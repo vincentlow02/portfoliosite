@@ -1,25 +1,45 @@
 @property --bg {
   syntax: "<color>";
   inherits: true;
-  initial-value: #e8e6de;
+  initial-value: #f1f2ef;
 }
 
 @property --text {
   syntax: "<color>";
   inherits: true;
-  initial-value: #1f252b;
+  initial-value: #626055;
 }
 
 @property --mid {
   syntax: "<color>";
   inherits: true;
-  initial-value: #74808a;
+  initial-value: #626055;
 }
 
 @property --line {
   syntax: "<color>";
   inherits: true;
-  initial-value: #d8dee5;
+  initial-value: #d6d8d3;
+}
+
+:global(body.home-default) {
+  --bg: #f1f2ef;
+  --text: #626055;
+  --mid: #626055;
+  --line: #d6d8d3;
+}
+
+:global(body.home-default) .scene::before {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.24) 0%, transparent 36%),
+    radial-gradient(circle at 82% 12%, rgba(186, 191, 194, 0.08) 0%, transparent 32%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 6px
+    );
 }
 
 :global(body.home-sunny) {
@@ -148,6 +168,25 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: multiply;
+  transition:
+    opacity 400ms ease,
+    filter 400ms ease;
+}
+
+:global(body.home-sunny) .canvas,
+:global(body.home-rain) .canvas {
+  opacity: 0;
+  filter: none;
 }
 
 .page {
@@ -296,6 +335,17 @@
     align-items: center;
     justify-content: flex-start;
     padding-top: 0;
+  }
+}
+
+@media (min-width: 901px) {
+  :global(body.home-rain) .scene {
+    background:
+      linear-gradient(rgba(108, 120, 134, 0.24), rgba(108, 120, 134, 0.24)),
+      url("/images/rain-glass-desktop.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 

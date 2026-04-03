@@ -4,8 +4,33 @@ import type { MutableRefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "@/components/home/cozy-window-shade.module.css";
 
-type ThemeMode = "sunny" | "rain";
+type RGB = [number, number, number];
+type ThemeMode = "default" | "sunny" | "rain";
 type StopAudio = () => void;
+
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+
+function blendColor(a: RGB, b: RGB, t: number): RGB {
+  return [
+    Math.round(lerp(a[0], b[0], t)),
+    Math.round(lerp(a[1], b[1], t)),
+    Math.round(lerp(a[2], b[2], t)),
+  ];
+}
+
+function getAnimTime(now: number) {
+  const period = 120000;
+  const phase = (now % (period * 2)) / period;
+  const triangle = phase < 1 ? phase : 2 - phase;
+
+  return triangle * 0.1;
+}
+
+function getAnimOpen(now: number) {
+  return 0.5 + Math.sin(now * 0.00006) * 0.04 + Math.sin(now * 0.00015) * 0.02;
+}
 
 function getAudioContext(
   ref: MutableRefObject<AudioContext | null>,
@@ -160,14 +185,18 @@ function startRainAmbience(context: AudioContext): StopAudio {
 }
 
 export function CozyWindowShade() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const leavesVideoRef = useRef<HTMLVideoElement | null>(null);
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
   const isAudioPlayingRef = useRef(false);
+  const fadeTargetRef = useRef(1);
+  const fadeValueRef = useRef(0);
+  const lastTimeRef = useRef(0);
   const [rotation, setRotation] = useState(0);
-  const [themeMode, setThemeMode] = useState<ThemeMode>("sunny");
+  const [themeMode, setThemeMode] = useState<ThemeMode>("default");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
   useEffect(() => {
@@ -177,11 +206,11 @@ export function CozyWindowShade() {
   useEffect(() => {
     const body = document.body;
 
-    body.classList.remove("home-sunny", "home-rain");
+    body.classList.remove("home-default", "home-sunny", "home-rain");
     body.classList.add(`home-${themeMode}`);
 
     return () => {
-      body.classList.remove("home-sunny", "home-rain");
+      body.classList.remove("home-default", "home-sunny", "home-rain");
     };
   }, [themeMode]);
 
@@ -278,8 +307,9 @@ export function CozyWindowShade() {
         case "r":
           setThemeMode("rain");
           break;
+        case "d":
         case "escape":
-          setThemeMode("sunny");
+          setThemeMode("default");
           break;
         case "a":
           void toggleAudio();
@@ -295,6 +325,328 @@ export function CozyWindowShade() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return;
+    }
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    let frameId = 0;
+    const offscreenCache: Record<string, HTMLCanvasElement> = {};
+
+    const fit = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    const getOffscreenCanvas = (key: string, width: number, height: number) => {
+      const existing = offscreenCache[key];
+
+      if (existing && existing.width === width && existing.height === height) {
+        return existing;
+      }
+
+      const nextCanvas = document.createElement("canvas");
+      nextCanvas.width = width;
+      nextCanvas.height = height;
+      offscreenCache[key] = nextCanvas;
+
+      return nextCanvas;
+    };
+
+    const draw = (now: number) => {
+      const deltaTime = lastTimeRef.current
+        ? (now - lastTimeRef.current) / 1000
+        : 0.016;
+      lastTimeRef.current = now;
+
+      const target = themeMode === "default" ? 1 : 0;
+      fadeTargetRef.current = target;
+      const transitionStep = deltaTime / 1.8;
+
+      if (fadeValueRef.current < fadeTargetRef.current) {
+        fadeValueRef.current = Math.min(
+          fadeValueRef.current + transitionStep,
+          1,
+        );
+      } else if (fadeValueRef.current > fadeTargetRef.current) {
+        fadeValueRef.current = Math.max(
+          fadeValueRef.current - transitionStep,
+          0,
+        );
+      }
+
+      const fadeEase =
+        fadeValueRef.current * fadeValueRef.current * (3 - 2 * fadeValueRef.current);
+
+      if (fadeValueRef.current === 0 && fadeTargetRef.current === 0) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        frameId = window.requestAnimationFrame(draw);
+        return;
+      }
+
+      const width = canvas.width;
+      const height = canvas.height;
+      const animTime = getAnimTime(now);
+      const openAmount = getAnimOpen(now);
+      const normalizedTime = animTime / 0.35;
+
+      const shadowTarget = blendColor(
+        [204, 210, 214],
+        [220, 225, 229],
+        normalizedTime,
+      );
+      const shadowColor = blendColor([255, 255, 255], shadowTarget, fadeEase);
+      const glowTarget = blendColor(
+        [232, 236, 239],
+        [244, 246, 248],
+        normalizedTime,
+      );
+      const glowColor = blendColor([255, 255, 255], glowTarget, fadeEase);
+
+      const skewX = lerp(0.34, 0.26, normalizedTime);
+      const skewY = lerp(0.13, 0.09, normalizedTime);
+      const stretch = lerp(1.9, 1.6, normalizedTime);
+      const glowAlpha = lerp(0.28, 0.17, normalizedTime) * fadeEase;
+      const baseSoftness = lerp(12, 7, normalizedTime);
+
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = `rgb(${shadowColor[0]}, ${shadowColor[1]}, ${shadowColor[2]})`;
+      context.fillRect(0, 0, width, height);
+
+      const projectedWidth = Math.min(width * 0.58, 420) * stretch;
+      const projectedHeight = Math.min(height * 0.72, 500) * stretch * 0.78;
+
+      const driftX = Math.sin(now * 0.00009) * 5 + Math.sin(now * 0.00025) * 2.5;
+      const driftY = Math.cos(now * 0.00011) * 3.5 + Math.cos(now * 0.00022) * 1.8;
+      const projectedX = lerp(width * 0.01, width * 0.06, normalizedTime) + driftX;
+      const projectedY = lerp(height * 0.01, height * 0.03, normalizedTime) + driftY;
+
+      const frameThickness = lerp(10, 7, normalizedTime);
+      const slatCount = 18;
+      const innerHeight = projectedHeight - frameThickness * 2;
+      const spacing = innerHeight / slatCount;
+      const slatThickness = spacing * lerp(0.88, 0.12, openAmount);
+      const gapHeight = spacing - slatThickness;
+
+      if (gapHeight < 0.3) {
+        frameId = window.requestAnimationFrame(draw);
+        return;
+      }
+
+      context.save();
+      context.translate(projectedX, projectedY);
+      context.transform(1, skewY, skewX, 1, 0, 0);
+
+      const offscreenWidth = Math.ceil(projectedWidth + 80);
+      const offscreenHeight = Math.ceil(projectedHeight + 80);
+      const maskCanvas = getOffscreenCanvas("mask", offscreenWidth, offscreenHeight);
+      const maskContext = maskCanvas.getContext("2d");
+
+      if (!maskContext) {
+        context.restore();
+        frameId = window.requestAnimationFrame(draw);
+        return;
+      }
+
+      maskContext.clearRect(0, 0, offscreenWidth, offscreenHeight);
+
+      for (let index = 0; index < slatCount; index += 1) {
+        const baseY = frameThickness + index * spacing + slatThickness;
+        const wobble =
+          Math.sin(now * 0.00008 + index * 0.53) * 1.1 +
+          Math.sin(now * 0.00019 + index * 0.79) * 0.6;
+        const slatY = baseY + wobble;
+        const verticalPosition = index / slatCount;
+        const slatSoftness = baseSoftness * (0.55 + verticalPosition);
+        const distanceFromCenter =
+          Math.abs(index - slatCount / 2) / (slatCount / 2);
+        const slatAlpha = 1 - distanceFromCenter * 0.1;
+        const paddingY = slatSoftness * 1.2;
+        const gradient = maskContext.createLinearGradient(
+          0,
+          slatY - paddingY,
+          0,
+          slatY + gapHeight + paddingY,
+        );
+
+        gradient.addColorStop(0, "rgba(255,255,255,0)");
+        gradient.addColorStop(
+          paddingY / (gapHeight + paddingY * 2),
+          `rgba(255,255,255,${slatAlpha})`,
+        );
+        gradient.addColorStop(
+          1 - paddingY / (gapHeight + paddingY * 2),
+          `rgba(255,255,255,${slatAlpha})`,
+        );
+        gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+        maskContext.fillStyle = gradient;
+        maskContext.fillRect(
+          frameThickness,
+          slatY - paddingY,
+          projectedWidth - frameThickness * 2,
+          gapHeight + paddingY * 2,
+        );
+      }
+
+      maskContext.globalCompositeOperation = "destination-in";
+
+      const horizontalMask = maskContext.createLinearGradient(
+        frameThickness,
+        0,
+        projectedWidth - frameThickness,
+        0,
+      );
+      horizontalMask.addColorStop(0, "rgba(255,255,255,0.1)");
+      horizontalMask.addColorStop(0.06, "rgba(255,255,255,0.55)");
+      horizontalMask.addColorStop(0.15, "rgba(255,255,255,1)");
+      horizontalMask.addColorStop(0.5, "rgba(255,255,255,1)");
+      horizontalMask.addColorStop(0.72, "rgba(255,255,255,0.8)");
+      horizontalMask.addColorStop(0.85, "rgba(255,255,255,0.35)");
+      horizontalMask.addColorStop(0.94, "rgba(255,255,255,0.12)");
+      horizontalMask.addColorStop(1, "rgba(255,255,255,0.02)");
+      maskContext.fillStyle = horizontalMask;
+      maskContext.fillRect(0, 0, offscreenWidth, offscreenHeight);
+
+      const verticalMask = maskContext.createLinearGradient(
+        0,
+        frameThickness,
+        0,
+        projectedHeight - frameThickness,
+      );
+      verticalMask.addColorStop(0, "rgba(255,255,255,0.08)");
+      verticalMask.addColorStop(0.05, "rgba(255,255,255,0.6)");
+      verticalMask.addColorStop(0.12, "rgba(255,255,255,1)");
+      verticalMask.addColorStop(0.75, "rgba(255,255,255,0.85)");
+      verticalMask.addColorStop(0.88, "rgba(255,255,255,0.35)");
+      verticalMask.addColorStop(0.95, "rgba(255,255,255,0.1)");
+      verticalMask.addColorStop(1, "rgba(255,255,255,0.02)");
+      maskContext.fillStyle = verticalMask;
+      maskContext.fillRect(0, 0, offscreenWidth, offscreenHeight);
+      maskContext.globalCompositeOperation = "source-over";
+
+      maskContext.globalCompositeOperation = "destination-out";
+      const mullionWidth = frameThickness * 0.5;
+      const mullionSoftness = baseSoftness * 0.9;
+      const mullionX = projectedWidth * 0.47;
+      const verticalCut = maskContext.createLinearGradient(
+        mullionX - mullionWidth - mullionSoftness,
+        0,
+        mullionX + mullionWidth + mullionSoftness,
+        0,
+      );
+      verticalCut.addColorStop(0, "rgba(255,255,255,0)");
+      verticalCut.addColorStop(0.15, "rgba(255,255,255,1)");
+      verticalCut.addColorStop(0.85, "rgba(255,255,255,1)");
+      verticalCut.addColorStop(1, "rgba(255,255,255,0)");
+      maskContext.fillStyle = verticalCut;
+      maskContext.fillRect(
+        mullionX - mullionWidth - mullionSoftness,
+        0,
+        (mullionWidth + mullionSoftness) * 2,
+        projectedHeight,
+      );
+
+      const mullionY = projectedHeight * 0.4;
+      const horizontalCut = maskContext.createLinearGradient(
+        0,
+        mullionY - mullionWidth - mullionSoftness,
+        0,
+        mullionY + mullionWidth + mullionSoftness,
+      );
+      horizontalCut.addColorStop(0, "rgba(255,255,255,0)");
+      horizontalCut.addColorStop(0.15, "rgba(255,255,255,1)");
+      horizontalCut.addColorStop(0.85, "rgba(255,255,255,1)");
+      horizontalCut.addColorStop(1, "rgba(255,255,255,0)");
+      maskContext.fillStyle = horizontalCut;
+      maskContext.fillRect(
+        0,
+        mullionY - mullionWidth - mullionSoftness,
+        projectedWidth,
+        (mullionWidth + mullionSoftness) * 2,
+      );
+
+      const cordX = projectedWidth * 0.73 + Math.sin(now * 0.00025) * 2.5;
+      const cordWidth = 1.5;
+      const cordSoftness = baseSoftness * 0.4;
+      const cordCut = maskContext.createLinearGradient(
+        cordX - cordWidth - cordSoftness,
+        0,
+        cordX + cordWidth + cordSoftness,
+        0,
+      );
+      cordCut.addColorStop(0, "rgba(255,255,255,0)");
+      cordCut.addColorStop(0.25, "rgba(255,255,255,0.6)");
+      cordCut.addColorStop(0.75, "rgba(255,255,255,0.6)");
+      cordCut.addColorStop(1, "rgba(255,255,255,0)");
+      maskContext.fillStyle = cordCut;
+      maskContext.fillRect(
+        cordX - cordWidth - cordSoftness,
+        frameThickness,
+        (cordWidth + cordSoftness) * 2,
+        projectedHeight - frameThickness * 2,
+      );
+      maskContext.globalCompositeOperation = "source-over";
+
+      context.globalCompositeOperation = "destination-out";
+      context.drawImage(maskCanvas, 0, 0);
+      context.globalCompositeOperation = "source-over";
+
+      const glowCanvas = getOffscreenCanvas("glow", offscreenWidth, offscreenHeight);
+      const glowContext = glowCanvas.getContext("2d");
+
+      if (glowContext) {
+        glowContext.clearRect(0, 0, offscreenWidth, offscreenHeight);
+        const glowX = projectedWidth * 0.38;
+        const glowY = projectedHeight * 0.42;
+        const glowGradient = glowContext.createRadialGradient(
+          glowX,
+          glowY,
+          0,
+          glowX,
+          glowY,
+          projectedWidth * 0.7,
+        );
+        glowGradient.addColorStop(
+          0,
+          `rgba(${glowColor[0]},${glowColor[1]},${glowColor[2]},${glowAlpha * 0.35})`,
+        );
+        glowGradient.addColorStop(
+          0.5,
+          `rgba(${glowColor[0]},${glowColor[1]},${glowColor[2]},${glowAlpha * 0.16})`,
+        );
+        glowGradient.addColorStop(1, "rgba(255,235,200,0)");
+        glowContext.fillStyle = glowGradient;
+        glowContext.fillRect(0, 0, offscreenWidth, offscreenHeight);
+        glowContext.globalCompositeOperation = "destination-in";
+        glowContext.drawImage(maskCanvas, 0, 0);
+        glowContext.globalCompositeOperation = "source-over";
+        context.drawImage(glowCanvas, 0, 0);
+      }
+
+      context.restore();
+      frameId = window.requestAnimationFrame(draw);
+    };
+
+    fit();
+    window.addEventListener("resize", fit);
+    frameId = window.requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener("resize", fit);
+      window.cancelAnimationFrame(frameId);
+      lastTimeRef.current = 0;
+    };
+  }, [themeMode]);
 
   useEffect(() => {
     const canvas = rainCanvasRef.current;
@@ -507,6 +859,8 @@ export function CozyWindowShade() {
         <canvas ref={rainCanvasRef} className={styles.rainCanvas} />
       </div>
 
+      <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
+
       <div className={styles.page}>
         <aside className={styles.rail}>
           <button
@@ -526,6 +880,29 @@ export function CozyWindowShade() {
         <section className={styles.content}>
           <div className={styles.controls}>
             <div className={styles.modeSwitch} role="group" aria-label="Theme mode">
+              <button
+                type="button"
+                className={`${styles.toggle} ${themeMode === "default" ? styles.toggleActive : ""}`}
+                onClick={() => setThemeMode("default")}
+                aria-pressed={themeMode === "default"}
+                aria-label="Switch to shade mode"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="4" y="4" width="16" height="16" rx="1.5" />
+                  <path d="M12 4V20" />
+                  <path d="M4 12H20" />
+                </svg>
+              </button>
+
               <button
                 type="button"
                 className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
