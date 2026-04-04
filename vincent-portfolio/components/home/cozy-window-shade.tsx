@@ -238,6 +238,7 @@ export function CozyWindowShade() {
   const [themeMode, setThemeMode] = useState<ThemeMode>("default");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isAudioPressing, setIsAudioPressing] = useState(false);
+  const [isChaosActive, setIsChaosActive] = useState(false);
   const [isHomeReady, setIsHomeReady] = useState(false);
   const [locale, setLocale] = useState<SiteLocale>(() => {
     if (typeof window === "undefined") {
@@ -460,6 +461,11 @@ export function CozyWindowShade() {
     activateTheme("sunny");
   }, [activateTheme]);
 
+  const triggerChaos = useCallback(() => {
+    setIsChaosActive((current) => !current);
+    void chaosControllerRef.current?.toggle();
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
@@ -484,7 +490,7 @@ export function CozyWindowShade() {
           void toggleAudio();
           break;
         case "c":
-          void chaosControllerRef.current?.toggle();
+          triggerChaos();
           break;
         default:
           break;
@@ -496,7 +502,7 @@ export function CozyWindowShade() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activateSunnyTheme, activateTheme, toggleAudio]);
+  }, [activateSunnyTheme, activateTheme, toggleAudio, triggerChaos]);
 
   useEffect(() => {
     const element = audioPullRef.current;
@@ -1177,12 +1183,20 @@ export function CozyWindowShade() {
               className={styles.modeSwitch}
               role="group"
               aria-label="Theme mode"
-              data-chaos-block
             >
-              <span className={styles.shortcutHint} aria-hidden="true">
-                C
-              </span>
               <button
+                type="button"
+                className={`${styles.shortcutHint} ${
+                  isChaosActive ? styles.shortcutHintActive : ""
+                }`}
+                onClick={triggerChaos}
+                aria-label="Trigger crash effect"
+                aria-pressed={isChaosActive}
+              >
+                C
+              </button>
+              <button
+                data-chaos-block
                 type="button"
                 className={`${styles.toggle} ${themeMode === "default" ? styles.toggleActive : ""}`}
                 onClick={() => activateTheme("default")}
@@ -1205,9 +1219,10 @@ export function CozyWindowShade() {
                   </svg>
                 </button>
 
-                <button
-                  type="button"
-                  className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
+              <button
+                data-chaos-block
+                type="button"
+                className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
                 onClick={activateSunnyTheme}
                 style={
                   themeMode === "sunny"
@@ -1247,6 +1262,7 @@ export function CozyWindowShade() {
               </button>
 
               <button
+                data-chaos-block
                 type="button"
                 className={`${styles.toggle} ${themeMode === "rain" ? styles.toggleActive : ""}`}
                 onClick={() => activateTheme("rain")}
@@ -1323,6 +1339,17 @@ export function CozyWindowShade() {
               <h2 id="selected-work" className={styles.srOnly}>
                 Selected work
               </h2>
+
+              <a
+                href="https://student.redesigner.jp/students/c826c67af54aeecf009cddbe3b873303"
+                target="_blank"
+                rel="noreferrer noopener"
+                className={styles.portfolioLink}
+                data-chaos-block
+                style={{ "--enter-delay": "280ms" } as CSSProperties}
+              >
+                VIEW PORTFOLIO
+              </a>
 
               {projects.map((project, index) => (
                 <Link
