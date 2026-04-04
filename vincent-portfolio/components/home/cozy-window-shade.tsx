@@ -2,26 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { MutableRefObject } from "react";
+import type { CSSProperties, MutableRefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { getProjects } from "@/content/projects";
+import {
+  localeCopy as sharedLocaleCopy,
+  normalizeLocale,
+  type Locale as SiteLocale,
+} from "@/lib/site-locale";
 import styles from "@/components/home/cozy-window-shade.module.css";
 
 type RGB = [number, number, number];
 type ThemeMode = "default" | "sunny" | "rain";
 type StopAudio = () => void;
-
 const SHADE_AMBIENCE_SRC = "/audio/shade-ambience.m4a";
 const SUNNY_AMBIENCE_SRC = "https://theme-switch.pages.dev/assets/forest.mp3";
-const introLines = [
-  "Product designer based in Japan.",
-  "Focused on creating clear, intuitive experiences for everyday life.",
-];
-const navItems = [
-  { label: "About", href: "/about" },
-  { label: "Work", href: "/projects" },
-  { label: "Connect", href: "/contact" },
-];
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -225,6 +220,30 @@ export function CozyWindowShade() {
   const [rotation, setRotation] = useState(0);
   const [themeMode, setThemeMode] = useState<ThemeMode>("default");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [locale, setLocale] = useState<SiteLocale>(() => {
+    if (typeof window === "undefined") {
+      return "en";
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    return normalizeLocale(params.get("lang") ?? undefined);
+  });
+
+  const copy = sharedLocaleCopy[locale];
+
+  const handleLocaleChange = (nextLocale: SiteLocale) => {
+    setLocale(nextLocale);
+
+    const params = new URLSearchParams(window.location.search);
+    params.set("lang", nextLocale);
+
+    const query = params.toString();
+    const nextUrl = query
+      ? `${window.location.pathname}?${query}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, "", nextUrl);
+  };
 
   useEffect(() => {
     isAudioPlayingRef.current = isAudioPlaying;
@@ -430,14 +449,14 @@ export function CozyWindowShade() {
       const normalizedTime = animTime / 0.35;
 
       const shadowTarget = blendColor(
-        [229, 233, 234],
-        [239, 242, 242],
+        [232, 236, 237],
+        [241, 244, 244],
         normalizedTime,
       );
       const shadowColor = blendColor([255, 255, 255], shadowTarget, fadeEase);
       const glowTarget = blendColor(
-        [236, 239, 239],
-        [244, 246, 246],
+        [238, 241, 241],
+        [246, 247, 247],
         normalizedTime,
       );
       const glowColor = blendColor([255, 255, 255], glowTarget, fadeEase);
@@ -1019,7 +1038,7 @@ export function CozyWindowShade() {
                 <h1 className={styles.name}>Vincent Low Sik Ching</h1>
 
                 <div className={styles.summary}>
-                  {introLines.map((line) => (
+                  {copy.introLines.map((line) => (
                     <p key={line}>{line}</p>
                   ))}
                 </div>
@@ -1027,8 +1046,13 @@ export function CozyWindowShade() {
             </section>
 
             <nav aria-label="Homepage" className={styles.nav}>
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className={styles.navLink}>
+              {copy.navItems.map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={`${item.href}?lang=${locale}`}
+                  className={styles.navLink}
+                  style={{ "--enter-delay": `${180 + index * 55}ms` } as CSSProperties}
+                >
                   {item.label}
                 </Link>
               ))}
@@ -1039,18 +1063,44 @@ export function CozyWindowShade() {
                 Selected work
               </h2>
 
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <Link
                   key={project.slug}
-                  href={`/projects/${project.slug}`}
+                  href={`/projects/${project.slug}?lang=${locale}`}
                   className={styles.workItem}
+                  style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
                 >
                   <span className={styles.workTitle}>{project.name}</span>
                   <span className={styles.workMeta}>
-                    {project.year} . {project.category}
+                    {project.year} .{" "}
+                    {copy.projectCategories[project.slug] ?? project.category}
                   </span>
                 </Link>
               ))}
+
+              <div
+                className={styles.localeSwitch}
+                role="group"
+                aria-label="Language"
+              >
+                {[
+                  { key: "en", label: "EN" },
+                  { key: "zh", label: "中" },
+                  { key: "ja", label: "日" },
+                ].map((item) => (
+                  <button
+                    key={item.key}
+                    type="button"
+                    className={`${styles.localeButton} ${
+                      locale === item.key ? styles.localeButtonActive : ""
+                    }`}
+                    onClick={() => handleLocaleChange(item.key as SiteLocale)}
+                    aria-pressed={locale === item.key}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </section>
           </div>
         </section>

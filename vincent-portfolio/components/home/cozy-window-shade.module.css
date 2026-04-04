@@ -66,8 +66,8 @@
 }
 
 .scene {
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
   overflow: hidden;
   position: relative;
   background: var(--bg);
@@ -193,9 +193,10 @@
   position: relative;
   z-index: 50;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
   padding: 20px;
+  overflow: hidden;
 }
 
 .rail {
@@ -259,9 +260,9 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100%;
   z-index: 130;
+  overflow: hidden;
 }
 
 .homeOverlay {
@@ -272,6 +273,7 @@
   left: 0.9rem;
   padding: 9rem 1.25rem 3.5rem;
   color: #121212;
+  animation: revealBlock 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .controls {
@@ -344,12 +346,18 @@
 }
 
 .navLink {
+  --enter-delay: 180ms;
   font-size: 0.8125rem;
   line-height: 1.45;
   color: #555555;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(16px);
+  animation: revealItem 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay);
 }
 
 .navLink:hover {
@@ -363,8 +371,14 @@
 }
 
 .workItem {
+  --enter-delay: 320ms;
   display: grid;
   gap: 0.25rem;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(16px);
+  animation: revealItem 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay);
 }
 
 .workTitle {
@@ -378,6 +392,48 @@
   font-size: 0.8125rem;
   line-height: 1.45;
   color: #5d5d5d;
+}
+
+.localeSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(16px);
+  animation: revealItem 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 520ms;
+}
+
+.localeButton {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #8a8a8a;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.localeButton:hover {
+  color: #3c3c3c;
+}
+
+.localeButtonActive {
+  color: #121212;
+}
+
+.localeButtonActive::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.18rem;
+  height: 1px;
+  background: currentColor;
 }
 
 .srOnly {
@@ -447,6 +503,46 @@
   100% {
     transform: translateX(1.5%);
     opacity: 1;
+  }
+}
+
+@keyframes revealBlock {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealItem {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeOverlay,
+  .navLink,
+  .workItem,
+  .localeSwitch {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
   }
 }
 
