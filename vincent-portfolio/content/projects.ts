@@ -2,48 +2,37 @@ import { Project } from "@/types/project";
 
 const projects: Project[] = [
   {
-    slug: "project-alpha",
-    name: "Project Alpha",
-    summary: "Placeholder summary for a featured portfolio case study.",
+    slug: "weave-ai",
+    name: "Weave AI",
+    category: "Seminar exhibition project",
+    summary:
+      "An exhibition-led design project exploring how AI can support more thoughtful learning experiences.",
     description:
-      "Use this entry to describe the problem, process, decisions, and outcomes for a real project.",
-    year: "2026",
-    status: "planned",
-    stack: ["Next.js", "TypeScript", "Tailwind CSS"],
-    highlights: [
-      "Typed content source for index and detail pages.",
-      "Static route generation through the App Router.",
-      "Neutral placeholders you can restyle later.",
-    ],
-  },
-  {
-    slug: "project-beta",
-    name: "Project Beta",
-    summary: "Placeholder summary for a work sample with a different narrative.",
-    description:
-      "This starter keeps the project contract stable so content, components, and design can evolve independently.",
+      "Weave AI was developed as a seminar exhibition project. The work focused on shaping a clear interaction concept, tightening the narrative of the experience, and presenting the system in a way that felt approachable in a physical showcase setting.",
     year: "2025",
-    status: "in-progress",
-    stack: ["React", "Node.js", "PostgreSQL"],
+    status: "completed",
+    stack: ["Product Design", "Interaction Design", "Exhibition Design"],
     highlights: [
-      "Reusable card and detail page scaffolding.",
-      "Route-aware metadata generation.",
-      "Separation between content, route logic, and components.",
+      "Defined the product concept and overall interaction direction.",
+      "Balanced clarity, storytelling, and physical presentation constraints.",
+      "Created a case study structure that can expand with deeper process notes later.",
     ],
   },
   {
-    slug: "project-gamma",
-    name: "Project Gamma",
-    summary: "Placeholder summary for another case study or experiment.",
+    slug: "goevent",
+    name: "GoEvent",
+    category: "Product and interaction design case study",
+    summary:
+      "A product design case study focused on simplifying event discovery, participation, and coordination.",
     description:
-      "Store your portfolio entries here first, then replace the layout and styling when you are ready to design the site.",
+      "GoEvent explored how a digital product could make event planning and participation feel easier to understand and act on. The project centered on product structure, interaction flows, and clearer decision points across the experience.",
     year: "2024",
     status: "completed",
-    stack: ["Figma", "Next.js", "Vercel"],
+    stack: ["Product Design", "UX Strategy", "Visual Design"],
     highlights: [
-      "Simple data model that is easy to expand.",
-      "Supports list and detail views from the same source.",
-      "Keeps UI decisions deferred until later.",
+      "Mapped the user journey around browsing, choosing, and joining events.",
+      "Reduced friction in key interactions through a tighter information hierarchy.",
+      "Packaged the work as a concise portfolio-ready case study.",
     ],
   },
 ];

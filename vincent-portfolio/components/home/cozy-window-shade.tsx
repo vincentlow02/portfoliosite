@@ -1,12 +1,27 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import type { MutableRefObject } from "react";
 import { useEffect, useRef, useState } from "react";
+import { getProjects } from "@/content/projects";
 import styles from "@/components/home/cozy-window-shade.module.css";
 
 type RGB = [number, number, number];
 type ThemeMode = "default" | "sunny" | "rain";
 type StopAudio = () => void;
+
+const SHADE_AMBIENCE_SRC = "/audio/shade-ambience.m4a";
+const SUNNY_AMBIENCE_SRC = "https://theme-switch.pages.dev/assets/forest.mp3";
+const introLines = [
+  "Product designer based in Japan.",
+  "Focused on creating clear, intuitive experiences for everyday life.",
+];
+const navItems = [
+  { label: "About", href: "/about" },
+  { label: "Work", href: "/projects" },
+  { label: "Connect", href: "/contact" },
+];
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -81,8 +96,19 @@ function createPinkNoiseBuffer(
   return buffer;
 }
 
-function startForestAmbience(audio: HTMLAudioElement): StopAudio {
-  audio.volume = 0.42;
+function startLoopingTrack(
+  audio: HTMLAudioElement,
+  source: string,
+  volume = 0.42,
+): StopAudio {
+  const resolvedSource = new URL(source, window.location.href).href;
+
+  if (audio.src !== resolvedSource) {
+    audio.src = source;
+    audio.load();
+  }
+
+  audio.volume = volume;
   audio.currentTime = 0;
   void audio.play().catch(() => {});
 
@@ -185,6 +211,7 @@ function startRainAmbience(context: AudioContext): StopAudio {
 }
 
 export function CozyWindowShade() {
+  const projects = getProjects();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const leavesVideoRef = useRef<HTMLVideoElement | null>(null);
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -272,7 +299,10 @@ export function CozyWindowShade() {
     }
 
     if (audioRef.current) {
-      stopAmbientAudioRef.current = startForestAmbience(audioRef.current);
+      stopAmbientAudioRef.current = startLoopingTrack(
+        audioRef.current,
+        themeMode === "default" ? SHADE_AMBIENCE_SRC : SUNNY_AMBIENCE_SRC,
+      );
     }
 
     return () => {
@@ -837,7 +867,6 @@ export function CozyWindowShade() {
     <main className={styles.scene}>
       <audio
         ref={audioRef}
-        src="https://theme-switch.pages.dev/assets/forest.mp3"
         loop
         preload="auto"
       />
@@ -971,6 +1000,56 @@ export function CozyWindowShade() {
                 </svg>
               </button>
             </div>
+          </div>
+
+          <div className={styles.homeOverlay}>
+            <section className={styles.introBlock}>
+              <Image
+                src="/images/home-portrait.png"
+                alt="Portrait of Vincent Low Sik Ching"
+                width={56}
+                height={56}
+                className={styles.portrait}
+                priority
+              />
+
+              <div className={styles.copy}>
+                <h1 className={styles.name}>Vincent Low Sik Ching</h1>
+
+                <div className={styles.summary}>
+                  {introLines.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <nav aria-label="Homepage" className={styles.nav}>
+              {navItems.map((item) => (
+                <Link key={item.href} href={item.href} className={styles.navLink}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <section aria-labelledby="selected-work" className={styles.workList}>
+              <h2 id="selected-work" className={styles.srOnly}>
+                Selected work
+              </h2>
+
+              {projects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className={styles.workItem}
+                >
+                  <span className={styles.workTitle}>{project.name}</span>
+                  <span className={styles.workMeta}>
+                    {project.year} . {project.category}
+                  </span>
+                </Link>
+              ))}
+            </section>
           </div>
         </section>
       </div>

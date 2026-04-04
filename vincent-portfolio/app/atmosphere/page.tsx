@@ -3,12 +3,12 @@ import { CozyWindowShade } from "@/components/home/cozy-window-shade";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Vincent Low Sik Ching",
+  title: "Atmosphere",
   description:
-    "Product designer based in Japan. Focused on creating clear, intuitive experiences for everyday life.",
-  pathname: "/",
+    "An atmospheric mode with shade, sunny, and rain scenes plus ambient sound.",
+  pathname: "/atmosphere",
 });
 
-export default function HomePage() {
+export default function AtmospherePage() {
   return <CozyWindowShade />;
 }
