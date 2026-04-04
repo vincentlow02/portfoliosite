@@ -430,14 +430,14 @@ export function CozyWindowShade() {
       const normalizedTime = animTime / 0.35;
 
       const shadowTarget = blendColor(
-        [204, 210, 214],
-        [220, 225, 229],
+        [229, 233, 234],
+        [239, 242, 242],
         normalizedTime,
       );
       const shadowColor = blendColor([255, 255, 255], shadowTarget, fadeEase);
       const glowTarget = blendColor(
-        [232, 236, 239],
-        [244, 246, 248],
+        [236, 239, 239],
+        [244, 246, 246],
         normalizedTime,
       );
       const glowColor = blendColor([255, 255, 255], glowTarget, fadeEase);
@@ -1004,14 +1004,16 @@ export function CozyWindowShade() {
 
           <div className={styles.homeOverlay}>
             <section className={styles.introBlock}>
-              <Image
-                src="/images/home-portrait.png"
-                alt="Portrait of Vincent Low Sik Ching"
-                width={56}
-                height={56}
-                className={styles.portrait}
-                priority
-              />
+              <div className={styles.portraitFrame}>
+                <Image
+                  src="/images/home-portrait.png"
+                  alt="Portrait of Vincent Low Sik Ching"
+                  width={56}
+                  height={56}
+                  className={styles.portrait}
+                  priority
+                />
+              </div>
 
               <div className={styles.copy}>
                 <h1 className={styles.name}>Vincent Low Sik Ching</h1>

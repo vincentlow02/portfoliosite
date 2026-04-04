@@ -23,20 +23,20 @@
 }
 
 :global(body.home-default) {
-  --bg: #f1f2ef;
+  --bg: #fbfbf8;
   --text: #626055;
   --mid: #626055;
-  --line: #d6d8d3;
+  --line: #e3e5df;
 }
 
 :global(body.home-default) .scene::before {
   background:
-    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.24) 0%, transparent 36%),
-    radial-gradient(circle at 82% 12%, rgba(186, 191, 194, 0.08) 0%, transparent 32%),
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.44) 0%, transparent 36%),
+    radial-gradient(circle at 82% 12%, rgba(212, 216, 219, 0.04) 0%, transparent 32%),
     repeating-linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.04) 0,
-      rgba(255, 255, 255, 0.04) 1px,
+      rgba(255, 255, 255, 0.06) 0,
+      rgba(255, 255, 255, 0.06) 1px,
       transparent 1px,
       transparent 6px
     );
@@ -84,16 +84,16 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.26) 0%, transparent 36%),
-    radial-gradient(circle at 82% 12%, rgba(188, 180, 166, 0.08) 0%, transparent 32%),
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.38) 0%, transparent 36%),
+    radial-gradient(circle at 82% 12%, rgba(212, 216, 219, 0.04) 0%, transparent 32%),
     repeating-linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.04) 0,
-      rgba(255, 255, 255, 0.04) 1px,
+      rgba(255, 255, 255, 0.06) 0,
+      rgba(255, 255, 255, 0.06) 1px,
       transparent 1px,
       transparent 6px
     );
-  opacity: 0.72;
+  opacity: 0.84;
   pointer-events: none;
 }
 
@@ -269,7 +269,8 @@
   z-index: 130;
   width: min(100%, 27rem);
   margin: 0 auto;
-  padding: 6.25rem 1.25rem 3.5rem;
+  left: 0.9rem;
+  padding: 9rem 1.25rem 3.5rem;
   color: #121212;
 }
 
@@ -289,13 +290,24 @@
   gap: 1.1875rem;
 }
 
-.portrait {
+.portraitFrame {
   flex: none;
-  width: 3.5rem;
-  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  box-shadow: 0 10px 30px rgba(24, 28, 34, 0.06);
+}
+
+.portrait {
+  width: 2.8rem;
+  height: 2.8rem;
   border-radius: 9999px;
   object-fit: cover;
-  box-shadow: 0 10px 30px rgba(24, 28, 34, 0.06);
 }
 
 .copy {
@@ -473,7 +485,8 @@
 
   .homeOverlay {
     width: min(100%, 25rem);
-    padding-top: 5.85rem;
+    left: 0.7rem;
+    padding-top: 8.6rem;
   }
 
   .name {
@@ -484,7 +497,8 @@
 @media (min-width: 768px) {
   .homeOverlay {
     width: min(100%, 29rem);
-    padding-top: 8.25rem;
+    left: 1.25rem;
+    padding-top: 10.25rem;
   }
 
   .name {
