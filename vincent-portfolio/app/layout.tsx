@@ -51,6 +51,15 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${notoSerifJp.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preload" as="image" href="/images/home-portrait.png" />
+        <link rel="preload" as="image" href="/images/profile-alt.png" />
+        <link rel="preload" as="image" href="/images/contact-icons/email.png" />
+        <link rel="preload" as="image" href="/images/contact-icons/x.png" />
+        <link rel="preload" as="image" href="/images/contact-icons/instagram.png" />
+        <link rel="preload" as="image" href="/images/contact-icons/github.png" />
+        <link rel="preload" as="image" href="/images/contact-icons/linkedin.png" />
+      </head>
       <body className="min-h-full bg-background text-foreground">{children}</body>
     </html>
   );

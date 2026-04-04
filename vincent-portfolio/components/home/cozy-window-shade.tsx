@@ -3,20 +3,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, MutableRefObject } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getProjects } from "@/content/projects";
 import {
   localeCopy as sharedLocaleCopy,
   normalizeLocale,
   type Locale as SiteLocale,
 } from "@/lib/site-locale";
+import { createHomeChaosController } from "@/components/home/home-chaos";
 import styles from "@/components/home/cozy-window-shade.module.css";
 
 type RGB = [number, number, number];
 type ThemeMode = "default" | "sunny" | "rain";
 type StopAudio = () => void;
+const AUDIO_VISUAL_LEAD_MS = 320;
 const SHADE_AMBIENCE_SRC = "/audio/shade-ambience.m4a";
-const SUNNY_AMBIENCE_SRC = "https://theme-switch.pages.dev/assets/forest.mp3";
+const SUNNY_AMBIENCE_SRC = "/audio/sunny-ambience.mp3";
+const LOOP_VOLUMES: Record<Exclude<ThemeMode, "rain">, number> = {
+  default: 0.94,
+  sunny: 0.9,
+};
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -91,11 +97,11 @@ function createPinkNoiseBuffer(
   return buffer;
 }
 
-function startLoopingTrack(
+async function startLoopingTrack(
   audio: HTMLAudioElement,
   source: string,
   volume = 0.42,
-): StopAudio {
+): Promise<StopAudio | null> {
   const resolvedSource = new URL(source, window.location.href).href;
 
   if (audio.src !== resolvedSource) {
@@ -105,7 +111,11 @@ function startLoopingTrack(
 
   audio.volume = volume;
   audio.currentTime = 0;
-  void audio.play().catch(() => {});
+  try {
+    await audio.play();
+  } catch {
+    return null;
+  }
 
   return () => {
     audio.pause();
@@ -207,19 +217,28 @@ function startRainAmbience(context: AudioContext): StopAudio {
 
 export function CozyWindowShade() {
   const projects = getProjects();
+  const sceneRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const audioPullRef = useRef<HTMLButtonElement | null>(null);
   const leavesVideoRef = useRef<HTMLVideoElement | null>(null);
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const chaosControllerRef = useRef<ReturnType<typeof createHomeChaosController> | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
+  const pendingPlayTimeoutRef = useRef<number | null>(null);
+  const ambientRequestRef = useRef(0);
+  const isAmbientStartedRef = useRef(false);
   const isAudioPlayingRef = useRef(false);
+  const themeModeRef = useRef<ThemeMode>("default");
   const fadeTargetRef = useRef(1);
   const fadeValueRef = useRef(0);
   const lastTimeRef = useRef(0);
   const [rotation, setRotation] = useState(0);
   const [themeMode, setThemeMode] = useState<ThemeMode>("default");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [isAudioPressing, setIsAudioPressing] = useState(false);
+  const [isHomeReady, setIsHomeReady] = useState(false);
   const [locale, setLocale] = useState<SiteLocale>(() => {
     if (typeof window === "undefined") {
       return "en";
@@ -246,8 +265,36 @@ export function CozyWindowShade() {
   };
 
   useEffect(() => {
+    if (!sceneRef.current) {
+      return;
+    }
+
+    const controller = createHomeChaosController(sceneRef.current);
+    chaosControllerRef.current = controller;
+
+    return () => {
+      controller.cleanup();
+      chaosControllerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const fallback = window.setTimeout(() => {
+      setIsHomeReady(true);
+    }, 260);
+
+    return () => {
+      window.clearTimeout(fallback);
+    };
+  }, []);
+
+  useEffect(() => {
     isAudioPlayingRef.current = isAudioPlaying;
   }, [isAudioPlaying]);
+
+  useEffect(() => {
+    themeModeRef.current = themeMode;
+  }, [themeMode]);
 
   useEffect(() => {
     const body = document.body;
@@ -279,65 +326,139 @@ export function CozyWindowShade() {
   useEffect(() => {
     const audio = audioRef.current;
 
-    if (!audio) {
-      return;
-    }
-
-    audio.volume = 0.42;
-
-    const handlePause = () => {
-      setIsAudioPlaying(false);
-    };
-
-    audio.addEventListener("pause", handlePause);
-
     return () => {
-      audio.pause();
-      audio.currentTime = 0;
+      ambientRequestRef.current += 1;
+      if (pendingPlayTimeoutRef.current !== null) {
+        window.clearTimeout(pendingPlayTimeoutRef.current);
+        pendingPlayTimeoutRef.current = null;
+      }
       stopAmbientAudioRef.current?.();
       stopAmbientAudioRef.current = null;
+      isAmbientStartedRef.current = false;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
       void audioContextRef.current?.close();
       audioContextRef.current = null;
-      audio.removeEventListener("pause", handlePause);
     };
   }, []);
 
-  useEffect(() => {
+  const stopAmbient = useCallback(() => {
+    ambientRequestRef.current += 1;
+    if (pendingPlayTimeoutRef.current !== null) {
+      window.clearTimeout(pendingPlayTimeoutRef.current);
+      pendingPlayTimeoutRef.current = null;
+    }
     stopAmbientAudioRef.current?.();
     stopAmbientAudioRef.current = null;
+    isAmbientStartedRef.current = false;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, []);
 
-    if (!isAudioPlaying) {
-      return;
+  const playAmbientForMode = useCallback(async (mode: ThemeMode) => {
+    ambientRequestRef.current += 1;
+    const requestId = ambientRequestRef.current;
+    stopAmbientAudioRef.current?.();
+    stopAmbientAudioRef.current = null;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
 
-    if (themeMode === "rain") {
-      stopAmbientAudioRef.current = startRainAmbience(
+    if (mode === "rain") {
+      const stop = startRainAmbience(
         getAudioContext(audioContextRef),
       );
-      return;
+      if (ambientRequestRef.current !== requestId) {
+        stop();
+        isAmbientStartedRef.current = false;
+        return false;
+      }
+
+      stopAmbientAudioRef.current = stop;
+      isAmbientStartedRef.current = true;
+      return true;
     }
 
     if (audioRef.current) {
-      stopAmbientAudioRef.current = startLoopingTrack(
+      const stop = await startLoopingTrack(
         audioRef.current,
-        themeMode === "default" ? SHADE_AMBIENCE_SRC : SUNNY_AMBIENCE_SRC,
+        mode === "default" ? SHADE_AMBIENCE_SRC : SUNNY_AMBIENCE_SRC,
+        LOOP_VOLUMES[mode],
       );
+
+      if (!stop) {
+        isAmbientStartedRef.current = false;
+        return false;
+      }
+
+      if (ambientRequestRef.current !== requestId) {
+        stop();
+        isAmbientStartedRef.current = false;
+        return false;
+      }
+
+      stopAmbientAudioRef.current = stop;
+      isAmbientStartedRef.current = true;
+      return true;
     }
 
-    return () => {
-      stopAmbientAudioRef.current?.();
-      stopAmbientAudioRef.current = null;
-    };
-  }, [isAudioPlaying, themeMode]);
+    isAmbientStartedRef.current = false;
+    return false;
+  }, []);
 
-  const toggleAudio = async () => {
+  const toggleAudio = useCallback(async () => {
     if (isAudioPlayingRef.current) {
+      stopAmbient();
       setIsAudioPlaying(false);
       return;
     }
 
     setIsAudioPlaying(true);
-  };
+    isAmbientStartedRef.current = false;
+    ambientRequestRef.current += 1;
+    const requestId = ambientRequestRef.current;
+
+    if (pendingPlayTimeoutRef.current !== null) {
+      window.clearTimeout(pendingPlayTimeoutRef.current);
+    }
+
+    pendingPlayTimeoutRef.current = window.setTimeout(() => {
+      pendingPlayTimeoutRef.current = null;
+      void playAmbientForMode(themeModeRef.current).then((started) => {
+        if (ambientRequestRef.current !== requestId) {
+          return;
+        }
+
+        if (!started) {
+          setIsAudioPlaying(false);
+        }
+      });
+    }, AUDIO_VISUAL_LEAD_MS);
+  }, [playAmbientForMode, stopAmbient]);
+
+  const activateTheme = useCallback(
+    (nextMode: ThemeMode) => {
+      setThemeMode(nextMode);
+      if (isAudioPlayingRef.current && isAmbientStartedRef.current) {
+        void playAmbientForMode(nextMode).then((started) => {
+          if (!started) {
+            setIsAudioPlaying(false);
+          }
+        });
+      }
+    },
+    [playAmbientForMode],
+  );
+
+  const activateSunnyTheme = useCallback(() => {
+    setRotation((current) => current + 360);
+    activateTheme("sunny");
+  }, [activateTheme]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -350,18 +471,20 @@ export function CozyWindowShade() {
 
       switch (event.key.toLowerCase()) {
         case "s":
-          setThemeMode("sunny");
-          setRotation((current) => current + 360);
+          activateSunnyTheme();
           break;
         case "r":
-          setThemeMode("rain");
+          activateTheme("rain");
           break;
         case "d":
         case "escape":
-          setThemeMode("default");
+          activateTheme("default");
           break;
         case "a":
           void toggleAudio();
+          break;
+        case "c":
+          void chaosControllerRef.current?.toggle();
           break;
         default:
           break;
@@ -372,6 +495,115 @@ export function CozyWindowShade() {
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activateSunnyTheme, activateTheme, toggleAudio]);
+
+  useEffect(() => {
+    const element = audioPullRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frameId = 0;
+    let pointerXTarget = 0;
+    let pointerStrengthTarget = 0;
+    let pointerX = 0;
+    let pointerStrength = 0;
+    let angle = 0;
+    let angularVelocity = 0;
+    let shiftX = 0;
+    let hoverOscillation = 0;
+    let hoverOscillationTarget = 0;
+    let hoverPhase = Math.random() * Math.PI * 2;
+    let lastFrameTime = 0;
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(max, Math.max(min, value));
+
+    const clearPointer = () => {
+      pointerStrengthTarget = 0;
+      pointerXTarget = 0;
+      hoverOscillationTarget = 0;
+    };
+
+    const handlePointerMove = (event: MouseEvent | PointerEvent) => {
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height * 0.48;
+      const deltaX = event.clientX - centerX;
+      const deltaY = event.clientY - centerY;
+      const distance = Math.hypot(deltaX, deltaY);
+      const radius = 220;
+      const influence = clamp(1 - distance / radius, 0, 1);
+
+      pointerStrengthTarget = influence;
+      pointerXTarget = clamp(deltaX / 140, -1, 1);
+      hoverOscillationTarget = influence;
+    };
+
+    const render = (now: number) => {
+      const deltaTime = lastFrameTime ? Math.min((now - lastFrameTime) / 1000, 0.05) : 1 / 60;
+      lastFrameTime = now;
+
+      if (reducedMotion.matches) {
+        element.style.setProperty("--pull-sway-x", "0px");
+        element.style.setProperty("--pull-sway-rot", "0deg");
+        frameId = window.requestAnimationFrame(render);
+        return;
+      }
+
+      const time = now / 1000;
+      const ambientAngle =
+        Math.sin(time * 0.52) * 0.52 + Math.sin(time * 0.21 + 1.3) * 0.18;
+
+      pointerX += (pointerXTarget - pointerX) * 0.055;
+      pointerStrength += (pointerStrengthTarget - pointerStrength) * 0.085;
+      hoverOscillation += (hoverOscillationTarget - hoverOscillation) * 0.095;
+      hoverPhase += deltaTime * 2.35;
+
+      const hoverWave =
+        Math.sin(hoverPhase) * hoverOscillation * 1.8 +
+        Math.sin(hoverPhase * 0.62 + 1.2) * hoverOscillation * 0.65;
+      const pointerAngle = pointerX * pointerStrength * 1.2 + hoverWave;
+      const targetAngle = ambientAngle + pointerAngle;
+      const stiffness = 0.026;
+      const damping = 0.9;
+
+      angularVelocity += (targetAngle - angle) * stiffness;
+      angularVelocity *= damping;
+      angle += angularVelocity;
+
+      const targetShift = angle * 0.65 + pointerX * pointerStrength * 1.1;
+      shiftX += (targetShift - shiftX) * 0.08;
+
+      element.style.setProperty("--pull-sway-x", `${shiftX.toFixed(3)}px`);
+      element.style.setProperty("--pull-sway-rot", `${angle.toFixed(3)}deg`);
+
+      frameId = window.requestAnimationFrame(render);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== "visible") {
+        clearPointer();
+      }
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", clearPointer);
+    window.addEventListener("blur", clearPointer);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    frameId = window.requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", clearPointer);
+      window.removeEventListener("blur", clearPointer);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.cancelAnimationFrame(frameId);
+      element.style.setProperty("--pull-sway-x", "0px");
+      element.style.setProperty("--pull-sway-rot", "0deg");
     };
   }, []);
 
@@ -883,7 +1115,7 @@ export function CozyWindowShade() {
   }, [themeMode]);
 
   return (
-    <main className={styles.scene}>
+    <main ref={sceneRef} className={styles.scene}>
       <audio
         ref={audioRef}
         loop
@@ -912,26 +1144,48 @@ export function CozyWindowShade() {
       <div className={styles.page}>
         <aside className={styles.rail}>
           <button
+            ref={audioPullRef}
+            data-chaos-block
             type="button"
-            className={`${styles.audioButton} ${isAudioPlaying ? styles.audioButtonActive : ""}`}
+            className={`${styles.audioPull} ${isAudioPlaying ? styles.audioPullActive : ""} ${
+              isAudioPressing ? styles.audioPullPressing : ""
+            }`}
             onClick={() => {
               void toggleAudio();
             }}
+            onPointerDown={() => setIsAudioPressing(true)}
+            onPointerUp={() => setIsAudioPressing(false)}
+            onPointerCancel={() => setIsAudioPressing(false)}
+            onPointerLeave={() => setIsAudioPressing(false)}
+            onBlur={() => setIsAudioPressing(false)}
             aria-pressed={isAudioPlaying}
             aria-label={isAudioPlaying ? "Pause ambient audio" : "Play ambient audio"}
           >
-            <span className={styles.audioGlyph}>{isAudioPlaying ? "Sound" : "Mute"}</span>
-            <span className={styles.audioMeta}>{isAudioPlaying ? "On" : "Off"}</span>
+            <span className={styles.audioHaloOuter} aria-hidden="true" />
+            <span className={styles.audioHaloInner} aria-hidden="true" />
+            <span className={styles.audioLine} aria-hidden="true" />
+            <span
+              className={styles.audioKnob}
+              aria-hidden="true"
+            />
           </button>
         </aside>
 
         <section className={styles.content}>
           <div className={styles.controls}>
-            <div className={styles.modeSwitch} role="group" aria-label="Theme mode">
+            <div
+              className={styles.modeSwitch}
+              role="group"
+              aria-label="Theme mode"
+              data-chaos-block
+            >
+              <span className={styles.shortcutHint} aria-hidden="true">
+                C
+              </span>
               <button
                 type="button"
                 className={`${styles.toggle} ${themeMode === "default" ? styles.toggleActive : ""}`}
-                onClick={() => setThemeMode("default")}
+                onClick={() => activateTheme("default")}
                 aria-pressed={themeMode === "default"}
                 aria-label="Switch to shade mode"
               >
@@ -944,20 +1198,17 @@ export function CozyWindowShade() {
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                >
-                  <rect x="4" y="4" width="16" height="16" rx="1.5" />
-                  <path d="M12 4V20" />
-                  <path d="M4 12H20" />
-                </svg>
-              </button>
+                  >
+                    <rect x="4" y="4" width="16" height="16" rx="1.5" />
+                    <path d="M12 4V20" />
+                    <path d="M4 12H20" />
+                  </svg>
+                </button>
 
-              <button
-                type="button"
-                className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
-                onClick={() => {
-                  setThemeMode("sunny");
-                  setRotation((current) => current + 360);
-                }}
+                <button
+                  type="button"
+                  className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
+                onClick={activateSunnyTheme}
                 style={
                   themeMode === "sunny"
                     ? { transform: `rotate(${rotation}deg)` }
@@ -998,7 +1249,7 @@ export function CozyWindowShade() {
               <button
                 type="button"
                 className={`${styles.toggle} ${themeMode === "rain" ? styles.toggleActive : ""}`}
-                onClick={() => setThemeMode("rain")}
+                onClick={() => activateTheme("rain")}
                 aria-pressed={themeMode === "rain"}
                 aria-label="Switch to rainy mode"
               >
@@ -1021,9 +1272,13 @@ export function CozyWindowShade() {
             </div>
           </div>
 
-          <div className={styles.homeOverlay}>
+          <div
+            className={`${styles.homeOverlay} ${
+              isHomeReady ? styles.homeOverlayReady : styles.homeOverlayPending
+            }`}
+          >
             <section className={styles.introBlock}>
-              <div className={styles.portraitFrame}>
+              <div className={styles.portraitFrame} data-chaos-block>
                 <Image
                   src="/images/home-portrait.png"
                   alt="Portrait of Vincent Low Sik Ching"
@@ -1031,13 +1286,18 @@ export function CozyWindowShade() {
                   height={56}
                   className={styles.portrait}
                   priority
+                  loading="eager"
+                  fetchPriority="high"
+                  onLoad={() => setIsHomeReady(true)}
                 />
               </div>
 
               <div className={styles.copy}>
-                <h1 className={styles.name}>Vincent Low Sik Ching</h1>
+                <h1 className={styles.name} data-chaos-words>
+                  Vincent Low Sik Ching
+                </h1>
 
-                <div className={styles.summary}>
+                <div className={styles.summary} data-chaos-words>
                   {copy.introLines.map((line) => (
                     <p key={line}>{line}</p>
                   ))}
@@ -1051,6 +1311,7 @@ export function CozyWindowShade() {
                   key={item.href}
                   href={`${item.href}?lang=${locale}`}
                   className={styles.navLink}
+                  data-chaos-block
                   style={{ "--enter-delay": `${180 + index * 55}ms` } as CSSProperties}
                 >
                   {item.label}
@@ -1070,8 +1331,10 @@ export function CozyWindowShade() {
                   className={styles.workItem}
                   style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
                 >
-                  <span className={styles.workTitle}>{project.name}</span>
-                  <span className={styles.workMeta}>
+                  <span className={styles.workTitle} data-chaos-words>
+                    {project.name}
+                  </span>
+                  <span className={styles.workMeta} data-chaos-words>
                     {project.year} .{" "}
                     {copy.projectCategories[project.slug] ?? project.category}
                   </span>
@@ -1094,6 +1357,7 @@ export function CozyWindowShade() {
                     className={`${styles.localeButton} ${
                       locale === item.key ? styles.localeButtonActive : ""
                     }`}
+                    data-chaos-block
                     onClick={() => handleLocaleChange(item.key as SiteLocale)}
                     aria-pressed={locale === item.key}
                   >
