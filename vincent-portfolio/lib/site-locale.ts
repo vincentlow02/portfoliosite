@@ -14,6 +14,11 @@ export const localeCopy: Record<
     introLines: string[];
     navItems: Array<{ label: string; href: string }>;
     projectCategories: Record<string, string>;
+    audioLabels: {
+      idle: string;
+      playing: string;
+      muted: string;
+    };
     aboutTitle: string;
     aboutParagraphs: string[];
     connectTitle: string;
@@ -34,6 +39,11 @@ export const localeCopy: Record<
     projectCategories: {
       "weave-ai": "Seminar exhibition project",
       goevent: "Product and interaction design case study",
+    },
+    audioLabels: {
+      idle: "Click to listen",
+      playing: "Now playing",
+      muted: "Muted",
     },
     aboutTitle: "About",
     aboutParagraphs: [
@@ -65,6 +75,11 @@ export const localeCopy: Record<
       "weave-ai": "研讨会展览项目",
       goevent: "产品与交互设计案例研究",
     },
+    audioLabels: {
+      idle: "点击聆听",
+      playing: "正在播放",
+      muted: "已静音",
+    },
     aboutTitle: "关于",
     aboutParagraphs: [
       "我是 Vincent Low Sik Ching，来自马来西亚新山，目前就读于东京造形大学工业设计专业。我对科技与设计的交汇很感兴趣。",
@@ -94,6 +109,11 @@ export const localeCopy: Record<
     projectCategories: {
       "weave-ai": "セミナー展示プロジェクト",
       goevent: "プロダクトとインタラクションデザインのケーススタディ",
+    },
+    audioLabels: {
+      idle: "クリックして再生",
+      playing: "再生中",
+      muted: "ミュート",
     },
     aboutTitle: "概要",
     aboutParagraphs: [

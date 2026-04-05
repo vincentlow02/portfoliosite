@@ -229,6 +229,24 @@
   will-change: transform;
 }
 
+.audioLabel {
+  position: absolute;
+  top: 10.25rem;
+  left: 50%;
+  width: max-content;
+  max-width: 7.5rem;
+  color: rgba(78, 78, 78, 0.68);
+  font-size: 0.68rem;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  text-align: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
 .audioHaloOuter,
 .audioHaloInner {
   position: absolute;
@@ -310,6 +328,10 @@
   background: #2f362c;
 }
 
+.audioPullActive .audioLabel {
+  color: rgba(52, 52, 52, 0.82);
+}
+
 .audioPullPressing .audioKnob {
   transform: translateX(-50%) translateY(1.5px) scale(0.94);
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.08);
@@ -317,6 +339,10 @@
 
 .audioPullPressing .audioLine {
   opacity: 0.82;
+}
+
+.audioPullPressing .audioLabel {
+  opacity: 0.76;
 }
 
 .content {
@@ -335,7 +361,7 @@
   width: min(100%, 27rem);
   margin: 0 auto;
   left: 0.9rem;
-  padding: 12rem 1.25rem 3.5rem;
+  padding: 9.6rem 1.25rem 9.6rem;
   color: #121212;
 }
 
@@ -392,6 +418,13 @@
   gap: 0.6875rem;
 }
 
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
 .name {
   font-size: 1.25rem;
   font-weight: 400;
@@ -439,7 +472,18 @@
 }
 
 .workList {
-  margin-top: 2.75rem;
+  margin-top: 1.9rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.workShelf {
+  position: relative;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.workEntries {
   display: grid;
   gap: 1.75rem;
 }
@@ -475,13 +519,34 @@
   transform: translateY(16px);
   animation: revealItem 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--enter-delay);
+  transition: transform 0.22s ease;
+}
+
+.workItem:hover {
+  transform: translateY(-1px);
+}
+
+.workItem:hover .workTitle {
+  color: #0f0f0f;
+  border-bottom-color: rgba(18, 18, 18, 0.38);
+}
+
+.workItem:hover .workMeta {
+  color: #4f4f4f;
 }
 
 .workTitle {
+  display: inline-block;
+  width: fit-content;
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.35;
   color: #121212;
+  padding-bottom: 0.18rem;
+  border-bottom: 1px solid rgba(98, 96, 85, 0.22);
+  transition:
+    color 0.22s ease,
+    border-bottom-color 0.22s ease;
 }
 
 .workMeta {
@@ -490,11 +555,190 @@
   color: #5d5d5d;
 }
 
+.workPreviewStage {
+  display: none;
+}
+
+.workPreviewStageActive {
+  pointer-events: auto;
+}
+
+.workPreviewCard {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translate3d(16px, 8px, 0) scale(0.985);
+  transition:
+    opacity 260ms ease,
+    transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.workPreviewCardVisible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.weavePreview,
+.goeventPreview {
+  display: grid;
+  place-items: center;
+}
+
+.weavePreview {
+  display: flex;
+  align-items: flex-start;
+}
+
+.weavePreviewPanel,
+.goeventPoster {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  box-shadow:
+    0 22px 40px rgba(16, 20, 26, 0.07),
+    0 2px 10px rgba(16, 20, 26, 0.04);
+  background: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.previewChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  color: #4c4c4c;
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
+.previewDot {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: rgba(76, 96, 122, 0.42);
+}
+
+.weavePreviewPanel {
+  padding: 0;
+  background:
+    linear-gradient(145deg, rgba(245, 248, 251, 0.98) 0%, rgba(234, 239, 245, 0.92) 100%);
+}
+
+.weavePreviewMedia {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+.weavePreviewVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+.goeventPoster {
+  padding: 1.15rem;
+  background:
+    linear-gradient(150deg, rgba(244, 246, 249, 0.98) 0%, rgba(226, 232, 239, 0.94) 100%);
+}
+
+.goeventHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.goeventStack {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.goeventCardPrimary,
+.goeventCardSecondary {
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(17, 17, 17, 0.05);
+  box-shadow: 0 10px 20px rgba(53, 63, 79, 0.07);
+}
+
+.goeventCardPrimary {
+  padding: 1rem 0.9rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.goeventCardPrimary span,
+.goeventCardSecondary span,
+.goeventTicketRow span {
+  display: block;
+  border-radius: 999px;
+  background: rgba(95, 108, 125, 0.16);
+}
+
+.goeventCardPrimary span:nth-child(1) {
+  width: 68%;
+  height: 0.72rem;
+}
+
+.goeventCardPrimary span:nth-child(2) {
+  width: 86%;
+  height: 0.5rem;
+}
+
+.goeventCardPrimary span:nth-child(3) {
+  width: 48%;
+  height: 0.5rem;
+}
+
+.goeventCardSecondary {
+  display: grid;
+  grid-template-columns: 1.1fr 0.8fr;
+  gap: 0.7rem;
+  padding: 0.9rem;
+}
+
+.goeventCardSecondary span:nth-child(1) {
+  height: 4rem;
+  border-radius: 0.95rem;
+}
+
+.goeventCardSecondary span:nth-child(2) {
+  height: 4rem;
+  border-radius: 0.95rem;
+}
+
+.goeventTicketRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.goeventTicketRow span {
+  height: 3.2rem;
+  border-radius: 0.9rem;
+  background: rgba(86, 103, 126, 0.13);
+}
+
 .localeSwitch {
   display: inline-flex;
   align-items: center;
   gap: 0.8rem;
-  margin-top: 0.25rem;
+  margin-top: -0.45rem;
   opacity: 0;
   filter: blur(8px);
   transform: translateY(16px);
@@ -777,14 +1021,31 @@
     right: 18px;
   }
 
+  .shortcutHint {
+    color: #8f97a1;
+  }
+
+  .shortcutHint:hover {
+    color: #8f97a1;
+  }
+
+  .shortcutHintActive {
+    color: #121212;
+  }
+
   .homeOverlay {
     width: min(100%, 25rem);
     left: 0.7rem;
-    padding-top: 11.4rem;
+    padding-top: 13.2rem;
+    padding-bottom: 7.7rem;
   }
 
   .name {
     font-size: 1.125rem;
+  }
+
+  .nameRow {
+    gap: 0.5rem 0.85rem;
   }
 }
 
@@ -795,8 +1056,9 @@
 
   .homeOverlay {
     width: min(100%, 29rem);
-    left: 1.25rem;
-    padding-top: 12.9rem;
+    left: -2.65rem;
+    padding-top: 7.2rem;
+    padding-bottom: 10.4rem;
   }
 
   .name {
@@ -805,5 +1067,66 @@
 
   .summary {
     max-width: 15rem;
+  }
+
+  .nameRow {
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1040px) {
+  .homeOverlay {
+    width: min(100%, 58rem);
+    left: 4rem;
+    padding-top: 7.6rem;
+    padding-bottom: 11rem;
+  }
+
+  .workShelf {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 18rem) minmax(0, 26rem);
+    align-items: center;
+    justify-content: start;
+    gap: 2.75rem;
+  }
+
+  .workEntries {
+    width: min(100%, 18rem);
+    min-width: 0;
+    justify-self: start;
+    align-self: start;
+  }
+
+  .workItem {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .workTitle,
+  .workMeta {
+    text-align: left;
+  }
+
+  .workPreviewStage {
+    position: fixed;
+    display: block;
+    top: 14.6rem;
+    left: calc(50% + 2.6rem);
+    z-index: 220;
+    width: min(26rem, 37vw);
+    min-height: 16.5rem;
+    pointer-events: none;
+    transform: none;
+  }
+
+  .workPreviewCard {
+    inset: 0;
+  }
+
+  .weavePreviewMedia,
+  .goeventPoster {
+    height: 100%;
   }
 }

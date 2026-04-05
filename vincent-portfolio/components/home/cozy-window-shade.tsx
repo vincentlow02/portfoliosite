@@ -223,6 +223,7 @@ export function CozyWindowShade() {
   const leavesVideoRef = useRef<HTMLVideoElement | null>(null);
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const weavePreviewVideoRef = useRef<HTMLVideoElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const chaosControllerRef = useRef<ReturnType<typeof createHomeChaosController> | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
@@ -238,8 +239,10 @@ export function CozyWindowShade() {
   const [themeMode, setThemeMode] = useState<ThemeMode>("default");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isAudioPressing, setIsAudioPressing] = useState(false);
+  const [hasAudioInteracted, setHasAudioInteracted] = useState(false);
   const [isChaosActive, setIsChaosActive] = useState(false);
   const [isHomeReady, setIsHomeReady] = useState(false);
+  const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null);
   const [locale, setLocale] = useState<SiteLocale>(() => {
     if (typeof window === "undefined") {
       return "en";
@@ -250,6 +253,11 @@ export function CozyWindowShade() {
   });
 
   const copy = sharedLocaleCopy[locale];
+  const audioPrompt = isAudioPlaying
+    ? copy.audioLabels.playing
+    : hasAudioInteracted
+      ? copy.audioLabels.muted
+      : copy.audioLabels.idle;
 
   const handleLocaleChange = (nextLocale: SiteLocale) => {
     setLocale(nextLocale);
@@ -323,6 +331,24 @@ export function CozyWindowShade() {
     video.pause();
     video.currentTime = 0;
   }, [themeMode]);
+
+  useEffect(() => {
+    const video = weavePreviewVideoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    if (hoveredProjectSlug === "weave-ai") {
+      video.pause();
+      video.currentTime = 0;
+      void video.play().catch(() => {});
+      return;
+    }
+
+    video.pause();
+    video.currentTime = 0;
+  }, [hoveredProjectSlug]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -413,6 +439,8 @@ export function CozyWindowShade() {
   }, []);
 
   const toggleAudio = useCallback(async () => {
+    setHasAudioInteracted(true);
+
     if (isAudioPlayingRef.current) {
       stopAmbient();
       setIsAudioPlaying(false);
@@ -1149,9 +1177,9 @@ export function CozyWindowShade() {
 
       <div className={styles.page}>
         <aside className={styles.rail}>
-          <button
-            ref={audioPullRef}
-            data-chaos-block
+            <button
+              ref={audioPullRef}
+              data-chaos-block
             type="button"
             className={`${styles.audioPull} ${isAudioPlaying ? styles.audioPullActive : ""} ${
               isAudioPressing ? styles.audioPullPressing : ""
@@ -1170,12 +1198,15 @@ export function CozyWindowShade() {
             <span className={styles.audioHaloOuter} aria-hidden="true" />
             <span className={styles.audioHaloInner} aria-hidden="true" />
             <span className={styles.audioLine} aria-hidden="true" />
-            <span
-              className={styles.audioKnob}
-              aria-hidden="true"
-            />
-          </button>
-        </aside>
+              <span
+                className={styles.audioKnob}
+                aria-hidden="true"
+              />
+              <span className={styles.audioLabel} aria-hidden="true">
+                {audioPrompt}
+              </span>
+            </button>
+          </aside>
 
         <section className={styles.content}>
           <div className={styles.controls}>
@@ -1340,33 +1371,87 @@ export function CozyWindowShade() {
                 Selected work
               </h2>
 
-              <a
-                href="https://student.redesigner.jp/students/c826c67af54aeecf009cddbe3b873303"
-                target="_blank"
-                rel="noreferrer noopener"
-                className={styles.portfolioLink}
-                data-chaos-block
-                style={{ "--enter-delay": "280ms" } as CSSProperties}
-              >
-                VIEW PORTFOLIO
-              </a>
+              <div className={styles.workShelf}>
+                <div className={styles.workEntries}>
+                  {projects.map((project, index) => (
+                    <Link
+                      key={project.slug}
+                      href={`/projects/${project.slug}?lang=${locale}`}
+                      className={styles.workItem}
+                      style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
+                      onMouseEnter={() => setHoveredProjectSlug(project.slug)}
+                      onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
+                      onFocus={() => setHoveredProjectSlug(project.slug)}
+                      onBlur={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
+                    >
+                      <span className={styles.workTitle} data-chaos-words>
+                        {project.name}
+                      </span>
+                      <span className={styles.workMeta} data-chaos-words>
+                        {project.year} .{" "}
+                        {copy.projectCategories[project.slug] ?? project.category}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
 
-              {projects.map((project, index) => (
-                <Link
-                  key={project.slug}
-                  href={`/projects/${project.slug}?lang=${locale}`}
-                  className={styles.workItem}
-                  style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
+                <div
+                  className={`${styles.workPreviewStage} ${
+                    hoveredProjectSlug ? styles.workPreviewStageActive : ""
+                  }`}
+                  aria-hidden={hoveredProjectSlug ? "false" : "true"}
                 >
-                  <span className={styles.workTitle} data-chaos-words>
-                    {project.name}
-                  </span>
-                  <span className={styles.workMeta} data-chaos-words>
-                    {project.year} .{" "}
-                    {copy.projectCategories[project.slug] ?? project.category}
-                  </span>
-                </Link>
-              ))}
+                  <div
+                    className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "weave-ai"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.weavePreview}`}
+                  >
+                    <div className={styles.weavePreviewMedia}>
+                      <video
+                        ref={weavePreviewVideoRef}
+                        className={styles.weavePreviewVideo}
+                        src="/videos/weave-preview.mp4"
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "goevent"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.goeventPreview}`}
+                  >
+                    <div className={styles.goeventPoster}>
+                      <div className={styles.goeventHeader}>
+                        <span className={styles.previewChip}>GoEvent</span>
+                        <span className={styles.previewDot} />
+                      </div>
+                      <div className={styles.goeventStack}>
+                        <div className={styles.goeventCardPrimary}>
+                          <span />
+                          <span />
+                          <span />
+                        </div>
+                        <div className={styles.goeventCardSecondary}>
+                          <span />
+                          <span />
+                        </div>
+                        <div className={styles.goeventTicketRow}>
+                          <span />
+                          <span />
+                          <span />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div
                 className={styles.localeSwitch}
