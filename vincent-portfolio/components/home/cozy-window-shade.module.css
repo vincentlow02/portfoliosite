@@ -650,88 +650,33 @@
   border-radius: inherit;
 }
 
-.goeventPoster {
-  padding: 1.15rem;
-  background:
-    linear-gradient(150deg, rgba(244, 246, 249, 0.98) 0%, rgba(226, 232, 239, 0.94) 100%);
+.goeventPreviewMedia {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  box-shadow: none;
 }
 
-.goeventHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.goeventStack {
-  margin-top: 1rem;
-  display: grid;
-  gap: 0.9rem;
-}
-
-.goeventCardPrimary,
-.goeventCardSecondary {
-  border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(17, 17, 17, 0.05);
-  box-shadow: 0 10px 20px rgba(53, 63, 79, 0.07);
-}
-
-.goeventCardPrimary {
-  padding: 1rem 0.9rem;
-  display: grid;
-  gap: 0.5rem;
-}
-
-.goeventCardPrimary span,
-.goeventCardSecondary span,
-.goeventTicketRow span {
+.goeventPreviewImage {
   display: block;
-  border-radius: 999px;
-  background: rgba(95, 108, 125, 0.16);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+  transform: translateZ(0);
+  image-rendering: auto;
+  backface-visibility: hidden;
 }
 
-.goeventCardPrimary span:nth-child(1) {
-  width: 68%;
-  height: 0.72rem;
+.goeventPreview.workPreviewCard {
+  transform: translate3d(0, 8px, 0);
 }
 
-.goeventCardPrimary span:nth-child(2) {
-  width: 86%;
-  height: 0.5rem;
-}
-
-.goeventCardPrimary span:nth-child(3) {
-  width: 48%;
-  height: 0.5rem;
-}
-
-.goeventCardSecondary {
-  display: grid;
-  grid-template-columns: 1.1fr 0.8fr;
-  gap: 0.7rem;
-  padding: 0.9rem;
-}
-
-.goeventCardSecondary span:nth-child(1) {
-  height: 4rem;
-  border-radius: 0.95rem;
-}
-
-.goeventCardSecondary span:nth-child(2) {
-  height: 4rem;
-  border-radius: 0.95rem;
-}
-
-.goeventTicketRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
-}
-
-.goeventTicketRow span {
-  height: 3.2rem;
-  border-radius: 0.9rem;
-  background: rgba(86, 103, 126, 0.13);
+.goeventPreview.workPreviewCardVisible {
+  transform: translate3d(0, 0, 0);
 }
 
 .localeSwitch {

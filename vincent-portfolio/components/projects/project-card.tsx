@@ -11,7 +11,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-2">
           <h2 className="text-xl font-semibold tracking-tight">
-            <Link href={`/projects/${project.slug}`}>{project.name}</Link>
+            <Link
+              href={project.url ?? `/projects/${project.slug}`}
+              target={project.url ? "_blank" : undefined}
+              rel={project.url ? "noopener noreferrer" : undefined}
+            >
+              {project.name}
+            </Link>
           </h2>
           <p className="text-sm text-muted-foreground">{project.summary}</p>
         </div>

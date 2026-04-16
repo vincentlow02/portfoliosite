@@ -1,11 +1,39 @@
 import type { Locale as SiteLocale } from "@/lib/site-locale";
 
+export type GoEventDetailImage = {
+  label: string;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  headline?: string;
+  titlePosition?: "top" | "bottom";
+  detailImages?: GoEventDetailImage[];
+};
+
+type GoEventSolutionStep = {
+  overlayLabel: string;
+  imageSrc: string;
+  visualClass: string;
+  imageClass: string;
+  alt: string;
+  headline?: string;
+  detailImages?: GoEventDetailImage[];
+};
+
 export type GoEventLocaleCopy = {
+  languageLabel: string;
+  backToHomeLabel: string;
+  avatarAlt: string;
+  heroImageAlt: string;
   summary: string;
   locationLabel: string;
   locationValue: string;
   dateLabel: string;
   dateValue: string;
+  processSectionTitle: string;
+  processCardTitle: string;
+  processCardPreview: string;
   briefTitle: string;
   briefCopy: string;
   researchTitle: string;
@@ -26,39 +54,30 @@ export type GoEventLocaleCopy = {
   ];
   designSolutionTitle: string;
   designSolutionSteps: [
-    {
-      overlayLabel: string;
-      imageSrc: string;
-      visualClass: string;
-      imageClass: string;
-      alt: string;
-    },
-    {
-      overlayLabel: string;
-      imageSrc: string;
-      visualClass: string;
-      imageClass: string;
-      alt: string;
-    },
-    {
-      overlayLabel: string;
-      imageSrc: string;
-      visualClass: string;
-      imageClass: string;
-      alt: string;
-    },
+    GoEventSolutionStep,
+    GoEventSolutionStep,
+    GoEventSolutionStep,
   ];
   quotes: [string, string, string];
+  andManyMoreLabel: string;
 };
 
 export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
   en: {
+    languageLabel: "Language",
+    backToHomeLabel: "Back to home",
+    avatarAlt: "GoEvent avatar",
+    heroImageAlt: "GoEvent app preview",
     summary:
       "GoEvent is a concept mobile app that helps people discover and join nearby events whenever inspiration strikes.",
     locationLabel: "Location",
     locationValue: "Tokyo, Japan",
     dateLabel: "Date",
     dateValue: "June 2025 → July 2025",
+    processSectionTitle: "Design process",
+    processCardTitle: "Project brief → CJM",
+    processCardPreview:
+      "View the full process from project brief, research, and user interview through challenge, persona, and journey map.",
     briefTitle: "Project brief",
     briefCopy:
       "In Tokyo, deciding whether to attend an event still feels difficult because event discovery and ticketing happen across different platforms.",
@@ -68,7 +87,7 @@ export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
     interviewSectionTitle: "User Interview",
     interviewTitle: "Challenge",
     interviewCopy:
-      "Across interviews, users were not struggling to find events — they were struggling to judge whether an event fit their current situation.",
+      "Across interviews, users were not struggling to find events. They were struggling to judge whether an event fit their current situation.",
     challengeImageAlt: "Interview participant portrait",
     personaTitle: "Persona",
     personaName: "Mayu, 24",
@@ -85,7 +104,7 @@ export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
       },
       {
         label: "During use",
-        copy: "Only relevant “go-now” events were surfaced, making judgment easier.",
+        copy: 'Only relevant "go-now" events were surfaced, making judgment easier.',
       },
       {
         label: "After use",
@@ -114,21 +133,93 @@ export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
         visualClass: "goeventSolutionVisualTall",
         imageClass: "goeventSolutionImagePhone",
         alt: "GoEvent discover screen concept",
+        headline: 'Designed for "go now" judgement',
+        detailImages: [
+          {
+            label: "Event detail",
+            src: "/images/goevent-solution-eventdetail.png",
+            alt: "GoEvent event detail screen",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "Ticket booking",
+            src: "/images/goevent-solution-ticketbooking.png",
+            alt: "GoEvent ticket booking screen",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "Saved",
+            src: "/images/goevent-solution-saved.png",
+            alt: "GoEvent saved screen",
+            width: 1608,
+            height: 3496,
+            headline: "Designing for continued use beyond a single event",
+            detailImages: [
+              {
+                label: "Search",
+                src: "/images/goevent-solution-search.png",
+                alt: "GoEvent search screen",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "Ticket",
+                src: "/images/goevent-solution-ticket.png",
+                alt: "GoEvent ticket screen",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "Profile",
+                src: "/images/goevent-solution-profile.png",
+                alt: "GoEvent profile screen",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "Visual Identity",
+                src: "/images/design.png",
+                alt: "GoEvent Visual Identity",
+                width: 3092,
+                height: 1924,
+                titlePosition: "top",
+              },
+              {
+                label: "Platforms Showcase",
+                src: "/images/last.png",
+                alt: "GoEvent platforms showcase",
+                width: 3092,
+                height: 1924,
+              },
+            ],
+          },
+        ],
       },
     ],
     quotes: [
-      "I can find events, but I can't tell right away if one fits today. 🤔",
-      "Usually compares events across multiple platforms before deciding “Too much comparison slows down action.” 🤔",
-      "“I keep checking different places before I decide to go.” 🤦🏻‍♀️",
+      "I can find events, but I can't tell right away if one fits today.",
+      "I usually compare events across multiple platforms before deciding. \"Too much comparison slows down action.\"",
+      '"I keep checking different places before I decide to go."',
     ],
+    andManyMoreLabel: "And many more...",
   },
   zh: {
+    languageLabel: "语言",
+    backToHomeLabel: "返回首页",
+    avatarAlt: "GoEvent 头像",
+    heroImageAlt: "GoEvent 应用预览",
     summary:
       "GoEvent 是一款概念型移动应用，帮助人们在灵感出现时发现并加入附近的活动。",
-    locationLabel: "Location",
-    locationValue: "Tokyo, Japan",
-    dateLabel: "Date",
+    locationLabel: "地点",
+    locationValue: "东京，日本",
+    dateLabel: "日期",
     dateValue: "2025年6月 → 2025年7月",
+    processSectionTitle: "设计过程",
+    processCardTitle: "项目简介 → CJM",
+    processCardPreview:
+      "查看从项目简介、调研与用户访谈，到挑战、人物画像和旅程地图的完整过程。",
     briefTitle: "项目简介",
     briefCopy:
       "在东京，决定是否去参加一个活动依然很困难，因为活动发现与购票分散在不同平台上。",
@@ -162,43 +253,115 @@ export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
         copy: "用户能够更有把握地做出行动决定。",
       },
     ],
-    designSolutionTitle: "Design solution:\nBrowse Less, Decide Faster",
+    designSolutionTitle: "设计方案：\n少一点浏览，更快做决定",
     designSolutionSteps: [
       {
-        overlayLabel: "Signin",
+        overlayLabel: "登录",
         imageSrc: "/images/goevent-solution-signin.png",
         visualClass: "goeventSolutionVisualTall",
         imageClass: "goeventSolutionImagePhone",
-        alt: "GoEvent 登录入口界面",
+        alt: "GoEvent 登录界面概念图",
       },
       {
-        overlayLabel: "Home",
+        overlayLabel: "首页",
         imageSrc: "/images/goevent-solution-home.png",
         visualClass: "goeventSolutionVisualWide",
         imageClass: "goeventSolutionImageContain",
-        alt: "GoEvent 首页概念界面",
+        alt: "GoEvent 首页概念图",
       },
       {
-        overlayLabel: "Discover",
+        overlayLabel: "发现",
         imageSrc: "/images/goevent-solution-discover.png",
         visualClass: "goeventSolutionVisualTall",
         imageClass: "goeventSolutionImagePhone",
-        alt: "GoEvent 发现页概念界面",
+        alt: "GoEvent 发现页概念图",
+        headline: "为“现在就去”的判断而设计",
+        detailImages: [
+          {
+            label: "活动详情",
+            src: "/images/goevent-solution-eventdetail.png",
+            alt: "GoEvent 活动详情界面",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "票券预订",
+            src: "/images/goevent-solution-ticketbooking.png",
+            alt: "GoEvent 票券预订界面",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "收藏",
+            src: "/images/goevent-solution-saved.png",
+            alt: "GoEvent 收藏界面",
+            width: 1608,
+            height: 3496,
+            headline: "为单次活动之后的持续使用而设计",
+            detailImages: [
+              {
+                label: "搜索",
+                src: "/images/goevent-solution-search.png",
+                alt: "GoEvent 搜索界面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "票券",
+                src: "/images/goevent-solution-ticket.png",
+                alt: "GoEvent 票券界面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "个人资料",
+                src: "/images/goevent-solution-profile.png",
+                alt: "GoEvent 个人资料界面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "视觉识别系统",
+                src: "/images/design.png",
+                alt: "GoEvent 视觉识别系统",
+                width: 3092,
+                height: 1924,
+                titlePosition: "top",
+              },
+              {
+                label: "全平台展示",
+                src: "/images/last.png",
+                alt: "GoEvent 全平台展示",
+                width: 3092,
+                height: 1924,
+              },
+            ],
+          },
+        ],
       },
     ],
     quotes: [
-      "我能找到活动，但没办法立刻判断它是不是适合今天去。🤔",
-      "我通常会在多个平台之间反复比较活动，“比较太多反而拖慢了行动。” 🤔",
-      "“我总是要到处看一遍，才决定要不要去。” 🤦🏻‍♀️",
+      "我能找到活动，但没办法立刻判断它适不适合今天去。",
+      "我通常会在多个平台之间反复比较活动，“比较太多反而拖慢了行动。”",
+      "“我总是要到处看一遍，才决定要不要去。”",
     ],
+    andManyMoreLabel: "以及更多...",
   },
   ja: {
+    languageLabel: "言語",
+    backToHomeLabel: "ホームに戻る",
+    avatarAlt: "GoEvent アバター",
+    heroImageAlt: "GoEvent アプリプレビュー",
     summary:
       "GoEvent は、気分が向いたときに近くのイベントを見つけて参加できるようにするコンセプトモバイルアプリです。",
-    locationLabel: "Location",
-    locationValue: "Tokyo, Japan",
-    dateLabel: "Date",
+    locationLabel: "場所",
+    locationValue: "東京、日本",
+    dateLabel: "日付",
     dateValue: "2025年6月 → 2025年7月",
+    processSectionTitle: "デザインプロセス",
+    processCardTitle: "プロジェクト概要 → CJM",
+    processCardPreview:
+      "プロジェクト概要、リサーチ、ユーザーインタビューから、課題、ペルソナ、ジャーニーマップまでの全プロセスを見る。",
     briefTitle: "プロジェクト概要",
     briefCopy:
       "東京では、イベントを見つけることはできても、発見とチケット購入が別々のプラットフォームに分かれているため、参加するかどうかの判断がまだ難しいままです。",
@@ -225,41 +388,105 @@ export const goeventLocaleCopy: Record<SiteLocale, GoEventLocaleCopy> = {
       },
       {
         label: "使用中",
-        copy: "“今行ける”関連イベントだけが表示され、判断しやすくなった。",
+        copy: "「今行ける」関連イベントだけが表示され、判断しやすくなった。",
       },
       {
         label: "使用後",
         copy: "ユーザーはより自信を持って次の行動に移れるようになった。",
       },
     ],
-    designSolutionTitle: "Design solution:\nBrowse Less, Decide Faster",
+    designSolutionTitle: "デザインソリューション：\n探す時間を減らし、早く決める",
     designSolutionSteps: [
       {
-        overlayLabel: "Signin",
+        overlayLabel: "サインイン",
         imageSrc: "/images/goevent-solution-signin.png",
         visualClass: "goeventSolutionVisualTall",
         imageClass: "goeventSolutionImagePhone",
         alt: "GoEvent サインイン画面コンセプト",
       },
       {
-        overlayLabel: "Home",
+        overlayLabel: "ホーム",
         imageSrc: "/images/goevent-solution-home.png",
         visualClass: "goeventSolutionVisualWide",
         imageClass: "goeventSolutionImageContain",
         alt: "GoEvent ホーム画面コンセプト",
       },
       {
-        overlayLabel: "Discover",
+        overlayLabel: "発見",
         imageSrc: "/images/goevent-solution-discover.png",
         visualClass: "goeventSolutionVisualTall",
         imageClass: "goeventSolutionImagePhone",
         alt: "GoEvent ディスカバー画面コンセプト",
+        headline: "「今行けるか」を判断しやすくする設計",
+        detailImages: [
+          {
+            label: "イベント詳細",
+            src: "/images/goevent-solution-eventdetail.png",
+            alt: "GoEvent イベント詳細画面",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "チケット予約",
+            src: "/images/goevent-solution-ticketbooking.png",
+            alt: "GoEvent チケット予約画面",
+            width: 1608,
+            height: 3496,
+          },
+          {
+            label: "保存済み",
+            src: "/images/goevent-solution-saved.png",
+            alt: "GoEvent 保存済み画面",
+            width: 1608,
+            height: 3496,
+            headline: "単発のイベント後も使い続けられるように設計",
+            detailImages: [
+              {
+                label: "検索",
+                src: "/images/goevent-solution-search.png",
+                alt: "GoEvent 検索画面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "チケット",
+                src: "/images/goevent-solution-ticket.png",
+                alt: "GoEvent チケット画面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "プロフィール",
+                src: "/images/goevent-solution-profile.png",
+                alt: "GoEvent プロフィール画面",
+                width: 1608,
+                height: 3496,
+              },
+              {
+                label: "ブランド・アイデンティティ",
+                src: "/images/design.png",
+                alt: "GoEvent ブランド・アイデンティティ",
+                width: 3092,
+                height: 1924,
+                titlePosition: "top",
+              },
+              {
+                label: "プラットフォーム・ショーケース",
+                src: "/images/last.png",
+                alt: "GoEvent プラットフォーム・ショーケース",
+                width: 3092,
+                height: 1924,
+              },
+            ],
+          },
+        ],
       },
     ],
     quotes: [
-      "イベントは見つかるけれど、今日の自分に合うかどうかはすぐに分からない。🤔",
-      "参加を決める前に複数のプラットフォームで比較してしまう。「比較しすぎると行動が遅くなる。」 🤔",
-      "「行くと決める前に、いろいろな場所を何度も見てしまう。」 🤦🏻‍♀️",
+      "イベントは見つかるけれど、今日の自分に合うかどうかはすぐに分からない。",
+      "参加を決める前に複数のプラットフォームで比較してしまう。「比較しすぎると行動が遅くなる。」",
+      "「行くと決める前に、いろいろな場所を何度も見てしまう。」",
     ],
+    andManyMoreLabel: "などなど...",
   },
 };

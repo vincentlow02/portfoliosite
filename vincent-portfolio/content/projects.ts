@@ -17,16 +17,17 @@ const projects: Project[] = [
       "Balanced clarity, storytelling, and physical presentation constraints.",
       "Created a case study structure that can expand with deeper process notes later.",
     ],
+    url: "https://student.redesigner.jp/portfolios/PFc88f09ccb1170d9d737cdb4c83c1de34",
   },
   {
     slug: "goevent",
     name: "GoEvent",
     category: "Product and interaction design case study",
     summary:
-      "A product design case study focused on simplifying event discovery, participation, and coordination.",
+      "GoEvent is a concept mobile app that helps people discover and join nearby events whenever inspiration strikes.",
     description:
-      "GoEvent explored how a digital product could make event planning and participation feel easier to understand and act on. The project centered on product structure, interaction flows, and clearer decision points across the experience.",
-    year: "2024",
+      "GoEvent is a concept mobile app focused on making nearby event discovery feel immediate, approachable, and easy to act on. The project explored how mobile interactions, interface clarity, and brand cues could work together to support spontaneous participation.",
+    year: "2025",
     status: "completed",
     stack: ["Product Design", "UX Strategy", "Visual Design"],
     highlights: [

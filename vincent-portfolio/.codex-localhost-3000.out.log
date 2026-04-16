@@ -1,0 +1,25 @@
+
+> vincent-portfolio@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.10.104:3000
+✓ Ready in 1696ms
+
+ GET /projects/goevent?lang=en 200 in 3.0s (next.js: 1997ms, generate-params: 1487ms, application-code: 1034ms)
+ GET /projects/goevent?lang=en 200 in 306ms (next.js: 37ms, generate-params: 23ms, application-code: 270ms)
+ GET /projects/goevent?lang=en 200 in 205ms (next.js: 28ms, generate-params: 17ms, application-code: 177ms)
+✓ Compiled in 175ms
+✓ Compiled in 505ms
+ GET /projects/goevent?lang=en 500 in 939ms (next.js: 518ms, application-code: 421ms)
+ GET /projects/goevent?lang=en 500 in 46ms (next.js: 23ms, application-code: 23ms)
+ GET /projects/goevent?lang=en 500 in 40ms (next.js: 16ms, application-code: 25ms)
+ GET /projects/goevent?lang=en 500 in 49ms (next.js: 22ms, application-code: 26ms)
+ GET /projects/goevent?lang=en 500 in 55ms (next.js: 16ms, application-code: 39ms)
+ GET /projects/goevent?lang=en 500 in 36ms (next.js: 15ms, application-code: 21ms)
+✓ Compiled in 110ms
+ GET /projects/goevent?lang=en 200 in 828ms (next.js: 278ms, generate-params: 16ms, application-code: 550ms)
+ GET /projects/goevent?lang=en 200 in 185ms (next.js: 9ms, generate-params: 121µs, application-code: 176ms)
+✓ Compiled in 69ms
+ GET /projects/goevent?lang=en 200 in 580ms (next.js: 238ms, generate-params: 21ms, application-code: 342ms)

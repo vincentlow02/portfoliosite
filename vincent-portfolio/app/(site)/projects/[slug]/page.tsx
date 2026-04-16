@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getProjectBySlug, getProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
+import { GoEventContent } from "./goevent-content";
 
 type ProjectDetailPageProps = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams: Promise<{
+    lang?: string;
   }>;
 };
 
@@ -38,12 +42,27 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({
   params,
+  searchParams,
 }: ProjectDetailPageProps) {
   const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
   const project = getProjectBySlug(slug);
 
   if (!project) {
     notFound();
+  }
+
+  if (project.url) {
+    redirect(project.url);
+  }
+
+  if (project.slug === "goevent") {
+    return (
+      <GoEventContent
+        project={project}
+        initialLocale={resolvedSearchParams.lang}
+      />
+    );
   }
 
   return (

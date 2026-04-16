@@ -1,0 +1,77 @@
+
+> vincent-portfolio@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.10.104:3000
+✓ Ready in 2.1s
+
+ GET / 200 in 1418ms (next.js: 578ms, application-code: 840ms)
+ GET / 200 in 203ms (next.js: 37ms, application-code: 166ms)
+ GET /projects/goevent?lang=en 200 in 1956ms (next.js: 1835ms, generate-params: 1706ms, application-code: 121ms)
+✓ Compiled in 832ms
+✓ Compiled in 71ms
+✓ Compiled in 113ms
+ GET /projects/goevent 200 in 659ms (next.js: 253ms, generate-params: 19ms, application-code: 405ms)
+✓ Compiled in 62ms
+✓ Compiled in 271ms
+✓ Compiled in 49ms
+✓ Compiled in 71ms
+✓ Compiled in 215ms
+✓ Compiled in 161ms
+ GET /projects/goevent 200 in 417ms (next.js: 134ms, generate-params: 15ms, application-code: 284ms)
+✓ Compiled in 69ms
+✓ Compiled in 86ms
+ GET /projects/goevent 200 in 451ms (next.js: 142ms, generate-params: 12ms, application-code: 309ms)
+✓ Compiled in 543ms
+✓ Compiled in 94ms
+ GET /projects/goevent?lang=en 200 in 328ms (next.js: 153ms, generate-params: 17ms, application-code: 176ms)
+ GET /projects/goevent 200 in 337ms (next.js: 23ms, generate-params: 15ms, application-code: 314ms)
+✓ Compiled in 66ms
+✓ Compiled in 75ms
+✓ Compiled in 75ms
+✓ Compiled in 47ms
+ GET /projects/goevent?lang=en 200 in 466ms (next.js: 153ms, generate-params: 14ms, application-code: 313ms)
+✓ Compiled in 64ms
+✓ Compiled in 65ms
+ GET /projects/goevent?lang=en 200 in 450ms (next.js: 151ms, generate-params: 17ms, application-code: 300ms)
+✓ Compiled in 368ms
+ GET /projects/goevent?lang=en 200 in 255ms (next.js: 155ms, generate-params: 14ms, application-code: 101ms)
+✓ Compiled in 56ms
+✓ Compiled in 92ms
+✓ Compiled in 64ms
+ GET /projects/goevent?lang=en 200 in 314ms (next.js: 203ms, generate-params: 16ms, application-code: 111ms)
+ GET /projects/goevent?lang=en 200 in 104ms (next.js: 19ms, generate-params: 12ms, application-code: 85ms)
+ GET /projects/goevent?lang=en 200 in 93ms (next.js: 19ms, generate-params: 12ms, application-code: 75ms)
+ GET /projects/goevent?lang=en 200 in 103ms (next.js: 21ms, generate-params: 14ms, application-code: 82ms)
+ GET /projects/goevent?lang=en 200 in 79ms (next.js: 15ms, generate-params: 9ms, application-code: 64ms)
+ GET /projects/goevent?lang=en 200 in 106ms (next.js: 18ms, generate-params: 13ms, application-code: 88ms)
+ GET /projects/goevent?lang=en 200 in 101ms (next.js: 31ms, generate-params: 26ms, application-code: 70ms)
+✓ Compiled in 606ms
+ GET /projects/goevent?lang=en 500 in 3.6s (next.js: 3.3s, application-code: 361ms)
+ GET /projects/goevent?lang=en 500 in 41ms (next.js: 15ms, application-code: 26ms)
+ GET /projects/goevent?lang=en 500 in 51ms (next.js: 22ms, application-code: 28ms)
+ GET /projects/goevent?lang=en 500 in 76ms (next.js: 52ms, application-code: 24ms)
+✓ Compiled in 149ms
+ GET /projects/goevent?lang=en 200 in 530ms (next.js: 149ms, generate-params: 15ms, application-code: 380ms)
+ GET /projects/goevent?lang=en 200 in 136ms (next.js: 6ms, generate-params: 61µs, application-code: 130ms)
+✓ Compiled in 64ms
+ GET /projects/goevent/process?lang=en 200 in 3.7s (next.js: 3.7s, application-code: 62ms)
+ GET /projects/goevent 200 in 445ms (next.js: 136ms, generate-params: 13ms, application-code: 309ms)
+ GET /projects/goevent/process 200 in 269ms (next.js: 21ms, application-code: 248ms)
+✓ Compiled in 57ms
+ GET /projects/goevent/process?lang=en 200 in 89ms (next.js: 23ms, application-code: 66ms)
+ GET /projects/goevent/process?lang=zh 200 in 87ms (next.js: 23ms, application-code: 64ms)
+ GET /projects/goevent/process?lang=en 200 in 66ms (next.js: 6ms, application-code: 59ms)
+✓ Compiled in 100ms
+✓ Compiled in 49ms
+✓ Compiled in 70ms
+ GET /projects/goevent?lang=en 200 in 323ms (next.js: 118ms, generate-params: 13ms, application-code: 205ms)
+✓ Compiled in 64ms
+✓ Compiled in 171ms
+✓ Compiled in 419ms
+✓ Compiled in 103ms
+✓ Compiled in 54ms
+ GET /?lang=en 200 in 259ms (next.js: 215ms, application-code: 44ms)
+ GET /projects/goevent?lang=en 200 in 228ms (next.js: 128ms, generate-params: 11ms, application-code: 100ms)

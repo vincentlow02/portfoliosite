@@ -1373,12 +1373,18 @@ export function CozyWindowShade() {
 
               <div className={styles.workShelf}>
                 <div className={styles.workEntries}>
-                  {projects.map((project, index) => (
-                    <Link
-                      key={project.slug}
-                      href={`/projects/${project.slug}?lang=${locale}`}
-                      className={styles.workItem}
-                      style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
+                  {projects.map((project, index) => {
+                    const href = project.url ?? `/projects/${project.slug}?lang=${locale}`;
+                    const isExternal = !!project.url;
+
+                    return (
+                      <Link
+                        key={project.slug}
+                        href={href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className={styles.workItem}
+                        style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
                       onMouseEnter={() => setHoveredProjectSlug(project.slug)}
                       onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
                       onFocus={() => setHoveredProjectSlug(project.slug)}
@@ -1392,7 +1398,8 @@ export function CozyWindowShade() {
                         {copy.projectCategories[project.slug] ?? project.category}
                       </span>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 <div
@@ -1427,27 +1434,16 @@ export function CozyWindowShade() {
                         : ""
                     } ${styles.goeventPreview}`}
                   >
-                    <div className={styles.goeventPoster}>
-                      <div className={styles.goeventHeader}>
-                        <span className={styles.previewChip}>GoEvent</span>
-                        <span className={styles.previewDot} />
-                      </div>
-                      <div className={styles.goeventStack}>
-                        <div className={styles.goeventCardPrimary}>
-                          <span />
-                          <span />
-                          <span />
-                        </div>
-                        <div className={styles.goeventCardSecondary}>
-                          <span />
-                          <span />
-                        </div>
-                        <div className={styles.goeventTicketRow}>
-                          <span />
-                          <span />
-                          <span />
-                        </div>
-                      </div>
+                    <div className={styles.goeventPreviewMedia}>
+                      <Image
+                        src="/images/goeventphoto.png"
+                        alt="GoEvent preview"
+                        width={3092}
+                        height={1924}
+                        className={styles.goeventPreviewImage}
+                        sizes="(min-width: 1040px) min(26rem, 37vw), 100vw"
+                        unoptimized
+                      />
                     </div>
                   </div>
                 </div>

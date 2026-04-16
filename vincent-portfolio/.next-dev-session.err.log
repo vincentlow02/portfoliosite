@@ -1,0 +1,388 @@
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] ./app/(site)/projects/[slug]/goevent-content.tsx:563:19
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  561 |                     </div>
+  562 |                   </article>
+> 563 |                 ))}
+      |                   ^
+  564 |               </div>
+  565 |             </section>
+  566 |           </section>
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx 
+[browser] ./app/(site)/projects/[slug]/goevent-content.tsx:563:19
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  561 |                     </div>
+  562 |                   </article>
+> 563 |                 ))}
+      |                   ^
+  564 |               </div>
+  565 |             </section>
+  566 |           </section>
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx 
+[browser] ./app/(site)/projects/[slug]/goevent-content.tsx:563:19
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  561 |                     </div>
+  562 |                   </article>
+> 563 |                 ))}
+      |                   ^
+  564 |               </div>
+  565 |             </section>
+  566 |           </section>
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  [90m3 |[0m [36mimport[0m { getProjectBySlug, getProjects } [36mfrom[0m [32m"@/content/projects"[0m;
+  [90m4 |[0m [36mimport[0m { buildMetadata } [36mfrom[0m [32m"@/lib/metadata"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mGoEventContent[0m } [36mfrom[0m [32m"./goevent-content"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m [36mtype[0m [33mProjectDetailPageProps[0m = {
+  [90m8 |[0m   params: [33mPromise[0m<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/projects/[slug]/page.tsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/projects/[slug]/page.tsx:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./app/(site)/projects/[slug]/page.tsx:5:1
+Module not found: Can't resolve './goevent-content'
+  3 | import { getProjectBySlug, getProjects } from "@/content/projects";
+  4 | import { buildMetadata } from "@/lib/metadata";
+> 5 | import { GoEventContent } from "./goevent-content";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |
+  7 | type ProjectDetailPageProps = {
+  8 |   params: Promise<{
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

@@ -10,4 +10,5 @@ export type Project = {
   status: ProjectStatus;
   stack: string[];
   highlights: string[];
+  url?: string;
 };

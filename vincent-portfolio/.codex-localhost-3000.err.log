@@ -1,0 +1,754 @@
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+   7 | import type { Project } from "@/types/project";
+   8 | import { normalizeLocale, type Locale as SiteLocale } from "@/lib/site-locale";
+>  9 | import { goeventLocaleCopy } from "./goevent-content-data";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import styles from "./page.module.css";
+  11 |
+  12 | type GoEventContentProps = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/projects/[slug]/goevent-content.tsx:9:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/projects/[slug]/goevent-content.tsx:9:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+  [90m 7 |[0m [36mimport[0m [36mtype[0m { [33mProject[0m } [36mfrom[0m [32m"@/types/project"[0m;
+  [90m 8 |[0m [36mimport[0m { normalizeLocale, [36mtype[0m [33mLocale[0m [36mas[0m [33mSiteLocale[0m } [36mfrom[0m [32m"@/lib/site-locale"[0m;
+[31m[1m>[0m [90m 9 |[0m [36mimport[0m { goeventLocaleCopy } [36mfrom[0m [32m"./goevent-content-data"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m10 |[0m [36mimport[0m styles [36mfrom[0m [32m"./page.module.css"[0m;
+  [90m11 |[0m
+  [90m12 |[0m [36mtype[0m [33mGoEventContentProps[0m = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./app/(site)/projects/[slug]/goevent-content.tsx:9:1
+Module not found: Can't resolve './goevent-content-data'
+   7 | import type { Project } from "@/types/project";
+   8 | import { normalizeLocale, type Locale as SiteLocale } from "@/lib/site-locale";
+>  9 | import { goeventLocaleCopy } from "./goevent-content-data";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  10 | import styles from "./page.module.css";
+  11 |
+  12 | type GoEventContentProps = {
+
+
+
+Import trace:
+  Server Component:
+    ./app/(site)/projects/[slug]/goevent-content.tsx
+    ./app/(site)/projects/[slug]/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./app/(site)/projects/[slug]/goevent-content.tsx:9:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./app/(site)/projects/[slug]/goevent-content.tsx:9:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/projects/..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" className="geist_a715...">
+                          <head>
+                          <body
+                            className="min-h-full bg-background text-foreground"
+-                           data-smart-converter-loaded="true"
+                          >
+                  ...
+ 
+^C
