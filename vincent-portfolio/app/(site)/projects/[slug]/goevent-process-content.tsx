@@ -44,7 +44,7 @@ export function GoEventProcessContent({
   };
 
   return (
-    <article className={styles.goeventPage}>
+    <article className={`${styles.goeventPage} ${styles.goeventProcessPage}`}>
       <div
         className={styles.localeSwitch}
         role="group"
@@ -80,7 +80,20 @@ export function GoEventProcessContent({
             className={styles.goeventBackButton}
             aria-label="Back to project"
           >
-            Back
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className={styles.goeventBackIcon}
+            >
+              <path
+                d="M15 18l-6-6 6-6"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+            </svg>
           </Link>
         </div>
 
