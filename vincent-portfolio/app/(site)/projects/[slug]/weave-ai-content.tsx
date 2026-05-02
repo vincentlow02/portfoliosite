@@ -177,12 +177,11 @@ export function WeaveAIContent({
           <section className={styles.weaveResearchSection}>
             <h2 className={styles.weaveResearchTitle}>{copy.researchTitle}</h2>
             <Image
-              src="/images/research.png"
+              src="/images/research-optimized.webp"
               alt=""
-              width={16384}
-              height={10484}
+              width={2400}
+              height={1536}
               className={styles.weaveResearchImage}
-              unoptimized
             />
           </section>
 

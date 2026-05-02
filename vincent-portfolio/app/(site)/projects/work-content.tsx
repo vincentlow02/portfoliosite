@@ -110,22 +110,21 @@ export function WorkContent({
                 >
                   {project.slug === "weave-ai" ? (
                     <Image
-                      src="/images/weaveAI.jpg"
+                      src="/images/weaveAI-optimized.webp"
                       alt=""
-                      width={3840}
-                      height={2394}
+                      width={1800}
+                      height={1122}
                       className={`${styles.itemImage} ${styles.itemImageWeave}`}
-                      unoptimized
+                      priority
                     />
                   ) : null}
                   {project.slug === "goevent" ? (
                     <Image
-                      src="/images/goevent01.png"
+                      src="/images/goevent01-optimized.webp"
                       alt=""
-                      width={7183}
-                      height={5395}
+                      width={1800}
+                      height={1352}
                       className={`${styles.itemImage} ${styles.itemImageGoevent}`}
-                      unoptimized
                     />
                   ) : null}
                   <span className={styles.itemTextRow}>
