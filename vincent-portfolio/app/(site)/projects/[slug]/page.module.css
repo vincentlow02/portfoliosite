@@ -8,6 +8,108 @@
   background: #ffffff;
 }
 
+.weavePage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.weaveStack {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 2.125rem;
+  width: min(100%, 21.375rem);
+  margin: 2.75rem auto 0;
+}
+
+.weaveHeaderBlock {
+  display: grid;
+  gap: 0.9375rem;
+}
+
+.weaveAvatarLink {
+  display: block;
+  width: fit-content;
+  border-radius: 9999px;
+}
+
+.weaveAvatar {
+  display: block;
+  width: 2.0625rem;
+  height: 2rem;
+  border-radius: 1.09375rem;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.weaveIntro {
+  display: block;
+}
+
+.weaveCopy {
+  display: grid;
+  gap: 0.4375rem;
+  width: min(100%, 17.1875rem);
+  margin-top: 1.15rem;
+}
+
+.weaveTitle {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #000000;
+}
+
+.weaveSummary {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.325;
+  letter-spacing: 0.02em;
+  color: #5e5e5e;
+}
+
+.weaveMeta {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 0.7rem;
+  margin: 0;
+  margin-top: 1.9rem;
+}
+
+.weaveMetaItem {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.65rem 1.25rem;
+  margin: 0;
+}
+
+.weaveMetaLabel,
+.weaveMetaValue {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+.weaveMetaLabel {
+  color: #7e7e7e;
+  font-weight: 400;
+}
+
+.weaveMetaValue {
+  color: #111111;
+  font-weight: 500;
+}
+
 .goeventStack {
   position: relative;
   z-index: 2;
@@ -189,6 +291,94 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+.weaveHeroFrame {
+  display: flex;
+  align-items: center;
+  aspect-ratio: 2 / 1;
+  border-radius: 0;
+}
+
+.weaveHeroVideo {
+  flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  object-fit: initial;
+  object-position: center;
+  transform: none;
+  transform-origin: center;
+}
+
+.weaveResearchSection {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.weaveResearchTitle {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #000000;
+}
+
+.weaveResearchImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 2rem;
+}
+
+.weaveFramingSection {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.weaveQuestionCard {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 7.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+  background: #f6f6f6;
+}
+
+.weaveQuestionCard::before,
+.weaveQuestionCard::after {
+  content: "";
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-color: #111111;
+}
+
+.weaveQuestionCard::before {
+  top: 1rem;
+  left: 1rem;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.weaveQuestionCard::after {
+  right: 1rem;
+  bottom: 1rem;
+  border-right: 2px solid;
+  border-bottom: 2px solid;
+}
+
+.weaveQuestionText {
+  width: min(100%, 42rem);
+  margin: 0;
+  color: #000000;
+  font-size: 0.92rem;
+  line-height: 1.32;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .goeventProcessSection {
@@ -833,13 +1023,15 @@
     margin-right: calc((100% - min(calc(100vw - 3rem), 56rem)) / 2 - 7rem);
   }
 
-  .goeventAvatarWrap {
+  .goeventAvatarWrap,
+  .weaveAvatar {
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 9999px;
   }
 
-  .goeventStack {
+  .goeventStack,
+  .weaveStack {
     width: min(100%, 22.5rem);
     margin-top: 2.5rem;
   }
@@ -858,6 +1050,57 @@
     height: 100%;
     object-fit: cover;
     object-position: center bottom;
+  }
+
+  .weaveHeroFrame {
+    aspect-ratio: 2 / 1;
+  }
+
+  .weaveHeroVideo {
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+    object-position: center;
+    transform: none;
+  }
+
+  .weaveResearchSection {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .weaveResearchTitle {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .weaveFramingSection {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .weaveQuestionCard {
+    min-height: 8.5rem;
+    margin-top: 2.5rem;
+    padding: 2rem 4rem;
+  }
+
+  .weaveQuestionCard::before,
+  .weaveQuestionCard::after {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .weaveQuestionText {
+    width: min(100%, 48rem);
+    font-size: 1.15rem;
+    line-height: 1.3;
   }
 
   .goeventProcessSection {
@@ -1115,11 +1358,13 @@
     );
   }
 
-  .goeventTitle {
+  .goeventTitle,
+  .weaveTitle {
     font-size: 1.4rem;
   }
 
-  .goeventSummary {
+  .goeventSummary,
+  .weaveSummary {
     font-size: 0.9375rem;
   }
 

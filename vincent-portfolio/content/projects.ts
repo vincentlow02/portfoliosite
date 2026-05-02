@@ -6,9 +6,9 @@ const projects: Project[] = [
     name: "Weave AI",
     category: "Seminar exhibition project",
     summary:
-      "An exhibition-led design project exploring how AI can support more thoughtful learning experiences.",
+      "Weave AI is a speculative concept for a 2045 seminar exhibition, exploring how AI agents could guide future travel discovery and decision-making.",
     description:
-      "Weave AI was developed as a seminar exhibition project. The work focused on shaping a clear interaction concept, tightening the narrative of the experience, and presenting the system in a way that felt approachable in a physical showcase setting.",
+      "Weave AI is a speculative concept for a 2045 seminar exhibition, exploring how AI agents could guide future travel discovery and decision-making.",
     year: "2025",
     status: "completed",
     stack: ["Product Design", "Interaction Design", "Exhibition Design"],
@@ -17,7 +17,6 @@ const projects: Project[] = [
       "Balanced clarity, storytelling, and physical presentation constraints.",
       "Created a case study structure that can expand with deeper process notes later.",
     ],
-    url: "https://student.redesigner.jp/portfolios/PFc88f09ccb1170d9d737cdb4c83c1de34",
   },
   {
     slug: "goevent",

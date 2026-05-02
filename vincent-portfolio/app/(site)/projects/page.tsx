@@ -1,23 +1,54 @@
 import type { Metadata } from "next";
-import { ProjectList } from "@/components/projects/project-list";
-import { PageIntro } from "@/components/ui/page-intro";
 import { getProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
+import { normalizeLocale, type Locale as SiteLocale } from "@/lib/site-locale";
+import { WorkContent } from "./work-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Projects",
-  description: "Project index powered by a typed data source.",
+  title: "Work",
+  description: "Selected portfolio work by Vincent Low Sik Ching.",
   pathname: "/projects",
 });
 
-export default function ProjectsPage() {
+type ProjectsPageProps = {
+  searchParams: Promise<{
+    lang?: string;
+  }>;
+};
+
+const projectsPageCopy: Record<
+  SiteLocale,
+  {
+    title: string;
+    avatarAlt: string;
+  }
+> = {
+  en: {
+    title: "Work",
+    avatarAlt: "Portrait of Vincent Low Sik Ching",
+  },
+  zh: {
+    title: "项目",
+    avatarAlt: "Vincent Low Sik Ching 的头像",
+  },
+  ja: {
+    title: "制作",
+    avatarAlt: "Vincent Low Sik Ching のポートレート",
+  },
+};
+
+export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const locale = normalizeLocale(resolvedSearchParams.lang);
+  const copy = projectsPageCopy[locale];
+  const projects = getProjects();
+
   return (
-    <div className="space-y-8">
-      <PageIntro
-        title="Projects"
-        description="A simple list view backed by typed data. Replace cards and layout later without changing the route contract."
-      />
-      <ProjectList projects={getProjects()} />
-    </div>
+    <WorkContent
+      locale={locale}
+      title={copy.title}
+      avatarAlt={copy.avatarAlt}
+      projects={projects}
+    />
   );
 }

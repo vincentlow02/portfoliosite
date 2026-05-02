@@ -223,7 +223,6 @@ export function CozyWindowShade() {
   const leavesVideoRef = useRef<HTMLVideoElement | null>(null);
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const weavePreviewVideoRef = useRef<HTMLVideoElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const chaosControllerRef = useRef<ReturnType<typeof createHomeChaosController> | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
@@ -331,24 +330,6 @@ export function CozyWindowShade() {
     video.pause();
     video.currentTime = 0;
   }, [themeMode]);
-
-  useEffect(() => {
-    const video = weavePreviewVideoRef.current;
-
-    if (!video) {
-      return;
-    }
-
-    if (hoveredProjectSlug === "weave-ai") {
-      video.pause();
-      video.currentTime = 0;
-      void video.play().catch(() => {});
-      return;
-    }
-
-    video.pause();
-    video.currentTime = 0;
-  }, [hoveredProjectSlug]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -1416,13 +1397,14 @@ export function CozyWindowShade() {
                     } ${styles.weavePreview}`}
                   >
                     <div className={styles.weavePreviewMedia}>
-                      <video
-                        ref={weavePreviewVideoRef}
-                        className={styles.weavePreviewVideo}
-                        src="/videos/weave-preview.mp4"
-                        muted
-                        playsInline
-                        preload="metadata"
+                      <Image
+                        src="/images/weaveAI.jpg"
+                        alt="Weave AI preview"
+                        width={2048}
+                        height={1280}
+                        className={styles.weavePreviewImage}
+                        sizes="(min-width: 1040px) min(26rem, 37vw), 100vw"
+                        unoptimized
                       />
                     </div>
                   </div>

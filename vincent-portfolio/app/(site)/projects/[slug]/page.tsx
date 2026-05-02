@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getProjectBySlug, getProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
 import { GoEventContent } from "./goevent-content";
+import { WeaveAIContent } from "./weave-ai-content";
 
 type ProjectDetailPageProps = {
   params: Promise<{
@@ -59,6 +60,15 @@ export default async function ProjectDetailPage({
   if (project.slug === "goevent") {
     return (
       <GoEventContent
+        project={project}
+        initialLocale={resolvedSearchParams.lang}
+      />
+    );
+  }
+
+  if (project.slug === "weave-ai") {
+    return (
+      <WeaveAIContent
         project={project}
         initialLocale={resolvedSearchParams.lang}
       />

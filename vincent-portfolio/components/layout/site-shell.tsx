@@ -12,14 +12,22 @@ type SiteShellProps = {
 export function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname();
   const isProjectDetail = /^\/projects\/[^/]+(?:\/process)?$/.test(pathname);
+  const isWorkIndex = pathname === "/projects";
+  const isMinimalPage = isProjectDetail || isWorkIndex;
 
   return (
     <div className="flex min-h-screen flex-col">
-      {!isProjectDetail ? <SiteHeader /> : null}
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-6 py-10">
+      {!isMinimalPage ? <SiteHeader /> : null}
+      <main
+        className={
+          isMinimalPage
+            ? "flex w-full flex-1 flex-col"
+            : "mx-auto flex w-full max-w-5xl flex-1 flex-col px-6 py-10"
+        }
+      >
         {children}
       </main>
-      {!isProjectDetail ? <SiteFooter /> : null}
+      {!isMinimalPage ? <SiteFooter /> : null}
     </div>
   );
 }
