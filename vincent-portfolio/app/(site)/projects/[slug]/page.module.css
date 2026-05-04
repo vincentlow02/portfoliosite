@@ -381,6 +381,642 @@
   text-align: center;
 }
 
+.weaveInputTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveOutputTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveActionTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveInputBody {
+  width: min(100%, 34rem);
+  margin: 0.7rem 0 0;
+  color: #8a8a8a;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.weaveInputDiagram {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.18fr)
+    minmax(1.25rem, 0.22fr)
+    minmax(0, 0.86fr)
+    minmax(1rem, 0.14fr)
+    minmax(0, 0.86fr)
+    minmax(1.5rem, 0.28fr)
+    minmax(0, 0.98fr);
+  align-items: center;
+  gap: 0.8rem;
+  width: min(100%, 44rem);
+  max-width: 100%;
+  margin-top: 2.6rem;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.weaveInputImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 2.6rem;
+}
+
+.weaveOutputImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 2.6rem;
+}
+
+.weaveImageCaption {
+  margin: 0.45rem 0 0;
+  color: #8a8a8a;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.weaveActionVisual {
+  width: min(100%, 44rem);
+  margin: 1.6rem auto 0;
+}
+
+.weaveActionImageFrame {
+  width: 100%;
+  aspect-ratio: 1284 / 254;
+  overflow: hidden;
+}
+
+.weaveActionImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.weaveActionLabels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.weaveActionLabels p {
+  margin: 0;
+  color: #111111;
+  font-size: 1rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.weaveGuideGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.6rem;
+  width: min(100%, 44rem);
+  margin: 3.25rem auto 0;
+}
+
+.weaveGuideCard {
+  min-width: 0;
+  margin: 0;
+}
+
+.weaveGuideImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.weaveExperienceTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveExperienceGrid {
+  margin-top: 2.4rem;
+}
+
+.weaveMobileTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveProcessTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveBrandTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveInteractiveTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveOutcomeTitle {
+  margin-top: 3.25rem;
+}
+
+.weaveMobileFigure {
+  width: min(100%, 44rem);
+  margin: 2.4rem auto 0;
+}
+
+.weaveOutcomePanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 2.4rem;
+  align-items: center;
+  width: min(100%, 44rem);
+  margin: 2.8rem auto 0;
+}
+
+.weaveOutcomeCopy {
+  min-width: 0;
+}
+
+.weaveOutcomePanelTitle,
+.weaveOutcomeReachLabel {
+  margin: 0;
+  color: #111111;
+  font-size: 1.15rem;
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.weaveOutcomePanelBody {
+  width: min(100%, 27rem);
+  margin: 0.55rem 0 0;
+  color: #111111;
+  font-size: 0.82rem;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+
+.weaveOutcomeReach {
+  min-width: 0;
+  padding-left: 2.4rem;
+  border-left: 1px solid #b7cce7;
+}
+
+.weaveOutcomeReachValue {
+  margin: 0.2rem 0 0;
+  color: #111111;
+  font-size: 1.55rem;
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.weaveOutcomeReachValue span {
+  font-size: 2.15rem;
+  font-weight: 600;
+}
+
+.weavePrototypeLink {
+  display: inline-block;
+  margin-top: 1.15rem;
+  color: #8a8a8a;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-decoration-line: underline;
+  text-decoration-color: #d8d8d8;
+  text-underline-offset: 0.18em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.weavePrototypeLink:hover {
+  color: #111111;
+  text-decoration-color: #111111;
+}
+
+.weaveInputNode {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  row-gap: 0.12rem;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+  border: 1px solid #1f1f1f;
+  border-radius: 999px;
+  color: #111111;
+  text-align: center;
+}
+
+.weaveInputNode span {
+  width: 78%;
+  overflow-wrap: anywhere;
+  color: inherit;
+  font-size: 0.88rem;
+  line-height: 1.16;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.weaveInputNode small {
+  display: block;
+  width: 78%;
+  margin-top: 0;
+  overflow-wrap: anywhere;
+  color: inherit;
+  font-size: 0.58rem;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.weaveInputNodeAgent {
+  background: #202126;
+  border-color: #202126;
+  color: #ffffff;
+}
+
+.weaveInputNodeAgent span {
+  font-size: 1.35rem;
+  line-height: 1.02;
+}
+
+.weaveInputNodeOutput {
+  border: 3px dashed #27add4;
+}
+
+.weaveInputConnector {
+  display: block;
+  min-width: 0;
+}
+
+.weaveInputTriangle {
+  justify-self: center;
+  width: 0;
+  height: 0;
+  border-top: 0.82rem solid transparent;
+  border-bottom: 0.82rem solid transparent;
+  border-left: 1.25rem solid #202126;
+}
+
+.weaveInputPlus {
+  justify-self: center;
+  min-width: 0;
+  color: #111111;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.weaveInputArrow {
+  position: relative;
+  justify-self: stretch;
+  width: 100%;
+  height: 1px;
+  background: #111111;
+}
+
+.weaveInputArrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-top: 1px solid #111111;
+  border-right: 1px solid #111111;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.weaveOutputDiagram {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(1.4rem, 0.16fr) minmax(0, 0.94fr);
+  align-items: center;
+  gap: 1.25rem;
+  width: min(100%, 42rem);
+  max-width: 100%;
+  margin-top: 2.6rem;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.weaveOutputFactors,
+.weaveOutputResult {
+  min-width: 0;
+}
+
+.weaveOutputDiagramTitle {
+  width: min(100%, 18rem);
+  margin: 0 auto 1.4rem;
+  color: #111111;
+  font-size: 1.25rem;
+  line-height: 1.22;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.weaveOutputFactorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  width: min(100%, 18rem);
+  margin: 0 auto;
+}
+
+.weaveOutputFactor {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  color: #111111;
+  font-size: 0.8rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.weaveOutputFactorBudget {
+  background: #ffb8c2;
+}
+
+.weaveOutputFactorTransport {
+  background: #b8f0c8;
+}
+
+.weaveOutputFactorHotel {
+  background: #ffe0a3;
+}
+
+.weaveOutputFactorGuide {
+  background: #aedbff;
+}
+
+.weaveOutputFactorWeather {
+  background: #d9f4b9;
+}
+
+.weaveOutputFactorFood {
+  background: #cdb6ff;
+}
+
+.weaveOutputTriangle {
+  justify-self: center;
+  width: 0;
+  height: 0;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1.45rem solid #202126;
+}
+
+.weaveOutputResult {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+}
+
+.weaveOutputFormula {
+  display: grid;
+  grid-template-columns: minmax(0, auto) auto minmax(0, auto);
+  align-items: center;
+  gap: 1.4rem;
+  max-width: 100%;
+  color: #000000;
+  font-size: 1.65rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.weaveOutputMultiply {
+  font-size: 2.2rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.weaveOutputPill {
+  width: min(100%, 18rem);
+  margin: 0;
+  padding: 1rem 1.2rem;
+  border-radius: 1.25rem;
+  background: #f0f0f0;
+  color: #111111;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .weaveInputDiagram {
+    grid-template-columns:
+      minmax(0, 1.18fr)
+      minmax(0.7rem, 0.18fr)
+      minmax(0, 0.86fr)
+      minmax(0.55rem, 0.12fr)
+      minmax(0, 0.86fr)
+      minmax(0.8rem, 0.22fr)
+      minmax(0, 0.98fr);
+    gap: 0.32rem;
+    overflow: hidden;
+  }
+
+  .weaveInputNode,
+  .weaveInputNodeAgent,
+  .weaveInputNodeOutput {
+    width: 100%;
+  }
+
+  .weaveInputTriangle {
+    border-top-width: 0.36rem;
+    border-bottom-width: 0.36rem;
+    border-left-width: 0.56rem;
+  }
+
+  .weaveInputArrow {
+    width: 100%;
+    height: 1px;
+  }
+
+  .weaveInputArrow::after {
+    right: 0;
+    top: 50%;
+    bottom: auto;
+    width: 0.32rem;
+    height: 0.32rem;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .weaveInputPlus {
+    font-size: 1rem;
+  }
+
+  .weaveInputNode span {
+    width: 82%;
+    font-size: 0.46rem;
+    line-height: 1.08;
+  }
+
+  .weaveInputNode small {
+    width: 82%;
+    font-size: 0.32rem;
+    line-height: 1.08;
+  }
+
+  .weaveInputNodeAgent span {
+    font-size: 0.64rem;
+  }
+
+  .weaveInputNodeOutput {
+    border-width: 2px;
+  }
+
+  .weaveOutputDiagram {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0.75rem, 0.14fr) minmax(0, 0.94fr);
+    gap: 0.42rem;
+    margin-top: 2.2rem;
+  }
+
+  .weaveOutputDiagramTitle {
+    width: 100%;
+    margin-bottom: 0.62rem;
+    font-size: 0.58rem;
+    line-height: 1.14;
+  }
+
+  .weaveOutputFactorGrid {
+    width: 100%;
+    gap: 0.24rem;
+  }
+
+  .weaveOutputFactor {
+    font-size: 0.38rem;
+    letter-spacing: 0;
+  }
+
+  .weaveOutputTriangle {
+    border-top-width: 0.42rem;
+    border-bottom-width: 0.42rem;
+    border-left-width: 0.62rem;
+  }
+
+  .weaveOutputResult {
+    gap: 0.58rem;
+  }
+
+  .weaveOutputFormula {
+    gap: 0.38rem;
+    font-size: 0.68rem;
+  }
+
+  .weaveOutputMultiply {
+    font-size: 0.98rem;
+  }
+
+  .weaveOutputPill {
+    width: 100%;
+    padding: 0.42rem 0.48rem;
+    border-radius: 0.58rem;
+    font-size: 0.45rem;
+    line-height: 1.22;
+  }
+
+  .weaveActionVisual {
+    width: min(100%, 22rem);
+    margin-top: 2.2rem;
+  }
+
+  .weaveActionLabels {
+    gap: 0.45rem;
+    margin-top: 0.55rem;
+  }
+
+  .weaveActionLabels p {
+    font-size: 0.58rem;
+    line-height: 1.18;
+  }
+
+  .weaveGuideGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.2rem;
+    width: min(100%, 22rem);
+    margin-top: 2.2rem;
+  }
+
+  .weaveExperienceGrid {
+    margin-top: 2rem;
+  }
+
+  .weaveMobileTitle {
+    margin-top: 3.25rem;
+  }
+
+  .weaveProcessTitle {
+    margin-top: 3.25rem;
+  }
+
+  .weaveBrandTitle {
+    margin-top: 3.25rem;
+  }
+
+  .weaveInteractiveTitle {
+    margin-top: 3.25rem;
+  }
+
+  .weaveOutcomeTitle {
+    margin-top: 3.25rem;
+  }
+
+  .weaveMobileFigure {
+    width: min(100%, 22rem);
+    margin-top: 2rem;
+  }
+
+  .weaveOutcomePanel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    width: min(100%, 22rem);
+    margin-top: 2rem;
+  }
+
+  .weaveOutcomeReach {
+    padding: 1.2rem 0 0;
+    border-left: 0;
+    border-top: 1px solid #d8e2ef;
+  }
+
+  .weaveOutcomePanelTitle,
+  .weaveOutcomeReachLabel {
+    font-size: 1rem;
+  }
+
+  .weaveOutcomePanelBody {
+    font-size: 0.75rem;
+  }
+
+  .weaveOutcomeReachValue {
+    font-size: 1.25rem;
+  }
+
+  .weaveOutcomeReachValue span {
+    font-size: 1.7rem;
+  }
+}
+
 .goeventProcessSection {
   display: grid;
   gap: 0.95rem;
@@ -983,6 +1619,11 @@
   color: #111111;
 }
 
+.weaveFooter {
+  width: 100%;
+  margin: 5rem 0 6rem;
+}
+
 @keyframes revealBlock {
   from {
     opacity: 0;
@@ -1101,6 +1742,72 @@
     width: min(100%, 48rem);
     font-size: 1.15rem;
     line-height: 1.3;
+  }
+
+  .weaveInputTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveOutputTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveActionTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveExperienceTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveMobileTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveProcessTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveBrandTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveInteractiveTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveOutcomeTitle {
+    margin-top: 5rem;
+  }
+
+  .weaveInputBody {
+    width: min(100%, 40rem);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .weaveInputDiagram {
+    margin-top: 4rem;
+  }
+
+  .weaveInputImage {
+    margin-top: 4rem;
+  }
+
+  .weaveOutputImage {
+    margin-top: 4rem;
+  }
+
+  .weaveActionVisual {
+    margin-top: 2.4rem;
+  }
+
+  .weaveInputNode span {
+    font-size: 1rem;
+  }
+
+  .weaveInputNodeAgent span {
+    font-size: 1.55rem;
   }
 
   .goeventProcessSection {
@@ -1356,6 +2063,11 @@
     margin-inline: calc(
       (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
     );
+  }
+
+  .weaveFooter {
+    width: 100%;
+    margin: 3.75rem 0 6rem;
   }
 
   .goeventTitle,

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import type { Project } from "@/types/project";
 import type { Locale as SiteLocale } from "@/lib/site-locale";
@@ -101,37 +101,59 @@ export function WorkContent({
               const isExternal = isWeaveAI || isGoEvent;
 
               return (
-                <Link
-                  key={project.slug}
-                  href={href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noreferrer noopener" : undefined}
-                  className={styles.item}
-                >
+                <Fragment key={project.slug}>
+                  <Link
+                    href={href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer noopener" : undefined}
+                    className={styles.item}
+                  >
+                    {project.slug === "weave-ai" ? (
+                      <Image
+                        src="/images/weaveAI-optimized.webp"
+                        alt=""
+                        width={1800}
+                        height={1122}
+                        className={`${styles.itemImage} ${styles.itemImageWeave}`}
+                        priority
+                      />
+                    ) : null}
+                    {project.slug === "goevent" ? (
+                      <Image
+                        src="/images/goevent01-optimized.webp"
+                        alt=""
+                        width={1800}
+                        height={1352}
+                        className={`${styles.itemImage} ${styles.itemImageGoevent}`}
+                      />
+                    ) : null}
+                    <span className={styles.itemTextRow}>
+                      <span className={styles.itemTitle}>{project.name}</span>
+                      <span className={styles.itemYear}>{project.year}</span>
+                    </span>
+                  </Link>
                   {project.slug === "weave-ai" ? (
-                    <Image
-                      src="/images/weaveAI-optimized.webp"
-                      alt=""
-                      width={1800}
-                      height={1122}
-                      className={`${styles.itemImage} ${styles.itemImageWeave}`}
-                      priority
-                    />
+                    <Link
+                      href="https://vincentlow02.github.io/Seminarapp-/"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={styles.item}
+                    >
+                      <Image
+                        src="/images/prototype-optimized.webp"
+                        alt=""
+                        width={1536}
+                        height={1024}
+                        className={`${styles.itemImage} ${styles.itemImagePrototype}`}
+                      />
+                      <span className={styles.itemTextRow}>
+                        <span className={styles.itemTitle}>
+                          Weave AI Interactive Exhibition Experience
+                        </span>
+                      </span>
+                    </Link>
                   ) : null}
-                  {project.slug === "goevent" ? (
-                    <Image
-                      src="/images/goevent01-optimized.webp"
-                      alt=""
-                      width={1800}
-                      height={1352}
-                      className={`${styles.itemImage} ${styles.itemImageGoevent}`}
-                    />
-                  ) : null}
-                  <span className={styles.itemTextRow}>
-                    <span className={styles.itemTitle}>{project.name}</span>
-                    <span className={styles.itemYear}>{project.year}</span>
-                  </span>
-                </Link>
+                </Fragment>
               );
             })}
           </div>

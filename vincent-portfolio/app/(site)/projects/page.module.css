@@ -139,6 +139,10 @@
   object-position: center;
 }
 
+.itemImagePrototype {
+  object-position: center;
+}
+
 .itemTextRow {
   display: inline-flex;
   align-items: baseline;
