@@ -37,10 +37,34 @@ const projects: Project[] = [
   },
 ];
 
+const detailProjects: Project[] = [
+  {
+    slug: "lemon-yuzu-fruit-tea",
+    name: "Lemon Yuzu Fruit Tea",
+    category: "Packaging Design Concept",
+    summary:
+      "Exploring how fruit tea packaging can communicate freshness, beauty, and a gentle moment of relaxation in everyday life.",
+    description:
+      "Exploring how fruit tea packaging can communicate freshness, beauty, and a gentle moment of relaxation in everyday life.",
+    year: "2024",
+    status: "completed",
+    stack: ["Packaging Design", "Visual Design", "Brand Concept"],
+    highlights: [
+      "Explored packaging as a quiet everyday ritual.",
+      "Balanced freshness, beauty, and a gentle sense of relaxation.",
+      "Defined a soft visual direction for a fruit tea concept.",
+    ],
+  },
+];
+
 export function getProjects(): Project[] {
   return projects;
 }
 
+export function getRoutableProjects(): Project[] {
+  return [...projects, ...detailProjects];
+}
+
 export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug);
+  return getRoutableProjects().find((project) => project.slug === slug);
 }

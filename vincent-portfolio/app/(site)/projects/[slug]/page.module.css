@@ -310,6 +310,75 @@
   transform-origin: center;
 }
 
+.lemonHeroFrame {
+  background: transparent;
+  border-radius: 0;
+}
+
+.lemonHeroImage {
+  border-radius: 0;
+  object-fit: contain;
+  object-position: right center;
+}
+
+.lemonProcessSection {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.lemonProcessGraphic {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.lemonProcessImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lemonProcessTextOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 66%;
+  min-height: 27%;
+  padding: 1.35rem 1rem 0.75rem 0;
+  background: #ffffff;
+}
+
+.lemonProcessTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #000000;
+}
+
+.lemonProcessBody {
+  max-width: 24.5rem;
+  margin: 1.25rem 0 0;
+  font-size: 0.56rem;
+  line-height: 2.05;
+  letter-spacing: 0.01em;
+  color: #292929;
+}
+
+.lemonVisualSection {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.lemonVisualImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 2rem;
+}
+
 .weaveResearchSection {
   width: 100%;
   margin-top: 3.25rem;
@@ -1624,6 +1693,11 @@
   margin: 5rem 0 6rem;
 }
 
+.lemonFooter {
+  width: 100%;
+  text-align: left;
+}
+
 @keyframes revealBlock {
   from {
     opacity: 0;
@@ -1691,6 +1765,44 @@
     height: 100%;
     object-fit: cover;
     object-position: center bottom;
+  }
+
+  .lemonHeroImage {
+    object-position: right center;
+  }
+
+  .lemonProcessSection {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .lemonProcessTextOverlay {
+    width: 51%;
+    min-height: 27%;
+    padding-top: 1.75rem;
+  }
+
+  .lemonProcessTitle {
+    font-size: 1.42rem;
+    line-height: 1.15;
+  }
+
+  .lemonProcessBody {
+    max-width: 33rem;
+    margin-top: 1.45rem;
+    font-size: 0.78rem;
+    line-height: 2.15;
+  }
+
+  .lemonVisualSection {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
   }
 
   .weaveHeroFrame {
@@ -2068,6 +2180,14 @@
   .weaveFooter {
     width: 100%;
     margin: 3.75rem 0 6rem;
+  }
+
+  .lemonFooter {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 3.75rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
   }
 
   .goeventTitle,

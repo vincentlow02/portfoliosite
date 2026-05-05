@@ -90,6 +90,25 @@ export function WorkContent({
           </h1>
 
           <div className={styles.list}>
+            <Link
+              href="https://www.intoday.cc/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={styles.item}
+            >
+              <Image
+                src="/images/intoday-optimized.webp"
+                alt=""
+                width={7352}
+                height={5328}
+                className={`${styles.itemImage} ${styles.itemImageIntoday}`}
+                priority
+              />
+              <span className={styles.itemTextRow}>
+                <span className={styles.itemTitle}>Intoday</span>
+                <span className={styles.itemYear}>2026</span>
+              </span>
+            </Link>
             {projects.map((project) => {
               const isWeaveAI = project.slug === "weave-ai";
               const isGoEvent = project.slug === "goevent";
@@ -128,7 +147,11 @@ export function WorkContent({
                       />
                     ) : null}
                     <span className={styles.itemTextRow}>
-                      <span className={styles.itemTitle}>{project.name}</span>
+                      <span className={styles.itemTitle}>
+                        {project.slug === "goevent"
+                          ? "GoEvent (case study)"
+                          : project.name}
+                      </span>
                       <span className={styles.itemYear}>{project.year}</span>
                     </span>
                   </Link>
@@ -150,6 +173,26 @@ export function WorkContent({
                         <span className={styles.itemTitle}>
                           Weave AI Interactive Exhibition Experience
                         </span>
+                      </span>
+                    </Link>
+                  ) : null}
+                  {project.slug === "goevent" ? (
+                    <Link
+                      href={`/projects/lemon-yuzu-fruit-tea?lang=${currentLocale}`}
+                      className={styles.item}
+                    >
+                      <Image
+                        src="/images/packaging01-optimized.webp"
+                        alt=""
+                        width={1491}
+                        height={1055}
+                        className={`${styles.itemImage} ${styles.itemImagePackaging}`}
+                      />
+                      <span className={styles.itemTextRow}>
+                        <span className={styles.itemTitle}>
+                          Lemon Yuzu Fruit Tea
+                        </span>
+                        <span className={styles.itemYear}>2024</span>
                       </span>
                     </Link>
                   ) : null}

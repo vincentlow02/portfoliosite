@@ -217,6 +217,29 @@ function startRainAmbience(context: AudioContext): StopAudio {
 
 export function CozyWindowShade() {
   const projects = getProjects();
+  const homeProjects = [
+    {
+      slug: "intoday",
+      name: "Intoday",
+      year: "2026",
+      category: "",
+      url: "https://www.intoday.cc/",
+    },
+    ...projects.flatMap((project) =>
+      project.slug === "goevent"
+        ? [
+            project,
+            {
+              slug: "lemon-yuzu-fruit-tea",
+              name: "Lemon Yuzu Fruit Tea",
+              year: "2024",
+              category: "Packaging Design Concept",
+              url: undefined,
+            },
+          ]
+        : [project],
+    ),
+  ];
   const sceneRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioPullRef = useRef<HTMLButtonElement | null>(null);
@@ -224,6 +247,8 @@ export function CozyWindowShade() {
   const rainCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const weavePreviewVideoRef = useRef<HTMLVideoElement | null>(null);
+  const workShelfRef = useRef<HTMLDivElement | null>(null);
+  const workPreviewStageRef = useRef<HTMLDivElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const chaosControllerRef = useRef<ReturnType<typeof createHomeChaosController> | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
@@ -243,6 +268,7 @@ export function CozyWindowShade() {
   const [isChaosActive, setIsChaosActive] = useState(false);
   const [isHomeReady, setIsHomeReady] = useState(false);
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null);
+  const [workPreviewTop, setWorkPreviewTop] = useState(0);
   const [locale, setLocale] = useState<SiteLocale>(() => {
     if (typeof window === "undefined") {
       return "en";
@@ -349,6 +375,22 @@ export function CozyWindowShade() {
     video.pause();
     video.currentTime = 0;
   }, [hoveredProjectSlug]);
+
+  const updateWorkPreview = (slug: string, target: HTMLElement) => {
+    const shelf = workShelfRef.current;
+    const stage = workPreviewStageRef.current;
+
+    setHoveredProjectSlug(slug);
+
+    if (!shelf || !stage) {
+      return;
+    }
+
+    const shelfBox = shelf.getBoundingClientRect();
+    const targetBox = target.getBoundingClientRect();
+    const stageHeight = stage.offsetHeight || targetBox.height;
+    setWorkPreviewTop(targetBox.bottom - shelfBox.top - stageHeight);
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -1371,11 +1413,33 @@ export function CozyWindowShade() {
                 Selected work
               </h2>
 
-              <div className={styles.workShelf}>
+              <div className={styles.workShelf} ref={workShelfRef}>
                 <div className={styles.workEntries}>
-                  {projects.map((project, index) => {
+                  {homeProjects.map((project, index) => {
                     const href = project.url ?? `/projects/${project.slug}?lang=${locale}`;
                     const isExternal = !!project.url;
+                    const isLemonProject = project.slug === "lemon-yuzu-fruit-tea";
+                    const category =
+                      project.slug === "intoday"
+                        ? ""
+                        : copy.projectCategories[project.slug] ?? project.category;
+                    const displayTitle =
+                      project.slug === "goevent"
+                        ? "GoEvent (case study)"
+                        : project.name;
+                    const displayMeta = isLemonProject
+                      ? "2024 Packaging Design Concept"
+                      : `${project.year}${category ? ` . ${category}` : ""}`;
+                    const itemContent = (
+                      <>
+                        <span className={styles.workTitle} data-chaos-words>
+                          {displayTitle}
+                        </span>
+                        <span className={styles.workMeta} data-chaos-words>
+                          {displayMeta}
+                        </span>
+                      </>
+                    );
 
                     return (
                       <Link
@@ -1385,27 +1449,35 @@ export function CozyWindowShade() {
                         rel={isExternal ? "noopener noreferrer" : undefined}
                         className={styles.workItem}
                         style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
-                      onMouseEnter={() => setHoveredProjectSlug(project.slug)}
-                      onMouseLeave={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
-                      onFocus={() => setHoveredProjectSlug(project.slug)}
-                      onBlur={() => setHoveredProjectSlug((current) => (current === project.slug ? null : current))}
+                        onMouseEnter={(event) =>
+                          updateWorkPreview(project.slug, event.currentTarget)
+                        }
+                        onMouseLeave={() =>
+                          setHoveredProjectSlug((current) =>
+                            current === project.slug ? null : current,
+                          )
+                        }
+                        onFocus={(event) =>
+                          updateWorkPreview(project.slug, event.currentTarget)
+                        }
+                        onBlur={() =>
+                          setHoveredProjectSlug((current) =>
+                            current === project.slug ? null : current,
+                          )
+                        }
                     >
-                      <span className={styles.workTitle} data-chaos-words>
-                        {project.name}
-                      </span>
-                      <span className={styles.workMeta} data-chaos-words>
-                        {project.year} .{" "}
-                        {copy.projectCategories[project.slug] ?? project.category}
-                      </span>
+                      {itemContent}
                     </Link>
                     );
                   })}
                 </div>
 
                 <div
+                  ref={workPreviewStageRef}
                   className={`${styles.workPreviewStage} ${
                     hoveredProjectSlug ? styles.workPreviewStageActive : ""
                   }`}
+                  style={{ "--preview-top": `${workPreviewTop}px` } as CSSProperties}
                   aria-hidden={hoveredProjectSlug ? "false" : "true"}
                 >
                   <div
@@ -1429,6 +1501,44 @@ export function CozyWindowShade() {
 
                   <div
                     className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "intoday"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.intodayPreview}`}
+                  >
+                    <div className={styles.intodayPreviewMedia}>
+                      <Image
+                        src="/images/intoday-optimized.webp"
+                        alt="Intoday preview"
+                        width={7352}
+                        height={5328}
+                        className={styles.intodayPreviewImage}
+                        sizes="(min-width: 1040px) 13rem, 100vw"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "lemon-yuzu-fruit-tea"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.packagingPreview}`}
+                  >
+                    <div className={styles.packagingPreviewMedia}>
+                      <Image
+                        src="/images/packaging01-optimized.webp"
+                        alt="Lemon Yuzu Fruit Tea packaging preview"
+                        width={1491}
+                        height={1055}
+                        className={styles.packagingPreviewImage}
+                        sizes="(min-width: 1040px) 13rem, 100vw"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.workPreviewCard} ${
                       hoveredProjectSlug === "goevent"
                         ? styles.workPreviewCardVisible
                         : ""
@@ -1441,7 +1551,7 @@ export function CozyWindowShade() {
                         width={3092}
                         height={1924}
                         className={styles.goeventPreviewImage}
-                        sizes="(min-width: 1040px) min(26rem, 37vw), 100vw"
+                        sizes="(min-width: 1040px) 13rem, 100vw"
                         unoptimized
                       />
                     </div>

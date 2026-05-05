@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { getProjectBySlug, getProjects } from "@/content/projects";
+import { getProjectBySlug, getRoutableProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
 import { GoEventContent } from "./goevent-content";
+import { LemonYuzuContent } from "./lemon-yuzu-content";
 import { WeaveAIContent } from "./weave-ai-content";
 
 type ProjectDetailPageProps = {
@@ -15,7 +16,7 @@ type ProjectDetailPageProps = {
 };
 
 export async function generateStaticParams() {
-  return getProjects().map((project) => ({
+  return getRoutableProjects().map((project) => ({
     slug: project.slug,
   }));
 }
@@ -69,6 +70,15 @@ export default async function ProjectDetailPage({
   if (project.slug === "weave-ai") {
     return (
       <WeaveAIContent
+        project={project}
+        initialLocale={resolvedSearchParams.lang}
+      />
+    );
+  }
+
+  if (project.slug === "lemon-yuzu-fruit-tea") {
+    return (
+      <LemonYuzuContent
         project={project}
         initialLocale={resolvedSearchParams.lang}
       />

@@ -139,7 +139,15 @@
   object-position: center;
 }
 
+.itemImageIntoday {
+  object-position: center;
+}
+
 .itemImagePrototype {
+  object-position: center;
+}
+
+.itemImagePackaging {
   object-position: center;
 }
 
@@ -147,6 +155,8 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.65rem;
+  max-width: 100%;
+  flex-wrap: wrap;
   width: fit-content;
   justify-content: flex-start;
 }
@@ -223,5 +233,29 @@
 
   .itemTextRow {
     gap: 0.55rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .frame {
+    width: min(calc(100vw - 4rem), 48rem);
+  }
+
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 2.25rem;
+    row-gap: 2.6rem;
+    width: 100%;
+  }
+
+  .item {
+    width: 100%;
+  }
+
+  .itemImage {
+    width: 100%;
+    height: clamp(10.5rem, 15vw, 12.75rem);
+    margin-bottom: 0.95rem;
   }
 }
