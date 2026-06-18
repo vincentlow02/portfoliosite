@@ -39,6 +39,24 @@ const projects: Project[] = [
 
 const detailProjects: Project[] = [
   {
+    slug: "intoday",
+    name: "IntoDay",
+    category: "Product design and visual workspace",
+    summary:
+      "IntoDay is a visual workspace that keeps collected context together, helping users turn scattered resources into structured, shareable, and reusable knowledge.",
+    description:
+      "IntoDay is a visual workspace that keeps collected context together, helping users turn scattered resources into structured, shareable, and reusable knowledge.",
+    year: "2026",
+    status: "in-progress",
+    stack: [
+      "Product Strategy",
+      "UX/UI Design",
+      "Branding",
+      "Front-end Development",
+    ],
+    highlights: [],
+  },
+  {
     slug: "lemon-yuzu-fruit-tea",
     name: "Lemon Yuzu Fruit Tea",
     category: "Packaging Design Concept",

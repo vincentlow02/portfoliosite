@@ -91,9 +91,7 @@ export function WorkContent({
 
           <div className={styles.list}>
             <Link
-              href="https://www.intoday.cc/"
-              target="_blank"
-              rel="noreferrer noopener"
+              href={`/projects/intoday?lang=${currentLocale}`}
               className={styles.item}
             >
               <Image
@@ -105,7 +103,7 @@ export function WorkContent({
                 priority
               />
               <span className={styles.itemTextRow}>
-                <span className={styles.itemTitle}>Intoday</span>
+                <span className={styles.itemTitle}>IntoDay</span>
                 <span className={styles.itemYear}>2026</span>
               </span>
             </Link>

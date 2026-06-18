@@ -310,6 +310,68 @@
   transform-origin: center;
 }
 
+.intodayHeroFrame {
+  width: 100%;
+  margin-top: 2.45rem;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.intodayHeroImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.intodayProblemSection {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.intodayProgressGallery {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.intodayProgressTitle {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.intodayProgressImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.intodayClosingSections {
+  width: 100%;
+  margin-top: 3.25rem;
+}
+
+.intodayVersionSection {
+  width: 100%;
+}
+
+.intodayManyMoreBody {
+  width: min(100%, 34rem);
+  margin: 0;
+  color: #8a8a8a;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.intodayFooter {
+  margin-bottom: 6rem;
+}
+
 .lemonHeroFrame {
   background: transparent;
   border-radius: 0;
@@ -1765,6 +1827,52 @@
     height: 100%;
     object-fit: cover;
     object-position: center bottom;
+  }
+
+  .intodayHeroFrame {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 3.25rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .intodayProblemSection {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .intodayProgressGallery {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .intodayProgressTitle {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .intodayClosingSections {
+    width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
+    margin-top: 5rem;
+    margin-inline: calc(
+      (100% - min(calc(100vw - 3rem), calc(200% + 0.75rem))) / 2
+    );
+  }
+
+  .intodayManyMoreBody {
+    width: min(100%, 40rem);
+    font-size: 0.92rem;
   }
 
   .lemonHeroImage {

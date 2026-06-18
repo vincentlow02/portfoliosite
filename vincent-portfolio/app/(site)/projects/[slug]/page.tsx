@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getProjectBySlug, getRoutableProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
 import { GoEventContent } from "./goevent-content";
+import { IntodayContent } from "./intoday-content";
 import { LemonYuzuContent } from "./lemon-yuzu-content";
 import { WeaveAIContent } from "./weave-ai-content";
 
@@ -61,6 +62,15 @@ export default async function ProjectDetailPage({
   if (project.slug === "goevent") {
     return (
       <GoEventContent
+        project={project}
+        initialLocale={resolvedSearchParams.lang}
+      />
+    );
+  }
+
+  if (project.slug === "intoday") {
+    return (
+      <IntodayContent
         project={project}
         initialLocale={resolvedSearchParams.lang}
       />

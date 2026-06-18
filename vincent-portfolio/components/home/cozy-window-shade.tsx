@@ -220,10 +220,10 @@ export function CozyWindowShade() {
   const homeProjects = [
     {
       slug: "intoday",
-      name: "Intoday",
+      name: "IntoDay",
       year: "2026",
       category: "",
-      url: "https://www.intoday.cc/",
+      url: undefined,
     },
     ...projects.flatMap((project) =>
       project.slug === "goevent"
@@ -1508,10 +1508,10 @@ export function CozyWindowShade() {
                   >
                     <div className={styles.intodayPreviewMedia}>
                       <Image
-                        src="/images/intoday-optimized.webp"
-                        alt="Intoday preview"
-                        width={7352}
-                        height={5328}
+                        src="/images/intoday.jpg"
+                        alt="IntoDay preview"
+                        width={1681}
+                        height={979}
                         className={styles.intodayPreviewImage}
                         sizes="(min-width: 1040px) 13rem, 100vw"
                       />
