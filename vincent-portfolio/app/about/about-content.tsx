@@ -96,7 +96,7 @@ export function AboutContent() {
           aria-label="Back to home"
         >
           <Image
-            src="/images/profile-alt.png"
+            src="/images/site/profile-alt.png"
             alt="Portrait of Vincent Low Sik Ching"
             width={56}
             height={56}

@@ -352,7 +352,7 @@ export function WeaveAIContent({
             aria-label={copy.backToHomeLabel}
           >
             <Image
-              src="/images/goevent-avatar.png"
+              src="/images/site/profile-alt.png"
               alt=""
               width={44}
               height={44}
@@ -382,7 +382,7 @@ export function WeaveAIContent({
           <div className={`${styles.goeventHeroFrame} ${styles.weaveHeroFrame}`}>
             <video
               className={`${styles.goeventHeroImage} ${styles.weaveHeroVideo}`}
-              src="/videos/weave1.mp4"
+              src="/images/projects/weave-ai/weave1.mp4"
               aria-label={copy.videoLabel}
               autoPlay
               muted
@@ -395,7 +395,7 @@ export function WeaveAIContent({
           <section className={styles.weaveResearchSection}>
             <h2 className={styles.weaveResearchTitle}>{copy.researchTitle}</h2>
             <Image
-              src="/images/research-optimized.webp"
+              src="/images/projects/weave-ai/research-optimized.webp"
               alt=""
               width={2400}
               height={1536}
@@ -448,7 +448,7 @@ export function WeaveAIContent({
               </div>
             </div>
             <Image
-              src="/images/input-optimized.webp"
+              src="/images/projects/weave-ai/input-optimized.webp"
               alt=""
               width={2400}
               height={1560}
@@ -511,7 +511,7 @@ export function WeaveAIContent({
               </div>
             </div>
             <Image
-              src="/images/output-optimized.webp"
+              src="/images/projects/weave-ai/output-optimized.webp"
               alt=""
               width={2400}
               height={1560}
@@ -524,7 +524,7 @@ export function WeaveAIContent({
             <div className={styles.weaveActionVisual}>
               <div className={styles.weaveActionImageFrame}>
                 <Image
-                  src="/images/from.jpg"
+                  src="/images/projects/weave-ai/from.jpg"
                   alt={copy.actionImageAlt}
                   width={1284}
                   height={356}
@@ -540,7 +540,7 @@ export function WeaveAIContent({
             <div className={styles.weaveGuideGrid}>
               <figure className={styles.weaveGuideCard}>
                 <Image
-                  src="/images/guide-optimized.webp"
+                  src="/images/projects/weave-ai/guide-optimized.webp"
                   alt=""
                   width={1400}
                   height={910}
@@ -552,7 +552,7 @@ export function WeaveAIContent({
               </figure>
               <figure className={styles.weaveGuideCard}>
                 <Image
-                  src="/images/guideinside-optimized.webp"
+                  src="/images/projects/weave-ai/guideinside-optimized.webp"
                   alt=""
                   width={1400}
                   height={910}
@@ -571,7 +571,7 @@ export function WeaveAIContent({
             <div className={`${styles.weaveGuideGrid} ${styles.weaveExperienceGrid}`}>
               <figure className={styles.weaveGuideCard}>
                 <Image
-                  src="/images/profileweave.png"
+                  src="/images/projects/weave-ai/profileweave.png"
                   alt=""
                   width={1920}
                   height={1248}
@@ -583,7 +583,7 @@ export function WeaveAIContent({
               </figure>
               <figure className={styles.weaveGuideCard}>
                 <Image
-                  src="/images/savedweave.png"
+                  src="/images/projects/weave-ai/savedweave.png"
                   alt=""
                   width={1920}
                   height={1248}
@@ -595,7 +595,7 @@ export function WeaveAIContent({
               </figure>
               <figure className={styles.weaveGuideCard}>
                 <Image
-                  src="/images/memory.png"
+                  src="/images/projects/weave-ai/memory.png"
                   alt=""
                   width={1920}
                   height={1248}
@@ -613,7 +613,7 @@ export function WeaveAIContent({
             </h2>
             <figure className={`${styles.weaveGuideCard} ${styles.weaveMobileFigure}`}>
               <Image
-                src="/images/phoneweave-optimized.webp"
+                src="/images/projects/weave-ai/phoneweave-optimized.webp"
                 alt=""
                 width={7260}
                 height={5132}
@@ -630,7 +630,7 @@ export function WeaveAIContent({
             </h2>
             <figure className={`${styles.weaveGuideCard} ${styles.weaveMobileFigure}`}>
               <Image
-                src="/images/weaveprocess-optimized.webp"
+                src="/images/projects/weave-ai/weaveprocess-optimized.webp"
                 alt=""
                 width={7260}
                 height={5132}
@@ -647,7 +647,7 @@ export function WeaveAIContent({
             </h2>
             <figure className={`${styles.weaveGuideCard} ${styles.weaveMobileFigure}`}>
               <Image
-                src="/images/branding-optimized.webp"
+                src="/images/projects/weave-ai/branding-optimized.webp"
                 alt=""
                 width={1981}
                 height={794}
@@ -664,7 +664,7 @@ export function WeaveAIContent({
             </h2>
             <figure className={`${styles.weaveGuideCard} ${styles.weaveMobileFigure}`}>
               <Image
-                src="/images/exhibit-optimized.webp"
+                src="/images/projects/weave-ai/exhibit-optimized.webp"
                 alt=""
                 width={5984}
                 height={6432}
@@ -684,7 +684,7 @@ export function WeaveAIContent({
             </a>
             <figure className={`${styles.weaveGuideCard} ${styles.weaveMobileFigure}`}>
               <Image
-                src="/images/exhibitresult-crop-optimized.webp"
+                src="/images/projects/weave-ai/exhibitresult-crop-optimized.webp"
                 alt=""
                 width={7264}
                 height={4140}

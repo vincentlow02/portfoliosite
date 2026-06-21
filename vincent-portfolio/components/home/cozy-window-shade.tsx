@@ -1369,7 +1369,7 @@ export function CozyWindowShade() {
             <section className={styles.introBlock}>
               <div className={styles.portraitFrame} data-chaos-block>
                 <Image
-                  src="/images/home-portrait.png"
+                  src="/images/site/home-portrait.png"
                   alt="Portrait of Vincent Low Sik Ching"
                   width={56}
                   height={56}
@@ -1508,7 +1508,7 @@ export function CozyWindowShade() {
                   >
                     <div className={styles.intodayPreviewMedia}>
                       <Image
-                        src="/images/intoday.jpg"
+                        src="/images/projects/intoday/intoday.jpg"
                         alt="IntoDay preview"
                         width={1681}
                         height={979}
@@ -1527,7 +1527,7 @@ export function CozyWindowShade() {
                   >
                     <div className={styles.packagingPreviewMedia}>
                       <Image
-                        src="/images/packaging01-optimized.webp"
+                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
                         alt="Lemon Yuzu Fruit Tea packaging preview"
                         width={1491}
                         height={1055}
@@ -1546,7 +1546,7 @@ export function CozyWindowShade() {
                   >
                     <div className={styles.goeventPreviewMedia}>
                       <Image
-                        src="/images/goeventphoto.png"
+                        src="/images/projects/goevent/goeventphoto.png"
                         alt="GoEvent preview"
                         width={3092}
                         height={1924}

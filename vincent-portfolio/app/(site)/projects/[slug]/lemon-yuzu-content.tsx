@@ -228,7 +228,7 @@ export function LemonYuzuContent({
             aria-label={copy.backToHomeLabel}
           >
             <Image
-              src="/images/goevent-avatar.png"
+              src="/images/site/profile-alt.png"
               alt=""
               width={44}
               height={44}
@@ -257,7 +257,7 @@ export function LemonYuzuContent({
 
           <div className={`${styles.goeventHeroFrame} ${styles.lemonHeroFrame}`}>
             <Image
-              src="/images/packaging01-optimized.webp"
+              src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
               alt={copy.imageAlt}
               width={1491}
               height={1055}
@@ -269,7 +269,7 @@ export function LemonYuzuContent({
           <section className={styles.lemonProcessSection}>
             <div className={styles.lemonProcessGraphic}>
               <Image
-                src="/images/designprocess.svg"
+                src="/images/projects/lemon-yuzu-fruit-tea/designprocess.svg"
                 alt={copy.designProcessAlt}
                 width={1282}
                 height={882}
@@ -290,7 +290,7 @@ export function LemonYuzuContent({
               {processCopy.visualIdentityTitle}
             </h2>
             <Image
-              src="/images/visualidentity.svg"
+              src="/images/projects/lemon-yuzu-fruit-tea/visualidentity.svg"
               alt={processCopy.visualIdentityTitle}
               width={1284}
               height={722}
@@ -304,7 +304,7 @@ export function LemonYuzuContent({
               {processCopy.packagingTitle}
             </h2>
             <Image
-              src="/images/packaging.svg"
+              src="/images/projects/lemon-yuzu-fruit-tea/packaging.svg"
               alt={processCopy.packagingTitle}
               width={1284}
               height={537}
@@ -318,7 +318,7 @@ export function LemonYuzuContent({
               {processCopy.productTitle}
             </h2>
             <Image
-              src="/images/product.svg"
+              src="/images/projects/lemon-yuzu-fruit-tea/product.svg"
               alt={processCopy.productTitle}
               width={1288}
               height={1060}
@@ -332,7 +332,7 @@ export function LemonYuzuContent({
               {processCopy.webDesignTitle}
             </h2>
             <Image
-              src="/images/web-optimized.webp"
+              src="/images/projects/lemon-yuzu-fruit-tea/web-optimized.webp"
               alt={processCopy.webDesignTitle}
               width={5120}
               height={3328}

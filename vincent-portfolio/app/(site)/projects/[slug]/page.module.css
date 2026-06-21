@@ -1288,7 +1288,7 @@
 .goeventProcessThumbChallenge {
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02)),
-    url("/images/goevent-challenge-photo.png") center / cover no-repeat;
+    url("/images/projects/goevent/goevent-challenge-photo.png") center / cover no-repeat;
 }
 
 .goeventProcessThumbPersona {

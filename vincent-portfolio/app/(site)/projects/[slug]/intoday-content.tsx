@@ -113,11 +113,11 @@ const intodayCopy: Record<
 };
 
 const intodayProgressImages = [
-  "/images/intoday-progress-02.png",
-  "/images/intoday-progress-03.png",
-  "/images/intoday-progress-04.png",
-  "/images/intoday-progress-05.png",
-  "/images/intoday-progress-06.png",
+  "/images/projects/intoday/intoday-progress-02.png",
+  "/images/projects/intoday/intoday-progress-03.png",
+  "/images/projects/intoday/intoday-progress-04.png",
+  "/images/projects/intoday/intoday-progress-05.png",
+  "/images/projects/intoday/intoday-progress-06.png",
 ];
 
 export function IntodayContent({
@@ -172,7 +172,7 @@ export function IntodayContent({
             aria-label={copy.backToHomeLabel}
           >
             <Image
-              src="/images/goevent-avatar.png"
+              src="/images/site/profile-alt.png"
               alt=""
               width={44}
               height={44}
@@ -203,7 +203,7 @@ export function IntodayContent({
 
           <div className={styles.intodayHeroFrame}>
             <Image
-              src="/images/intoday-ver2.png"
+              src="/images/projects/intoday/intoday-ver2.png"
               alt="IntoDay visual workspace"
               width={1920}
               height={1248}

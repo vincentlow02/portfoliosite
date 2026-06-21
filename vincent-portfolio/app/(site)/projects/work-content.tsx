@@ -72,7 +72,7 @@ export function WorkContent({
       >
         <Link href={`/?lang=${currentLocale}`} className={styles.avatarLink}>
           <Image
-            src="/images/goevent-avatar.png"
+            src="/images/site/profile-alt.png"
             alt={avatarAlt}
             width={44}
             height={44}
@@ -95,7 +95,7 @@ export function WorkContent({
               className={styles.item}
             >
               <Image
-                src="/images/intoday-optimized.webp"
+                src="/images/projects/intoday/intoday-optimized.webp"
                 alt=""
                 width={7352}
                 height={5328}
@@ -127,7 +127,7 @@ export function WorkContent({
                   >
                     {project.slug === "weave-ai" ? (
                       <Image
-                        src="/images/weaveAI-optimized.webp"
+                        src="/images/projects/weave-ai/weaveAI-optimized.webp"
                         alt=""
                         width={1800}
                         height={1122}
@@ -137,7 +137,7 @@ export function WorkContent({
                     ) : null}
                     {project.slug === "goevent" ? (
                       <Image
-                        src="/images/goevent01-optimized.webp"
+                        src="/images/projects/goevent/goevent01-optimized.webp"
                         alt=""
                         width={1800}
                         height={1352}
@@ -161,7 +161,7 @@ export function WorkContent({
                       className={styles.item}
                     >
                       <Image
-                        src="/images/prototype-optimized.webp"
+                        src="/images/projects/weave-ai/prototype-optimized.webp"
                         alt=""
                         width={1536}
                         height={1024}
@@ -180,7 +180,7 @@ export function WorkContent({
                       className={styles.item}
                     >
                       <Image
-                        src="/images/packaging01-optimized.webp"
+                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
                         alt=""
                         width={1491}
                         height={1055}

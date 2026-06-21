@@ -59,7 +59,7 @@
 :global(body.home-rain) .scene {
   background:
     linear-gradient(rgba(108, 120, 134, 0.24), rgba(108, 120, 134, 0.24)),
-    url("/images/rain-glass.jfif");
+    url("/images/site/rain-glass.jfif");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -998,7 +998,7 @@
   :global(body.home-rain) .scene {
     background:
       linear-gradient(rgba(108, 120, 134, 0.24), rgba(108, 120, 134, 0.24)),
-      url("/images/rain-glass-desktop.jpg");
+      url("/images/site/rain-glass-desktop.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

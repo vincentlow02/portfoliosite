@@ -112,7 +112,7 @@ export function GoEventProcessContent({
             aria-label="Platform image"
           >
             <Image
-              src="/images/photo01.png"
+              src="/images/projects/weave-ai/photo01.png"
               alt="GoEvent platform references"
               width={1356}
               height={656}
@@ -142,7 +142,7 @@ export function GoEventProcessContent({
                 className={`${styles.quoteBubble} ${styles.quoteBubbleLeftWide}`}
               >
                 <Image
-                  src="/images/goevent-insights/avatar-1.png"
+                  src="/images/projects/goevent/goevent-insights/avatar-1.png"
                   alt=""
                   width={33}
                   height={32}
@@ -157,7 +157,7 @@ export function GoEventProcessContent({
               >
                 <p className={styles.quoteTextSmall}>{copy.quotes[1]}</p>
                 <Image
-                  src="/images/goevent-insights/avatar-2.png"
+                  src="/images/projects/goevent/goevent-insights/avatar-2.png"
                   alt=""
                   width={33}
                   height={32}
@@ -170,7 +170,7 @@ export function GoEventProcessContent({
                 className={`${styles.quoteBubble} ${styles.quoteBubbleLeftNarrow}`}
               >
                 <Image
-                  src="/images/goevent-insights/avatar-3.png"
+                  src="/images/projects/goevent/goevent-insights/avatar-3.png"
                   alt=""
                   width={33}
                   height={32}
@@ -190,7 +190,7 @@ export function GoEventProcessContent({
             <p className={styles.goeventResearchCopy}>{copy.interviewCopy}</p>
             <div className={styles.goeventChallengePhotoFrame}>
               <Image
-                src="/images/goevent-challenge-photo.png"
+                src="/images/projects/goevent/goevent-challenge-photo.png"
                 alt={copy.challengeImageAlt}
                 width={1024}
                 height={768}

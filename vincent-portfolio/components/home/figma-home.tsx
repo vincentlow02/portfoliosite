@@ -22,7 +22,7 @@ export function FigmaHome() {
       <div className={styles.frame}>
         <section className={styles.intro}>
           <Image
-            src="/images/home-portrait.png"
+            src="/images/site/home-portrait.png"
             alt="Portrait of Vincent Low Sik Ching"
             width={56}
             height={56}

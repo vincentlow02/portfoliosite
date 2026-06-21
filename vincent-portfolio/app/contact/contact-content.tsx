@@ -12,31 +12,31 @@ const contactLinks = [
   {
     key: "email" as const,
     href: "mailto:lowvincent21@gmail.com",
-    iconSrc: "/images/contact-icons/email.png",
+    iconSrc: "/images/site/email.png",
     iconAlt: "Email icon",
   },
   {
     key: "x" as const,
     href: "https://x.com/vdhhhl?s=21",
-    iconSrc: "/images/contact-icons/x.png",
+    iconSrc: "/images/site/x.png",
     iconAlt: "X icon",
   },
   {
     key: "ins" as const,
     href: "https://www.instagram.com/vincent_low02?igsh=MWt4NW1hMmZkeTl5ZQ%3D%3D&utm_source=qr",
-    iconSrc: "/images/contact-icons/instagram.png",
+    iconSrc: "/images/site/instagram.png",
     iconAlt: "Instagram icon",
   },
   {
     key: "github" as const,
     href: "https://github.com/vincentlow02",
-    iconSrc: "/images/contact-icons/github.png",
+    iconSrc: "/images/site/github.png",
     iconAlt: "GitHub icon",
   },
   {
     key: "linkedin" as const,
     href: "https://www.linkedin.com/in/vincent-low-sik-ching/",
-    iconSrc: "/images/contact-icons/linkedin.png",
+    iconSrc: "/images/site/linkedin.png",
     iconAlt: "LinkedIn icon",
   },
 ];
@@ -137,7 +137,7 @@ export function ContactContent() {
           aria-label="Back to home"
         >
           <Image
-            src="/images/profile-alt.png"
+            src="/images/site/profile-alt.png"
             alt="Portrait of Vincent Low Sik Ching"
             width={56}
             height={56}

@@ -1,6 +1,23 @@
-# Vincent Portfolio Starter
+# Vincent Portfolio
 
-Minimal portfolio starter built with Next.js, TypeScript, Tailwind CSS, and the App Router. The project is intentionally neutral so you can layer your own UI system on top later.
+A personal portfolio website.
+
+This site showcases selected work in product design, UI/UX design, interaction design, and branding. It includes project case studies, visual design explorations, process documentation, and final outcomes.
+
+## Projects
+
+- IntoDay
+- Weave AI
+- GoEvent
+- Lemon Yuzu Fruit Tea
+
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Vercel
 
 ## Scripts
 

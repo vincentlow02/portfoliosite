@@ -130,7 +130,7 @@ export function GoEventContent({
             aria-label={copy.backToHomeLabel}
           >
             <Image
-              src="/images/goevent-avatar.png"
+              src="/images/site/profile-alt.png"
               alt={copy.avatarAlt}
               width={33}
               height={32}
@@ -160,7 +160,7 @@ export function GoEventContent({
 
           <div className={styles.goeventHeroFrame}>
             <Image
-              src="/images/goeventphoto.png"
+              src="/images/projects/goevent/goeventphoto.png"
               alt={copy.heroImageAlt}
               width={3092}
               height={1924}
