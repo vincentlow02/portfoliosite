@@ -27,6 +27,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  icons: {
+    icon: [
+      { url: "/images/site/sitelogo.png", type: "image/jpeg" },
+    ],
+  },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
@@ -59,6 +64,9 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/images/site/instagram.png" />
         <link rel="preload" as="image" href="/images/site/github.png" />
         <link rel="preload" as="image" href="/images/site/linkedin.png" />
+        <link rel="icon" href="/images/site/sitelog.jpg" type="image/jpeg" sizes="any" />
+        <link rel="shortcut icon" href="/images/site/sitelog.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/images/site/sitelog.jpg" />
       </head>
       <body className="min-h-full bg-background text-foreground">{children}</body>
     </html>

@@ -90,26 +90,11 @@ export function WorkContent({
           </h1>
 
           <div className={styles.list}>
-            <Link
-              href={`/projects/intoday?lang=${currentLocale}`}
-              className={styles.item}
-            >
-              <Image
-                src="/images/projects/intoday/intoday-optimized.webp"
-                alt=""
-                width={7352}
-                height={5328}
-                className={`${styles.itemImage} ${styles.itemImageIntoday}`}
-                priority
-              />
-              <span className={styles.itemTextRow}>
-                <span className={styles.itemTitle}>IntoDay</span>
-                <span className={styles.itemYear}>2026</span>
-              </span>
-            </Link>
             {projects.map((project) => {
               const isWeaveAI = project.slug === "weave-ai";
               const isGoEvent = project.slug === "goevent";
+              const isIntoDay = project.slug === "intoday";
+              const isLemonYuzu = project.slug === "lemon-yuzu-fruit-tea";
               const href = isWeaveAI
                 ? "https://seminardesign-app.vercel.app/"
                 : isGoEvent
@@ -125,7 +110,17 @@ export function WorkContent({
                     rel={isExternal ? "noreferrer noopener" : undefined}
                     className={styles.item}
                   >
-                    {project.slug === "weave-ai" ? (
+                    {isIntoDay ? (
+                      <Image
+                        src="/images/projects/intoday/intoday-optimized.webp"
+                        alt=""
+                        width={7352}
+                        height={5328}
+                        className={`${styles.itemImage} ${styles.itemImageIntoday}`}
+                        priority
+                      />
+                    ) : null}
+                    {isWeaveAI ? (
                       <Image
                         src="/images/projects/weave-ai/weaveAI-optimized.webp"
                         alt=""
@@ -135,13 +130,22 @@ export function WorkContent({
                         priority
                       />
                     ) : null}
-                    {project.slug === "goevent" ? (
+                    {isGoEvent ? (
                       <Image
                         src="/images/projects/goevent/goevent01-optimized.webp"
                         alt=""
                         width={1800}
                         height={1352}
                         className={`${styles.itemImage} ${styles.itemImageGoevent}`}
+                      />
+                    ) : null}
+                    {isLemonYuzu ? (
+                      <Image
+                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
+                        alt=""
+                        width={1491}
+                        height={1055}
+                        className={`${styles.itemImage} ${styles.itemImagePackaging}`}
                       />
                     ) : null}
                     <span className={styles.itemTextRow}>
@@ -153,7 +157,7 @@ export function WorkContent({
                       <span className={styles.itemYear}>{project.year}</span>
                     </span>
                   </Link>
-                  {project.slug === "weave-ai" ? (
+                  {isWeaveAI ? (
                     <Link
                       href="https://vincentlow02.github.io/Seminarapp-/"
                       target="_blank"
@@ -171,26 +175,6 @@ export function WorkContent({
                         <span className={styles.itemTitle}>
                           Weave AI Interactive Exhibition Experience
                         </span>
-                      </span>
-                    </Link>
-                  ) : null}
-                  {project.slug === "goevent" ? (
-                    <Link
-                      href={`/projects/lemon-yuzu-fruit-tea?lang=${currentLocale}`}
-                      className={styles.item}
-                    >
-                      <Image
-                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
-                        alt=""
-                        width={1491}
-                        height={1055}
-                        className={`${styles.itemImage} ${styles.itemImagePackaging}`}
-                      />
-                      <span className={styles.itemTextRow}>
-                        <span className={styles.itemTitle}>
-                          Lemon Yuzu Fruit Tea
-                        </span>
-                        <span className={styles.itemYear}>2024</span>
                       </span>
                     </Link>
                   ) : null}

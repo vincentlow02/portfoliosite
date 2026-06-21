@@ -10,5 +10,5 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function AtmospherePage() {
-  return <CozyWindowShade />;
+  return <CozyWindowShade variant="atmosphere" />;
 }

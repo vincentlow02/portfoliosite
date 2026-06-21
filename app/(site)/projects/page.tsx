@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getProjects } from "@/content/projects";
+import { getRoutableProjects } from "@/content/projects";
 import { buildMetadata } from "@/lib/metadata";
 import { normalizeLocale, type Locale as SiteLocale } from "@/lib/site-locale";
 import { WorkContent } from "./work-content";
@@ -41,7 +41,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   const resolvedSearchParams = await searchParams;
   const locale = normalizeLocale(resolvedSearchParams.lang);
   const copy = projectsPageCopy[locale];
-  const projects = getProjects();
+  const projects = getRoutableProjects();
 
   return (
     <WorkContent

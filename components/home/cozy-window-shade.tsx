@@ -215,8 +215,14 @@ function startRainAmbience(context: AudioContext): StopAudio {
   };
 }
 
-export function CozyWindowShade() {
+type CozyWindowShadeProps = {
+  variant: "home" | "atmosphere";
+};
+
+export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
   const projects = getProjects();
+  const isHome = variant === "home";
+  const homeHeroTitle = "Vincent Low Sik Ching";
   const homeProjects = [
     {
       slug: "intoday",
@@ -279,6 +285,7 @@ export function CozyWindowShade() {
   });
 
   const copy = sharedLocaleCopy[locale];
+  const homeHeroDescriptionLines = copy.introLines;
   const audioPrompt = isAudioPlaying
     ? copy.audioLabels.playing
     : hasAudioInteracted
@@ -1192,40 +1199,43 @@ export function CozyWindowShade() {
 
   return (
     <main ref={sceneRef} className={styles.scene}>
-      <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-      />
-
-      <div className={styles.sunnyAtmosphere} aria-hidden="true">
-        <video
-          ref={leavesVideoRef}
-          className={styles.leavesVideo}
-          src="https://theme-switch.pages.dev/assets/leaves.mp4"
-          muted
+      <div className={styles.backgroundLayer} aria-hidden="true">
+        <audio
+          ref={audioRef}
           loop
-          playsInline
           preload="auto"
         />
+
+        <div className={styles.sunnyAtmosphere} aria-hidden="true">
+          <video
+            ref={leavesVideoRef}
+            className={styles.leavesVideo}
+            src="https://theme-switch.pages.dev/assets/leaves.mp4"
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+        </div>
+
+        <div className={styles.rainAtmosphere} aria-hidden="true">
+          <div className={styles.rainFog} />
+          <canvas ref={rainCanvasRef} className={styles.rainCanvas} />
+        </div>
+
+        <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
       </div>
 
-      <div className={styles.rainAtmosphere} aria-hidden="true">
-        <div className={styles.rainFog} />
-        <canvas ref={rainCanvasRef} className={styles.rainCanvas} />
-      </div>
-
-      <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
-
-      <div className={styles.page}>
-        <aside className={styles.rail}>
+      <div className={styles.contentLayer}>
+        <div className={styles.page}>
+          <aside className={styles.rail}>
             <button
               ref={audioPullRef}
               data-chaos-block
-            type="button"
-            className={`${styles.audioPull} ${isAudioPlaying ? styles.audioPullActive : ""} ${
-              isAudioPressing ? styles.audioPullPressing : ""
-            }`}
+              type="button"
+              className={`${styles.audioPull} ${isAudioPlaying ? styles.audioPullActive : ""} ${
+                isAudioPressing ? styles.audioPullPressing : ""
+              }`}
             onClick={() => {
               void toggleAudio();
             }}
@@ -1361,57 +1371,58 @@ export function CozyWindowShade() {
             </div>
           </div>
 
-          <div
-            className={`${styles.homeOverlay} ${
-              isHomeReady ? styles.homeOverlayReady : styles.homeOverlayPending
-            }`}
-          >
-            <section className={styles.introBlock}>
-              <div className={styles.portraitFrame} data-chaos-block>
-                <Image
-                  src="/images/site/home-portrait.png"
-                  alt="Portrait of Vincent Low Sik Ching"
-                  width={56}
-                  height={56}
-                  className={styles.portrait}
-                  priority
-                  loading="eager"
-                  fetchPriority="high"
-                  onLoad={() => setIsHomeReady(true)}
-                />
-              </div>
-
-              <div className={styles.copy}>
-                <h1 className={styles.name} data-chaos-words>
-                  Vincent Low Sik Ching
-                </h1>
-
-                <div className={styles.summary} data-chaos-words>
-                  {copy.introLines.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
+          {isHome ? (
+            <div
+              className={`${styles.homeOverlay} ${
+                isHomeReady ? styles.homeOverlayReady : styles.homeOverlayPending
+              }`}
+            >
+              <section className={styles.introBlock}>
+                <div className={styles.portraitFrame} data-chaos-block>
+                  <Image
+                    src="/images/site/home-portrait.png"
+                    alt="Portrait of Vincent Low Sik Ching"
+                    width={56}
+                    height={56}
+                    className={styles.portrait}
+                    priority
+                    loading="eager"
+                    fetchPriority="high"
+                    onLoad={() => setIsHomeReady(true)}
+                  />
                 </div>
-              </div>
-            </section>
 
-            <nav aria-label="Homepage" className={styles.nav}>
-              {copy.navItems.map((item, index) => (
-                <Link
-                  key={item.href}
-                  href={`${item.href}?lang=${locale}`}
-                  className={styles.navLink}
-                  data-chaos-block
-                  style={{ "--enter-delay": `${180 + index * 55}ms` } as CSSProperties}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+                <div className={styles.copy}>
+                  <h1 className={styles.name} data-chaos-words>
+                    {homeHeroTitle}
+                  </h1>
 
-            <section aria-labelledby="selected-work" className={styles.workList}>
-              <h2 id="selected-work" className={styles.srOnly}>
-                Selected work
-              </h2>
+                  <div className={styles.summary} data-chaos-words>
+                    {homeHeroDescriptionLines.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <nav aria-label="Homepage" className={styles.nav}>
+                {copy.navItems.map((item, index) => (
+                  <Link
+                    key={item.href}
+                    href={`${item.href}?lang=${locale}`}
+                    className={styles.navLink}
+                    data-chaos-block
+                    style={{ "--enter-delay": `${180 + index * 55}ms` } as CSSProperties}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <section aria-labelledby="selected-work" className={styles.workList}>
+                <h2 id="selected-work" className={styles.srOnly}>
+                  Selected work
+                </h2>
 
               <div className={styles.workShelf} ref={workShelfRef}>
                 <div className={styles.workEntries}>
@@ -1585,8 +1596,10 @@ export function CozyWindowShade() {
               </div>
             </section>
           </div>
-        </section>
-      </div>
-    </main>
+        ) : null}
+      </section>
+    </div>
+  </div>
+</main>
   );
 }
