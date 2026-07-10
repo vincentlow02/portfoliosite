@@ -110,6 +110,12 @@
   font-weight: 500;
 }
 
+.weaveMetaLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .goeventStack {
   position: relative;
   z-index: 2;

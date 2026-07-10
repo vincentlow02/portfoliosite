@@ -159,7 +159,7 @@ export function WorkContent({
                   </Link>
                   {isWeaveAI ? (
                     <Link
-                      href="https://vincentlow02.github.io/Seminarapp-/"
+                      href="https://vincentlow02.github.io/weave-destination-experience/"
                       target="_blank"
                       rel="noreferrer noopener"
                       className={styles.item}

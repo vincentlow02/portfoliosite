@@ -24,6 +24,8 @@ const weaveLocaleCopy: Record<
     locationValue: string;
     dateLabel: string;
     dateValue: string;
+    websiteLabel: string;
+    websiteUrl: string;
     videoLabel: string;
     researchTitle: string;
     framingQuestionTitle: string;
@@ -90,6 +92,8 @@ const weaveLocaleCopy: Record<
     locationValue: "Tokyo, Japan",
     dateLabel: "Date",
     dateValue: "September 2025 → December 2025",
+    websiteLabel: "Website",
+    websiteUrl: "https://seminardesign-app.vercel.app/",
     videoLabel: "Weave AI concept preview",
     researchTitle:
       "Team Research: From 2025 Technology to Life with AI Agents in 2045",
@@ -163,6 +167,8 @@ const weaveLocaleCopy: Record<
     locationValue: "日本东京",
     dateLabel: "日期",
     dateValue: "2025 年 9 月 → 2025 年 12 月",
+    websiteLabel: "Website",
+    websiteUrl: "https://seminardesign-app.vercel.app/",
     videoLabel: "Weave AI 概念预览",
     researchTitle: "团队研究：从 2025 年技术到 2045 年 AI 代理生活",
     framingQuestionTitle: "界定问题：",
@@ -234,6 +240,8 @@ const weaveLocaleCopy: Record<
     locationValue: "東京、日本",
     dateLabel: "日付",
     dateValue: "2025 年 9 月 → 2025 年 12 月",
+    websiteLabel: "Website",
+    websiteUrl: "https://seminardesign-app.vercel.app/",
     videoLabel: "Weave AI コンセプトプレビュー",
     researchTitle:
       "チームリサーチ：2025年の技術から2045年のAIエージェントとの生活へ",
@@ -376,6 +384,19 @@ export function WeaveAIContent({
             <div className={styles.weaveMetaItem}>
               <dt className={styles.weaveMetaLabel}>{copy.dateLabel}</dt>
               <dd className={styles.weaveMetaValue}>{copy.dateValue}</dd>
+            </div>
+            <div className={styles.weaveMetaItem}>
+              <dt className={styles.weaveMetaLabel}>{copy.websiteLabel}</dt>
+              <dd className={styles.weaveMetaValue}>
+                <a
+                  className={styles.weaveMetaLink}
+                  href={copy.websiteUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  seminardesign-app.vercel.app
+                </a>
+              </dd>
             </div>
           </dl>
 
@@ -676,7 +697,7 @@ export function WeaveAIContent({
             </figure>
             <a
               className={styles.weavePrototypeLink}
-              href="https://vincentlow02.github.io/Seminarapp-/"
+              href="https://vincentlow02.github.io/weave-destination-experience/"
               target="_blank"
               rel="noreferrer"
             >
