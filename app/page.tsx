@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CozyWindowShade } from "@/components/home/cozy-window-shade";
 import { buildMetadata } from "@/lib/metadata";
+import { normalizeLocale } from "@/lib/site-locale";
 
 export const metadata: Metadata = buildMetadata({
   title: "Vincent Low Sik Ching",
@@ -9,6 +10,16 @@ export const metadata: Metadata = buildMetadata({
   pathname: "/",
 });
 
-export default function HomePage() {
-  return <CozyWindowShade variant="home" />;
+type HomePageProps = {
+  searchParams: Promise<{ lang?: string }>;
+};
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  return (
+    <CozyWindowShade
+      variant="home"
+      initialLocale={normalizeLocale(params.lang)}
+    />
+  );
 }

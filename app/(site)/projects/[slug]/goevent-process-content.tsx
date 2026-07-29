@@ -48,7 +48,7 @@ export function GoEventProcessContent({
       <div
         className={styles.localeSwitch}
         role="group"
-        aria-label="Language"
+        aria-label={copy.languageLabel}
       >
         {[
           { key: "en", label: "EN" },
@@ -78,7 +78,7 @@ export function GoEventProcessContent({
           <Link
             href={`/projects/${project.slug}?lang=${locale}`}
             className={styles.goeventBackButton}
-            aria-label="Back to project"
+            aria-label={copy.backToHomeLabel}
           >
             <svg
               aria-hidden="true"
@@ -99,7 +99,9 @@ export function GoEventProcessContent({
 
         <div className={styles.motionBlock}>
           <section className={styles.goeventProcessPageIntro}>
-            <h1 className={styles.goeventProcessPageTitle}>Design process</h1>
+            <h1 className={styles.goeventProcessPageTitle}>
+              {copy.processSectionTitle}
+            </h1>
           </section>
 
           <section id="design-process-brief" className={styles.goeventBriefBlock}>
@@ -109,11 +111,11 @@ export function GoEventProcessContent({
 
           <section
             className={styles.goeventPlatformsBoard}
-            aria-label="Platform image"
+            aria-label={copy.researchTitle}
           >
             <Image
               src="/images/projects/weave-ai/photo01.png"
-              alt="GoEvent platform references"
+              alt={copy.heroImageAlt}
               width={1356}
               height={656}
               className={styles.goeventPlatformsImage}
@@ -132,7 +134,7 @@ export function GoEventProcessContent({
           <section
             id="design-process-interview"
             className={styles.goeventQuotesSection}
-            aria-label="User insights"
+            aria-label={copy.interviewSectionTitle}
           >
             <h2 className={styles.goeventResearchTitle}>
               {copy.interviewSectionTitle}

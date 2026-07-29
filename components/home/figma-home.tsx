@@ -4,14 +4,13 @@ import { getProjects } from "@/content/projects";
 import styles from "./figma-home.module.css";
 
 const introLines = [
-  "Product designer based in Japan.",
-  "Focused on creating clear, intuitive experiences for everyday life.",
+  "Product designer from Malaysia, based in Tokyo.",
+  "I design and build clear, intuitive AI products and digital experiences.",
 ];
 
 const navItems = [
-  { label: "About", href: "/about" },
+  { label: "Notes", href: "/about" },
   { label: "Work", href: "/projects" },
-  { label: "Connect", href: "/contact" },
 ];
 
 export function FigmaHome() {

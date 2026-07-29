@@ -343,9 +343,9 @@
   margin-top: 2rem;
 }
 
-.intodayProgressTitle {
+.weaveResearchTitle.intodayProgressTitle {
   width: 100%;
-  margin-top: 3.25rem;
+  margin-top: 4.25rem;
 }
 
 .intodayProgressImage {
@@ -1860,7 +1860,7 @@
     );
   }
 
-  .intodayProgressTitle {
+  .weaveResearchTitle.intodayProgressTitle {
     width: min(calc(100vw - 3rem), calc(200% + 0.75rem));
     margin-top: 5rem;
     margin-inline: calc(

@@ -2,36 +2,82 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import type { Project } from "@/types/project";
 import type { Locale as SiteLocale } from "@/lib/site-locale";
 import styles from "./page.module.css";
 
 type WorkContentProps = {
   locale: SiteLocale;
-  title: string;
-  avatarAlt: string;
   projects: Project[];
+};
+
+type WorkItem = {
+  id: string;
+  title: string;
+  year: string;
+  category: string;
+  href: string;
+  external: boolean;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+    className?: string;
+  };
+};
+
+const WORK_UI_COPY: Record<
+  SiteLocale,
+  {
+    title: string;
+    email: string;
+    projectIndexLabel: string;
+    portfolioLabel: string;
+    languageLabel: string;
+    goeventTitle: string;
+    interactiveTitle: string;
+    lemonTitle: string;
+  }
+> = {
+  en: {
+    title: "Work",
+    email: "Email",
+    projectIndexLabel: "Project index",
+    portfolioLabel: "Portfolio projects",
+    languageLabel: "Language",
+    goeventTitle: "GoEvent (case study)",
+    interactiveTitle: "Weave AI Interactive Exhibition Experience",
+    lemonTitle: "Lemon Yuzu Fruit Tea",
+  },
+  zh: {
+    title: "项目",
+    email: "Email",
+    projectIndexLabel: "项目索引",
+    portfolioLabel: "作品项目",
+    languageLabel: "语言",
+    goeventTitle: "GoEvent（案例研究）",
+    interactiveTitle: "Weave AI 互动展览体验",
+    lemonTitle: "柠檬柚子水果茶",
+  },
+  ja: {
+    title: "制作",
+    email: "Email",
+    projectIndexLabel: "制作一覧",
+    portfolioLabel: "ポートフォリオ制作",
+    languageLabel: "言語",
+    goeventTitle: "GoEvent（ケーススタディ）",
+    interactiveTitle: "Weave AI インタラクティブ展示体験",
+    lemonTitle: "レモン柚子フルーツティー",
+  },
 };
 
 export function WorkContent({
   locale,
-  title,
-  avatarAlt,
   projects,
 }: WorkContentProps) {
-  const router = useRouter();
-  const pathname = usePathname();
   const [isReady, setIsReady] = useState(false);
-  const [currentLocale, setCurrentLocale] = useState(locale);
-
-  const handleLocaleChange = (nextLocale: SiteLocale) => {
-    const params = new URLSearchParams(window.location.search);
-    params.set("lang", nextLocale);
-    setCurrentLocale(nextLocale);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+  const copy = WORK_UI_COPY[locale];
 
   useEffect(() => {
     const fallback = window.setTimeout(() => {
@@ -43,146 +89,178 @@ export function WorkContent({
     };
   }, []);
 
+  const workItems = projects.flatMap<WorkItem>((project) => {
+    const isWeaveAI = project.slug === "weave-ai";
+    const href = `/projects/${project.slug}?lang=${locale}`;
+
+    const imageBySlug: Record<string, WorkItem["image"]> = {
+      "weave-ai": {
+        src: "/images/projects/weave-ai/weaveAI-optimized.webp",
+        width: 1800,
+        height: 1122,
+      },
+      goevent: {
+        src: "/images/projects/goevent/goevent01-optimized.webp",
+        width: 1800,
+        height: 1352,
+      },
+      intoday: {
+        src: "/images/projects/intoday/intoday-optimized.webp",
+        width: 7352,
+        height: 5328,
+      },
+      "lemon-yuzu-fruit-tea": {
+        src: "/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp",
+        width: 1491,
+        height: 1055,
+      },
+    };
+
+    const baseItem: WorkItem = {
+      id: project.slug,
+      title:
+        project.slug === "goevent"
+          ? copy.goeventTitle
+          : project.slug === "lemon-yuzu-fruit-tea"
+            ? copy.lemonTitle
+            : project.name,
+      year: project.year,
+      category: project.category,
+      href,
+      external: false,
+      image: imageBySlug[project.slug],
+    };
+
+    if (!isWeaveAI) {
+      return [baseItem];
+    }
+
+    return [
+      baseItem,
+      {
+        id: "weave-ai-interactive",
+        title: copy.interactiveTitle,
+        year: "2025",
+        category: "Interactive exhibition experience",
+        href: `/projects/weave-ai?lang=${locale}`,
+        external: false,
+        image: {
+          src: "/images/projects/weave-ai/prototype-optimized.webp",
+          width: 1536,
+          height: 1024,
+        },
+      },
+    ];
+  });
+
   return (
     <article className={styles.page} aria-labelledby="work-title">
-      <div className={styles.localeSwitch} role="group" aria-label="Language">
-        {[
-          { key: "en", label: "EN" },
-          { key: "zh", label: "中" },
-          { key: "ja", label: "日" },
-        ].map((item) => (
-          <button
-            key={item.key}
-            type="button"
-            className={`${styles.localeButton} ${
-              currentLocale === item.key ? styles.localeButtonActive : ""
-            }`}
-            onClick={() => handleLocaleChange(item.key as SiteLocale)}
-            aria-pressed={currentLocale === item.key}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-
       <div
         className={`${styles.frame} ${
           isReady ? styles.frameReady : styles.framePending
         }`}
       >
-        <Link href={`/?lang=${currentLocale}`} className={styles.avatarLink}>
-          <Image
-            src="/images/site/profile-alt.png"
-            alt={avatarAlt}
-            width={44}
-            height={44}
-            className={styles.avatar}
-            priority
-            loading="eager"
-            fetchPriority="high"
-            onLoad={() => setIsReady(true)}
-          />
-        </Link>
-
-        <section className={styles.motionBlock}>
-          <h1 id="work-title" className={styles.title}>
-            {title}
-          </h1>
-
-          <div className={styles.list}>
-            {projects.map((project) => {
-              const isWeaveAI = project.slug === "weave-ai";
-              const isGoEvent = project.slug === "goevent";
-              const isIntoDay = project.slug === "intoday";
-              const isLemonYuzu = project.slug === "lemon-yuzu-fruit-tea";
-              const href = isWeaveAI
-                ? "https://seminardesign-app.vercel.app/"
-                : isGoEvent
-                  ? "https://goevent.vercel.app/"
-                  : `/projects/${project.slug}?lang=${currentLocale}`;
-              const isExternal = isWeaveAI || isGoEvent;
-
-              return (
-                <Fragment key={project.slug}>
-                  <Link
-                    href={href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noreferrer noopener" : undefined}
-                    className={styles.item}
-                  >
-                    {isIntoDay ? (
-                      <Image
-                        src="/images/projects/intoday/intoday-optimized.webp"
-                        alt=""
-                        width={7352}
-                        height={5328}
-                        className={`${styles.itemImage} ${styles.itemImageIntoday}`}
-                        priority
-                      />
-                    ) : null}
-                    {isWeaveAI ? (
-                      <Image
-                        src="/images/projects/weave-ai/weaveAI-optimized.webp"
-                        alt=""
-                        width={1800}
-                        height={1122}
-                        className={`${styles.itemImage} ${styles.itemImageWeave}`}
-                        priority
-                      />
-                    ) : null}
-                    {isGoEvent ? (
-                      <Image
-                        src="/images/projects/goevent/goevent01-optimized.webp"
-                        alt=""
-                        width={1800}
-                        height={1352}
-                        className={`${styles.itemImage} ${styles.itemImageGoevent}`}
-                      />
-                    ) : null}
-                    {isLemonYuzu ? (
-                      <Image
-                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
-                        alt=""
-                        width={1491}
-                        height={1055}
-                        className={`${styles.itemImage} ${styles.itemImagePackaging}`}
-                      />
-                    ) : null}
-                    <span className={styles.itemTextRow}>
-                      <span className={styles.itemTitle}>
-                        {project.slug === "goevent"
-                          ? "GoEvent (case study)"
-                          : project.name}
-                      </span>
-                      <span className={styles.itemYear}>{project.year}</span>
-                    </span>
-                  </Link>
-                  {isWeaveAI ? (
-                    <Link
-                      href="https://vincentlow02.github.io/weave-destination-experience/"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={styles.item}
-                    >
-                      <Image
-                        src="/images/projects/weave-ai/prototype-optimized.webp"
-                        alt=""
-                        width={1536}
-                        height={1024}
-                        className={`${styles.itemImage} ${styles.itemImagePrototype}`}
-                      />
-                      <span className={styles.itemTextRow}>
-                        <span className={styles.itemTitle}>
-                          Weave AI Interactive Exhibition Experience
-                        </span>
-                      </span>
-                    </Link>
-                  ) : null}
-                </Fragment>
-              );
-            })}
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <Link href={`/?lang=${locale}`} className={styles.wordmark}>
+              VL
+            </Link>
+            <h1 id="work-title" className={styles.sidebarTitle}>
+              {copy.title}
+            </h1>
           </div>
-        </section>
+
+          <div className={styles.information}>
+            <div className={styles.socialLinks}>
+              <a href="mailto:lowvincent21@gmail.com">{copy.email}</a>
+              <a
+                href="https://www.linkedin.com/in/vincent-low-sik-ching/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://www.instagram.com/vincent_low02"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://github.com/vincentlow02"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <nav className={styles.projectIndex} aria-label={copy.projectIndexLabel}>
+            {workItems.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer noopener" : undefined}
+                className={styles.indexLink}
+              >
+                <span>{item.title}</span>
+              </Link>
+            ))}
+          </nav>
+
+          <nav className={styles.languageSwitch} aria-label={copy.languageLabel}>
+            {[
+              { key: "en", label: "EN" },
+              { key: "zh", label: "中" },
+              { key: "ja", label: "日" },
+            ].map((item) => (
+              <Link
+                key={item.key}
+                href={`/projects?lang=${item.key}`}
+                className={`${styles.languageLink} ${
+                  locale === item.key ? styles.languageLinkActive : ""
+                }`}
+                aria-current={locale === item.key ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </aside>
+
+        <main className={styles.content}>
+          <section className={styles.grid} aria-label={copy.portfolioLabel}>
+            {workItems.map((item, index) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer noopener" : undefined}
+                className={styles.card}
+                style={{ "--card-delay": `${120 + index * 55}ms` } as React.CSSProperties}
+              >
+                <div className={styles.imageFrame}>
+                  <Image
+                    src={item.image.src}
+                    alt=""
+                    width={item.image.width}
+                    height={item.image.height}
+                    className={styles.cardImage}
+                    priority={index < 4}
+                    sizes="(min-width: 1280px) 22vw, (min-width: 900px) 30vw, (min-width: 640px) 46vw, 100vw"
+                  />
+                </div>
+                <span className={styles.cardTitleRow}>
+                  <span className={styles.cardTitle}>{item.title}</span>
+                  <span className={styles.cardYear}>{item.year}</span>
+                </span>
+              </Link>
+            ))}
+          </section>
+        </main>
       </div>
     </article>
   );

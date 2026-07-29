@@ -1,136 +1,85 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { localeCopy, normalizeLocale } from "@/lib/site-locale";
+import type { Locale as SiteLocale } from "@/lib/site-locale";
 import styles from "./page.module.css";
 
-export function AboutContent() {
-  const searchParams = useSearchParams();
-  const locale = normalizeLocale(searchParams.get("lang") ?? undefined);
-  const copy = localeCopy[locale];
-  const [isReady, setIsReady] = useState(false);
-  const [isSunny, setIsSunny] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+const NOTES_COPY: Record<
+  SiteLocale,
+  {
+    title: string;
+    date: string;
+    articleTitle: string;
+    excerpt: string;
+    lang: string;
+  }
+> = {
+  en: {
+    title: "Notes",
+    date: "July 28, 2026",
+    articleTitle: "What I Learned Designing My First AI Agent",
+    excerpt:
+      "Practical insights from a designer’s experience building an AI agent product—from defining user outcomes and agent workflows to translating complex AI processes into clear, understandable product experiences.",
+    lang: "en",
+  },
+  zh: {
+    title: "笔记",
+    date: "2026年7月28日",
+    articleTitle: "设计第一个 AI Agent 时学到的事",
+    excerpt:
+      "一位设计师关于定义用户目标、设计 Agent 工作流程，以及将复杂的 AI 过程转化为清晰易懂产品体验的思考。",
+    lang: "zh-CN",
+  },
+  ja: {
+    title: "ノート",
+    date: "2026年7月28日",
+    articleTitle: "初めてのAIエージェント設計から学んだこと",
+    excerpt:
+      "ユーザーの目標設定、エージェントのワークフロー設計、そして複雑なAIプロセスを明快で理解しやすいプロダクト体験へ変換することについての、デザイナーとしての振り返り。",
+    lang: "ja",
+  },
+};
 
-  useEffect(() => {
-    const fallback = window.setTimeout(() => {
-      setIsReady(true);
-    }, 220);
+type AboutContentProps = {
+  locale: SiteLocale;
+};
 
-    return () => {
-      window.clearTimeout(fallback);
-    };
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (!video) {
-      return;
-    }
-
-    if (isSunny) {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-      return;
-    }
-
-    video.pause();
-    video.currentTime = 0;
-  }, [isSunny]);
+export function AboutContent({ locale }: AboutContentProps) {
+  const copy = NOTES_COPY[locale];
 
   return (
     <main className={styles.page}>
-      <div
-        className={`${styles.sunOverlay} ${isSunny ? styles.sunOverlayActive : ""}`}
-        aria-hidden="true"
-      >
-        <div className={styles.sunOverlayTint} />
-        <video
-          ref={videoRef}
-          className={styles.sunOverlayVideo}
-          src="https://theme-switch.pages.dev/assets/leaves.mp4"
-          loop
-          muted
-          playsInline
-          preload="none"
-        />
-      </div>
-      <button
-        type="button"
-        className={`${styles.sunToggle} ${isSunny ? styles.sunToggleActive : ""}`}
-        onClick={() => setIsSunny((current) => !current)}
-        role="switch"
-        aria-checked={isSunny}
-        aria-label="Let the sun in"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="4" />
-          <line x1="12" y1="2" x2="12" y2="4.5" />
-          <line x1="12" y1="19.5" x2="12" y2="22" />
-          <line x1="4.93" y1="4.93" x2="6.7" y2="6.7" />
-          <line x1="17.3" y1="17.3" x2="19.07" y2="19.07" />
-          <line x1="2" y1="12" x2="4.5" y2="12" />
-          <line x1="19.5" y1="12" x2="22" y2="12" />
-          <line x1="4.93" y1="19.07" x2="6.7" y2="17.3" />
-          <line x1="17.3" y1="6.7" x2="19.07" y2="4.93" />
-        </svg>
-      </button>
-      <div className={`${styles.frame} ${isReady ? styles.frameReady : styles.framePending}`}>
-        <Link
-          href={`/?lang=${locale}`}
-          className={styles.avatarWrap}
-          aria-label="Back to home"
-        >
-          <Image
-            src="/images/site/profile-alt.png"
-            alt="Portrait of Vincent Low Sik Ching"
-            width={56}
-            height={56}
-            className={styles.avatar}
-            priority
-            loading="eager"
-            fetchPriority="high"
-            onLoad={() => setIsReady(true)}
-          />
-        </Link>
+      <div className={styles.frame}>
+        <header className={styles.header}>
+          <Link href={`/?lang=${locale}`} className={styles.nameLink}>
+            VL
+          </Link>
+          <nav className={styles.nav} aria-label={copy.title}>
+            <span aria-current="page">{copy.title}</span>
+          </nav>
+        </header>
 
-        <div className={styles.motionBlock}>
-          <div className={styles.titleRow}>
-            <h1 className={styles.title}>{copy.aboutTitle}</h1>
+        <section className={styles.notes} aria-labelledby="notes-title">
+          <h1 id="notes-title" className={styles.title}>
+            {copy.title}
+          </h1>
+
+          <article className={styles.note}>
+            <time className={styles.date} dateTime="2026-07-28">
+              {copy.date}
+            </time>
             <a
-              href="https://student.redesigner.jp/students/c826c67af54aeecf009cddbe3b873303"
+              href="https://note.com/vincentlow/n/nafc5e5d3a3a6?app_launch=false"
               target="_blank"
               rel="noreferrer noopener"
-              className={styles.portfolioLink}
+              className={styles.noteTitle}
+              lang={copy.lang}
             >
-              VIEW PORTFOLIO
+              {copy.articleTitle}
             </a>
-          </div>
-
-          <div className={styles.copy}>
-            {copy.aboutParagraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-
-          <Link href={`/contact?lang=${locale}`} className={styles.connect}>
-            {copy.connectLabel}
-          </Link>
-        </div>
+            <p className={styles.excerpt} lang={copy.lang}>
+              {copy.excerpt}
+            </p>
+          </article>
+        </section>
       </div>
     </main>
   );

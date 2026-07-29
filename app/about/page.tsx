@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { buildMetadata } from "@/lib/metadata";
+import { normalizeLocale } from "@/lib/site-locale";
 import { AboutContent } from "./about-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About",
-  description:
-    "About Vincent Low Sik Ching, an Industrial Design student at Tokyo Zokei University.",
+  title: "Notes",
+  description: "Selected writing and notes by Vincent Low Sik Ching.",
   pathname: "/about",
 });
 
-export default function AboutPage() {
-  return (
-    <Suspense>
-      <AboutContent />
-    </Suspense>
-  );
+type AboutPageProps = {
+  searchParams: Promise<{ lang?: string }>;
+};
+
+export default async function AboutPage({ searchParams }: AboutPageProps) {
+  const params = await searchParams;
+  return <AboutContent locale={normalizeLocale(params.lang)} />;
 }

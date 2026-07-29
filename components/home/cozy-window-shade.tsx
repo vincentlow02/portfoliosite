@@ -3,26 +3,110 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, MutableRefObject } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getProjects } from "@/content/projects";
 import {
   localeCopy as sharedLocaleCopy,
-  normalizeLocale,
   type Locale as SiteLocale,
 } from "@/lib/site-locale";
-import { createHomeChaosController } from "@/components/home/home-chaos";
 import styles from "@/components/home/cozy-window-shade.module.css";
 
 type RGB = [number, number, number];
 type ThemeMode = "default" | "sunny" | "rain";
 type StopAudio = () => void;
+type LabLocationKey = "tokyo" | "singapore" | "thailand" | "johor-bahru";
 const AUDIO_VISUAL_LEAD_MS = 320;
-const SHADE_AMBIENCE_SRC = "/audio/shade-ambience.m4a";
 const SUNNY_AMBIENCE_SRC = "/audio/sunny-ambience.mp3";
-const LOOP_VOLUMES: Record<Exclude<ThemeMode, "rain">, number> = {
-  default: 0.94,
-  sunny: 0.9,
+const SUNNY_LOOP_VOLUME = 0.9;
+
+const LAB_LOCATIONS: Record<
+  LabLocationKey,
+  { background: string; position: string; size: string }
+> = {
+  tokyo: {
+    background: "/images/lab/product-lab-sky.png",
+    position: "center top",
+    size: "cover",
+  },
+  singapore: {
+    background: "/images/lab/location-singapore.jpg",
+    position: "center center",
+    size: "cover",
+  },
+  thailand: {
+    background: "/images/lab/location-thailand.jpg",
+    position: "center center",
+    size: "cover",
+  },
+  "johor-bahru": {
+    background: "/images/lab/location-johor-bahru.png",
+    position: "12% center",
+    size: "auto 116%",
+  },
 };
+
+function distanceInKm(
+  latitudeA: number,
+  longitudeA: number,
+  latitudeB: number,
+  longitudeB: number,
+) {
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+  const latitudeDelta = toRadians(latitudeB - latitudeA);
+  const longitudeDelta = toRadians(longitudeB - longitudeA);
+  const startLatitude = toRadians(latitudeA);
+  const endLatitude = toRadians(latitudeB);
+  const haversine =
+    Math.sin(latitudeDelta / 2) ** 2 +
+    Math.cos(startLatitude) *
+      Math.cos(endLatitude) *
+      Math.sin(longitudeDelta / 2) ** 2;
+
+  return (
+    earthRadiusKm *
+    2 *
+    Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine))
+  );
+}
+
+function resolveLabLocation(latitude: number, longitude: number): LabLocationKey {
+  const isSingaporeOrJohor =
+    latitude >= 1.1 &&
+    latitude <= 1.8 &&
+    longitude >= 103.45 &&
+    longitude <= 104.15;
+
+  if (isSingaporeOrJohor) {
+    const singaporeDistance = distanceInKm(
+      latitude,
+      longitude,
+      1.3521,
+      103.8198,
+    );
+    const johorDistance = distanceInKm(
+      latitude,
+      longitude,
+      1.4927,
+      103.7414,
+    );
+
+    return johorDistance < singaporeDistance ? "johor-bahru" : "singapore";
+  }
+
+  const isThailand =
+    latitude >= 5.5 &&
+    latitude <= 20.5 &&
+    longitude >= 97 &&
+    longitude <= 106;
+
+  return isThailand ? "thailand" : "tokyo";
+}
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -217,16 +301,164 @@ function startRainAmbience(context: AudioContext): StopAudio {
 
 type CozyWindowShadeProps = {
   variant: "home" | "atmosphere";
+  initialLocale?: SiteLocale;
 };
 
-export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
+const HOME_UI_COPY: Record<
+  SiteLocale,
+  {
+    nav: Record<"work" | "lab" | "notes", string>;
+    selectedWork: string;
+    viewAllWork: string;
+    goeventTitle: string;
+    themeModeLabel: string;
+    shadeModeLabel: string;
+    sunnyModeLabel: string;
+    rainyModeLabel: string;
+    playAudioLabel: string;
+    pauseAudioLabel: string;
+  }
+> = {
+  en: {
+    nav: { work: "Work", lab: "Lab", notes: "Notes" },
+    selectedWork: "Selected work",
+    viewAllWork: "View all work →",
+    goeventTitle: "GoEvent (case study)",
+    themeModeLabel: "Theme mode",
+    shadeModeLabel: "Switch to shade mode",
+    sunnyModeLabel: "Switch to sunny mode",
+    rainyModeLabel: "Switch to rainy mode",
+    playAudioLabel: "Play ambient audio",
+    pauseAudioLabel: "Pause ambient audio",
+  },
+  zh: {
+    nav: { work: "项目", lab: "实验", notes: "笔记" },
+    selectedWork: "精选项目",
+    viewAllWork: "查看全部项目 →",
+    goeventTitle: "GoEvent（案例研究）",
+    themeModeLabel: "主题模式",
+    shadeModeLabel: "切换到窗影模式",
+    sunnyModeLabel: "切换到晴天模式",
+    rainyModeLabel: "切换到雨天模式",
+    playAudioLabel: "播放环境音",
+    pauseAudioLabel: "暂停环境音",
+  },
+  ja: {
+    nav: { work: "制作", lab: "ラボ", notes: "ノート" },
+    selectedWork: "注目の制作",
+    viewAllWork: "すべての制作を見る →",
+    goeventTitle: "GoEvent（ケーススタディ）",
+    themeModeLabel: "テーマモード",
+    shadeModeLabel: "シェードモードに切り替え",
+    sunnyModeLabel: "晴れモードに切り替え",
+    rainyModeLabel: "雨モードに切り替え",
+    playAudioLabel: "環境音を再生",
+    pauseAudioLabel: "環境音を一時停止",
+  },
+};
+
+const LAB_UI_COPY: Record<
+  SiteLocale,
+  {
+    title: string;
+    intro: string;
+    currentCity: string;
+    cities: Record<LabLocationKey, string>;
+    liveProduct: string;
+    launchCurio: string;
+    openLiveProductLabel: string;
+    launchCurioLabel: string;
+    projectType: string;
+    projectDescription: string;
+    accessCodeLabel: string;
+    projectMeta: string;
+    homeLabel: string;
+  }
+> = {
+  en: {
+    title: "Product Lab",
+    intro:
+      "Exploring AI products through design, prototyping, and implementation.",
+    currentCity: "Currently city",
+    cities: {
+      tokyo: "Tokyo",
+      singapore: "Singapore",
+      thailand: "Thailand",
+      "johor-bahru": "Johor Bahru",
+    },
+    liveProduct: "Live product",
+    launchCurio: "Launch Curio",
+    openLiveProductLabel: "Open the live Curio product in a new tab",
+    launchCurioLabel: "Launch Curio in a new tab",
+    projectType: "Tokyo Collectible Discovery Agent",
+    projectDescription:
+      "Built during the Agent Forge Hackathon, Curio is an AI agent that helps users identify Japanese second-hand collectibles, understand market prices, and discover where to find them in Tokyo.",
+    accessCodeLabel: "Demo access code",
+    projectMeta: "Hackathon Project · AI Product Design & Development · 2026",
+    homeLabel: "Return to Home",
+  },
+  zh: {
+    title: "产品实验室",
+    intro: "通过设计、原型制作与实现，探索 AI 产品。",
+    currentCity: "当前城市",
+    cities: {
+      tokyo: "东京",
+      singapore: "新加坡",
+      thailand: "泰国",
+      "johor-bahru": "新山",
+    },
+    liveProduct: "在线产品",
+    launchCurio: "打开 Curio",
+    openLiveProductLabel: "在新标签页打开 Curio 在线产品",
+    launchCurioLabel: "在新标签页打开 Curio",
+    projectType: "东京收藏品探索智能体",
+    projectDescription:
+      "Curio 是在 Agent Forge 黑客松期间构建的 AI 智能体，帮助用户识别日本二手收藏品、了解市场价格，并探索在东京哪里可以找到它们。",
+    accessCodeLabel: "演示访问码",
+    projectMeta: "黑客松项目 · AI 产品设计与开发 · 2026",
+    homeLabel: "返回首页",
+  },
+  ja: {
+    title: "プロダクトラボ",
+    intro:
+      "デザイン、プロトタイピング、実装を通じてAIプロダクトを探求しています。",
+    currentCity: "現在地",
+    cities: {
+      tokyo: "東京",
+      singapore: "シンガポール",
+      thailand: "タイ",
+      "johor-bahru": "ジョホールバル",
+    },
+    liveProduct: "ライブプロダクト",
+    launchCurio: "Curioを開く",
+    openLiveProductLabel: "Curioのライブプロダクトを新しいタブで開く",
+    launchCurioLabel: "Curioを新しいタブで開く",
+    projectType: "東京コレクティブル探索エージェント",
+    projectDescription:
+      "Agent Forgeハッカソンで開発したCurioは、日本の中古コレクティブルの識別、市場価格の把握、東京で購入できる場所の発見を支援するAIエージェントです。",
+    accessCodeLabel: "デモアクセスコード",
+    projectMeta:
+      "ハッカソンプロジェクト · AIプロダクトデザイン＆開発 · 2026",
+    homeLabel: "ホームに戻る",
+  },
+};
+
+export function CozyWindowShade({
+  variant,
+  initialLocale = "en",
+}: CozyWindowShadeProps) {
   const projects = getProjects();
   const isHome = variant === "home";
   const homeHeroTitle = "Vincent Low Sik Ching";
+  const homeNavItems = [
+    { key: "work", href: "/projects" },
+    { key: "lab", href: "/atmosphere" },
+    { key: "notes", href: "/about" },
+  ] as const;
   const homeProjects = [
     {
       slug: "intoday",
-      name: "IntoDay",
+      name: "Sogdia",
       year: "2026",
       category: "",
       url: undefined,
@@ -236,10 +468,10 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
         ? [
             project,
             {
-              slug: "lemon-yuzu-fruit-tea",
-              name: "Lemon Yuzu Fruit Tea",
-              year: "2024",
-              category: "Packaging Design Concept",
+              slug: "all-work",
+              name: "View all work →",
+              year: "",
+              category: "",
               url: undefined,
             },
           ]
@@ -256,7 +488,6 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
   const workShelfRef = useRef<HTMLDivElement | null>(null);
   const workPreviewStageRef = useRef<HTMLDivElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const chaosControllerRef = useRef<ReturnType<typeof createHomeChaosController> | null>(null);
   const stopAmbientAudioRef = useRef<StopAudio | null>(null);
   const pendingPlayTimeoutRef = useRef<number | null>(null);
   const ambientRequestRef = useRef(0);
@@ -267,30 +498,20 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
   const fadeValueRef = useRef(0);
   const lastTimeRef = useRef(0);
   const [rotation, setRotation] = useState(0);
-  const [themeMode, setThemeMode] = useState<ThemeMode>("default");
+  const [themeMode, setThemeMode] = useState<ThemeMode>("sunny");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isAudioPressing, setIsAudioPressing] = useState(false);
-  const [hasAudioInteracted, setHasAudioInteracted] = useState(false);
-  const [isChaosActive, setIsChaosActive] = useState(false);
+  const [, setHasAudioInteracted] = useState(false);
   const [isHomeReady, setIsHomeReady] = useState(false);
   const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null);
   const [workPreviewTop, setWorkPreviewTop] = useState(0);
-  const [locale, setLocale] = useState<SiteLocale>(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    return normalizeLocale(params.get("lang") ?? undefined);
-  });
+  const [locale, setLocale] = useState<SiteLocale>(initialLocale);
+  const [labLocation, setLabLocation] = useState<LabLocationKey>("tokyo");
 
   const copy = sharedLocaleCopy[locale];
+  const homeUiCopy = HOME_UI_COPY[locale];
+  const labUiCopy = LAB_UI_COPY[locale];
   const homeHeroDescriptionLines = copy.introLines;
-  const audioPrompt = isAudioPlaying
-    ? copy.audioLabels.playing
-    : hasAudioInteracted
-      ? copy.audioLabels.muted
-      : copy.audioLabels.idle;
+  const activeLabLocation = LAB_LOCATIONS[labLocation];
 
   const handleLocaleChange = (nextLocale: SiteLocale) => {
     setLocale(nextLocale);
@@ -307,20 +528,6 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
   };
 
   useEffect(() => {
-    if (!sceneRef.current) {
-      return;
-    }
-
-    const controller = createHomeChaosController(sceneRef.current);
-    chaosControllerRef.current = controller;
-
-    return () => {
-      controller.cleanup();
-      chaosControllerRef.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
     const fallback = window.setTimeout(() => {
       setIsHomeReady(true);
     }, 260);
@@ -329,6 +536,26 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
       window.clearTimeout(fallback);
     };
   }, []);
+
+  useEffect(() => {
+    if (isHome || !navigator.geolocation) {
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setLabLocation(resolveLabLocation(coords.latitude, coords.longitude));
+      },
+      () => {
+        setLabLocation("tokyo");
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 30 * 60 * 1000,
+      },
+    );
+  }, [isHome]);
 
   useEffect(() => {
     isAudioPlayingRef.current = isAudioPlaying;
@@ -460,11 +687,16 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
       return true;
     }
 
+    if (mode === "default") {
+      isAmbientStartedRef.current = false;
+      return false;
+    }
+
     if (audioRef.current) {
       const stop = await startLoopingTrack(
         audioRef.current,
-        mode === "default" ? SHADE_AMBIENCE_SRC : SUNNY_AMBIENCE_SRC,
-        LOOP_VOLUMES[mode],
+        SUNNY_AMBIENCE_SRC,
+        SUNNY_LOOP_VOLUME,
       );
 
       if (!stop) {
@@ -538,12 +770,11 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
     activateTheme("sunny");
   }, [activateTheme]);
 
-  const triggerChaos = useCallback(() => {
-    setIsChaosActive((current) => !current);
-    void chaosControllerRef.current?.toggle();
-  }, []);
-
   useEffect(() => {
+    if (!isHome) {
+      return;
+    }
+
     const handleKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       const tagName = target?.tagName;
@@ -566,9 +797,6 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
         case "a":
           void toggleAudio();
           break;
-        case "c":
-          triggerChaos();
-          break;
         default:
           break;
       }
@@ -579,7 +807,7 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activateSunnyTheme, activateTheme, toggleAudio, triggerChaos]);
+  }, [activateSunnyTheme, activateTheme, isHome, toggleAudio]);
 
   useEffect(() => {
     const element = audioPullRef.current;
@@ -1198,122 +1426,88 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
   }, [themeMode]);
 
   return (
-    <main ref={sceneRef} className={styles.scene}>
-      <div className={styles.backgroundLayer} aria-hidden="true">
-        <audio
-          ref={audioRef}
-          loop
-          preload="auto"
-        />
+    <main
+      ref={sceneRef}
+      className={`${styles.scene} ${
+        isHome ? styles.homeScene : styles.labScene
+      }`}
+      style={
+        !isHome
+          ? ({
+              "--lab-background-image": `url("${activeLabLocation.background}")`,
+              "--lab-background-position": activeLabLocation.position,
+              "--lab-background-size": activeLabLocation.size,
+            } as CSSProperties)
+          : undefined
+      }
+    >
+      {isHome ? (
+        <div
+          className={`${styles.backgroundLayer} ${styles.sharedBackground} ${styles.homeSharedBackground}`}
+          aria-hidden="true"
+        >
+          <>
+            <div
+              className={`${styles.sunnyAtmosphere} ${styles.homeBambooAtmosphere}`}
+              aria-hidden="true"
+            >
+              <video
+                ref={leavesVideoRef}
+                className={styles.leavesVideo}
+                src="https://theme-switch.pages.dev/assets/leaves.mp4"
+                muted
+                loop
+                playsInline
+                preload="auto"
+              />
+            </div>
 
-        <div className={styles.sunnyAtmosphere} aria-hidden="true">
-          <video
-            ref={leavesVideoRef}
-            className={styles.leavesVideo}
-            src="https://theme-switch.pages.dev/assets/leaves.mp4"
-            muted
-            loop
-            playsInline
-            preload="auto"
-          />
+            <div className={styles.rainAtmosphere} aria-hidden="true">
+              <div className={styles.rainFog} />
+              <canvas ref={rainCanvasRef} className={styles.rainCanvas} />
+            </div>
+          </>
         </div>
+      ) : null}
 
-        <div className={styles.rainAtmosphere} aria-hidden="true">
-          <div className={styles.rainFog} />
-          <canvas ref={rainCanvasRef} className={styles.rainCanvas} />
-        </div>
-
-        <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
-      </div>
+      <Link
+        href={`/?lang=${locale}`}
+        className={styles.sharedBrand}
+        aria-label={isHome ? "Home" : labUiCopy.homeLabel}
+      >
+        VL
+      </Link>
 
       <div className={styles.contentLayer}>
-        <div className={styles.page}>
-          <aside className={styles.rail}>
-            <button
-              ref={audioPullRef}
-              data-chaos-block
-              type="button"
-              className={`${styles.audioPull} ${isAudioPlaying ? styles.audioPullActive : ""} ${
-                isAudioPressing ? styles.audioPullPressing : ""
-              }`}
-            onClick={() => {
-              void toggleAudio();
-            }}
-            onPointerDown={() => setIsAudioPressing(true)}
-            onPointerUp={() => setIsAudioPressing(false)}
-            onPointerCancel={() => setIsAudioPressing(false)}
-            onPointerLeave={() => setIsAudioPressing(false)}
-            onBlur={() => setIsAudioPressing(false)}
-            aria-pressed={isAudioPlaying}
-            aria-label={isAudioPlaying ? "Pause ambient audio" : "Play ambient audio"}
-          >
-            <span className={styles.audioHaloOuter} aria-hidden="true" />
-            <span className={styles.audioHaloInner} aria-hidden="true" />
-            <span className={styles.audioLine} aria-hidden="true" />
-              <span
-                className={styles.audioKnob}
-                aria-hidden="true"
-              />
-              <span className={styles.audioLabel} aria-hidden="true">
-                {audioPrompt}
-              </span>
-            </button>
-          </aside>
-
-        <section className={styles.content}>
-          <div className={styles.controls}>
+        <div className={`${styles.page} ${!isHome ? styles.labPage : ""}`}>
+        <section
+          className={`${styles.content} ${!isHome ? styles.labContent : ""}`}
+        >
+          {isHome ? (
+            <div className={styles.controls}>
             <div
               className={styles.modeSwitch}
               role="group"
-              aria-label="Theme mode"
+              aria-label={homeUiCopy.themeModeLabel}
             >
               <button
                 type="button"
-                className={`${styles.shortcutHint} ${
-                  isChaosActive ? styles.shortcutHintActive : ""
-                }`}
-                onClick={triggerChaos}
-                aria-label="Trigger crash effect"
-                aria-pressed={isChaosActive}
-              >
-                C
-              </button>
-              <button
-                data-chaos-block
-                type="button"
-                className={`${styles.toggle} ${themeMode === "default" ? styles.toggleActive : ""}`}
-                onClick={() => activateTheme("default")}
-                aria-pressed={themeMode === "default"}
-                aria-label="Switch to shade mode"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  >
-                    <rect x="4" y="4" width="16" height="16" rx="1.5" />
-                    <path d="M12 4V20" />
-                    <path d="M4 12H20" />
-                  </svg>
-                </button>
-
-              <button
-                data-chaos-block
-                type="button"
                 className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
-                onClick={activateSunnyTheme}
+                onClick={() => {
+                  if (themeMode === "sunny") {
+                    activateTheme("default");
+                    return;
+                  }
+
+                  activateSunnyTheme();
+                }}
                 style={
                   themeMode === "sunny"
                     ? { transform: `rotate(${rotation}deg)` }
                     : undefined
                 }
                 aria-pressed={themeMode === "sunny"}
-                aria-label="Switch to sunny mode"
+                aria-label={homeUiCopy.sunnyModeLabel}
               >
                 <svg
                   width="24"
@@ -1345,12 +1539,13 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
               </button>
 
               <button
-                data-chaos-block
                 type="button"
                 className={`${styles.toggle} ${themeMode === "rain" ? styles.toggleActive : ""}`}
-                onClick={() => activateTheme("rain")}
+                onClick={() =>
+                  activateTheme(themeMode === "rain" ? "default" : "rain")
+                }
                 aria-pressed={themeMode === "rain"}
-                aria-label="Switch to rainy mode"
+                aria-label={homeUiCopy.rainyModeLabel}
               >
                 <svg
                   width="24"
@@ -1370,6 +1565,91 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
               </button>
             </div>
           </div>
+          ) : null}
+
+          {!isHome ? (
+            <div className={styles.labWindowShell}>
+              <div className={styles.labWindowChrome}>
+                <p className={styles.labCity}>
+                  {labUiCopy.currentCity} ——{" "}
+                  {labUiCopy.cities[labLocation]}
+                </p>
+              </div>
+
+              <div className={styles.labMain}>
+                <section
+                  className={styles.labIntro}
+                  aria-labelledby="product-lab-title"
+                >
+                  <h1 id="product-lab-title" className={styles.labTitle}>
+                    {labUiCopy.title}
+                  </h1>
+                  <div className={styles.labCopy}>
+                    <p>{labUiCopy.intro}</p>
+                  </div>
+                </section>
+
+                <section
+                  className={styles.labFeatured}
+                  aria-labelledby="featured-project-title"
+                >
+                  <p className={styles.labSectionLabel}>01</p>
+                  <article className={styles.labFeaturedCard}>
+                    <a
+                      href="https://curio-web-production-49c7.up.railway.app/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className={styles.labFeaturedMedia}
+                      aria-label={labUiCopy.openLiveProductLabel}
+                    >
+                      <Image
+                        src="/images/lab/curio-figma.png"
+                        alt="Curio identifying and researching a Pokémon collectible card"
+                        width={2229}
+                        height={1203}
+                        className={styles.labFeaturedImage}
+                        sizes="(max-width: 760px) 88vw, 380px"
+                      />
+                      <span className={styles.labLiveBadge}>
+                        {labUiCopy.liveProduct}{" "}
+                        <span aria-hidden="true">↗</span>
+                      </span>
+                    </a>
+
+                    <div className={styles.labFeaturedDetails}>
+                      <div className={styles.labFeaturedHeading}>
+                        <h2 id="featured-project-title">Curio</h2>
+                        <a
+                          href="https://curio-web-production-49c7.up.railway.app/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.labLaunchLink}
+                          aria-label={labUiCopy.launchCurioLabel}
+                        >
+                          {labUiCopy.launchCurio}{" "}
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      </div>
+                      <div className={styles.labFeaturedCopy}>
+                        <p className={styles.labFeaturedType}>
+                          {labUiCopy.projectType}
+                        </p>
+                        <p className={styles.labFeaturedDescription}>
+                          {labUiCopy.projectDescription}
+                        </p>
+                        <p className={styles.labAccessCode}>
+                          {labUiCopy.accessCodeLabel} <code>agentforge</code>
+                        </p>
+                      </div>
+                      <p className={styles.labFeaturedMeta}>
+                        {labUiCopy.projectMeta}
+                      </p>
+                    </div>
+                  </article>
+                </section>
+              </div>
+            </div>
+          ) : null}
 
           {isHome ? (
             <div
@@ -1378,7 +1658,7 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
               }`}
             >
               <section className={styles.introBlock}>
-                <div className={styles.portraitFrame} data-chaos-block>
+                <div className={styles.portraitFrame}>
                   <Image
                     src="/images/site/home-portrait.png"
                     alt="Portrait of Vincent Low Sik Ching"
@@ -1393,11 +1673,11 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
                 </div>
 
                 <div className={styles.copy}>
-                  <h1 className={styles.name} data-chaos-words>
+                  <h1 className={styles.name}>
                     {homeHeroTitle}
                   </h1>
 
-                  <div className={styles.summary} data-chaos-words>
+                  <div className={styles.summary}>
                     {homeHeroDescriptionLines.map((line) => (
                       <p key={line}>{line}</p>
                     ))}
@@ -1406,49 +1686,52 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
               </section>
 
               <nav aria-label="Homepage" className={styles.nav}>
-                {copy.navItems.map((item, index) => (
+                {homeNavItems.map((item, index) => (
                   <Link
                     key={item.href}
                     href={`${item.href}?lang=${locale}`}
                     className={styles.navLink}
-                    data-chaos-block
                     style={{ "--enter-delay": `${180 + index * 55}ms` } as CSSProperties}
                   >
-                    {item.label}
+                    {homeUiCopy.nav[item.key]}
                   </Link>
                 ))}
               </nav>
 
               <section aria-labelledby="selected-work" className={styles.workList}>
                 <h2 id="selected-work" className={styles.srOnly}>
-                  Selected work
+                  {homeUiCopy.selectedWork}
                 </h2>
 
               <div className={styles.workShelf} ref={workShelfRef}>
                 <div className={styles.workEntries}>
                   {homeProjects.map((project, index) => {
-                    const href = project.url ?? `/projects/${project.slug}?lang=${locale}`;
+                    const isAllWorkLink = project.slug === "all-work";
+                    const href = isAllWorkLink
+                      ? `/projects?lang=${locale}`
+                      : project.url ?? `/projects/${project.slug}?lang=${locale}`;
                     const isExternal = !!project.url;
-                    const isLemonProject = project.slug === "lemon-yuzu-fruit-tea";
                     const category =
                       project.slug === "intoday"
                         ? ""
                         : copy.projectCategories[project.slug] ?? project.category;
                     const displayTitle =
-                      project.slug === "goevent"
-                        ? "GoEvent (case study)"
-                        : project.name;
-                    const displayMeta = isLemonProject
-                      ? "2024 Packaging Design Concept"
-                      : `${project.year}${category ? ` . ${category}` : ""}`;
+                      project.slug === "all-work"
+                        ? homeUiCopy.viewAllWork
+                        : project.slug === "goevent"
+                          ? homeUiCopy.goeventTitle
+                          : project.name;
+                    const displayMeta = `${project.year}${category ? ` . ${category}` : ""}`;
                     const itemContent = (
                       <>
-                        <span className={styles.workTitle} data-chaos-words>
+                        <span className={styles.workTitle}>
                           {displayTitle}
                         </span>
-                        <span className={styles.workMeta} data-chaos-words>
-                          {displayMeta}
-                        </span>
+                        {displayMeta ? (
+                          <span className={styles.workMeta}>
+                            {displayMeta}
+                          </span>
+                        ) : null}
                       </>
                     );
 
@@ -1460,16 +1743,22 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
                         rel={isExternal ? "noopener noreferrer" : undefined}
                         className={styles.workItem}
                         style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
-                        onMouseEnter={(event) =>
-                          updateWorkPreview(project.slug, event.currentTarget)
+                        onMouseEnter={
+                          isAllWorkLink
+                            ? undefined
+                            : (event) =>
+                                updateWorkPreview(project.slug, event.currentTarget)
                         }
                         onMouseLeave={() =>
                           setHoveredProjectSlug((current) =>
                             current === project.slug ? null : current,
                           )
                         }
-                        onFocus={(event) =>
-                          updateWorkPreview(project.slug, event.currentTarget)
+                        onFocus={
+                          isAllWorkLink
+                            ? undefined
+                            : (event) =>
+                                updateWorkPreview(project.slug, event.currentTarget)
                         }
                         onBlur={() =>
                           setHoveredProjectSlug((current) =>
@@ -1520,29 +1809,10 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
                     <div className={styles.intodayPreviewMedia}>
                       <Image
                         src="/images/projects/intoday/intoday.jpg"
-                        alt="IntoDay preview"
+                        alt="Sogdia preview"
                         width={1681}
                         height={979}
                         className={styles.intodayPreviewImage}
-                        sizes="(min-width: 1040px) 13rem, 100vw"
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={`${styles.workPreviewCard} ${
-                      hoveredProjectSlug === "lemon-yuzu-fruit-tea"
-                        ? styles.workPreviewCardVisible
-                        : ""
-                    } ${styles.packagingPreview}`}
-                  >
-                    <div className={styles.packagingPreviewMedia}>
-                      <Image
-                        src="/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp"
-                        alt="Lemon Yuzu Fruit Tea packaging preview"
-                        width={1491}
-                        height={1055}
-                        className={styles.packagingPreviewImage}
                         sizes="(min-width: 1040px) 13rem, 100vw"
                       />
                     </div>
@@ -1570,33 +1840,83 @@ export function CozyWindowShade({ variant }: CozyWindowShadeProps) {
                 </div>
               </div>
 
-              <div
-                className={styles.localeSwitch}
-                role="group"
-                aria-label="Language"
-              >
-                {[
-                  { key: "en", label: "EN" },
-                  { key: "zh", label: "中" },
-                  { key: "ja", label: "日" },
-                ].map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    className={`${styles.localeButton} ${
-                      locale === item.key ? styles.localeButtonActive : ""
-                    }`}
-                    data-chaos-block
-                    onClick={() => handleLocaleChange(item.key as SiteLocale)}
-                    aria-pressed={locale === item.key}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+              <footer className={styles.homeFooter}>
+                <nav
+                  className={styles.contactLinks}
+                  aria-label="Contact links"
+                >
+                  {[
+                    {
+                      label: "X",
+                      href: "https://x.com/vdhhhl?s=21",
+                    },
+                    {
+                      label: "LinkedIn",
+                      href:
+                        "https://www.linkedin.com/in/vincent-low-sik-ching/",
+                    },
+                    {
+                      label: "Instagram",
+                      href: "https://www.instagram.com/vincent_low02",
+                    },
+                    {
+                      label: "Gmail",
+                      href: "mailto:lowvincent21@gmail.com",
+                    },
+                  ].map((item, index) => (
+                    <span key={item.label} className={styles.contactItem}>
+                      {index > 0 ? (
+                        <span
+                          className={styles.contactSeparator}
+                          aria-hidden="true"
+                        >
+                          ·
+                        </span>
+                      ) : null}
+                      <a
+                        href={item.href}
+                        target={
+                          item.href.startsWith("mailto:") ? undefined : "_blank"
+                        }
+                        rel={
+                          item.href.startsWith("mailto:")
+                            ? undefined
+                            : "noreferrer noopener"
+                        }
+                      >
+                        {item.label}
+                      </a>
+                    </span>
+                  ))}
+                </nav>
+
+                <div
+                  className={styles.localeSwitch}
+                  role="group"
+                  aria-label="Language"
+                >
+                  {[
+                    { key: "ja", label: "日" },
+                    { key: "zh", label: "中" },
+                    { key: "en", label: "EN" },
+                  ].map((item) => (
+                    <button
+                      key={item.key}
+                      type="button"
+                      className={`${styles.localeButton} ${
+                        locale === item.key ? styles.localeButtonActive : ""
+                      }`}
+                      onClick={() => handleLocaleChange(item.key as SiteLocale)}
+                      aria-pressed={locale === item.key}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </footer>
             </section>
-          </div>
-        ) : null}
+            </div>
+          ) : null}
       </section>
     </div>
   </div>
