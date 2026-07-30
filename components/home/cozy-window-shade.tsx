@@ -493,11 +493,10 @@ export function CozyWindowShade({
   const ambientRequestRef = useRef(0);
   const isAmbientStartedRef = useRef(false);
   const isAudioPlayingRef = useRef(false);
-  const themeModeRef = useRef<ThemeMode>("default");
+  const themeModeRef = useRef<ThemeMode>("sunny");
   const fadeTargetRef = useRef(1);
   const fadeValueRef = useRef(0);
   const lastTimeRef = useRef(0);
-  const [rotation, setRotation] = useState(0);
   const [themeMode, setThemeMode] = useState<ThemeMode>("sunny");
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [, setHasAudioInteracted] = useState(false);
@@ -752,7 +751,7 @@ export function CozyWindowShade({
   }, [playAmbientForMode, stopAmbient]);
 
   const activateTheme = useCallback(
-    (nextMode: ThemeMode) => {
+    (nextMode: Exclude<ThemeMode, "default">) => {
       setThemeMode(nextMode);
       if (isAudioPlayingRef.current && isAmbientStartedRef.current) {
         void playAmbientForMode(nextMode).then((started) => {
@@ -764,11 +763,6 @@ export function CozyWindowShade({
     },
     [playAmbientForMode],
   );
-
-  const activateSunnyTheme = useCallback(() => {
-    setRotation((current) => current + 360);
-    activateTheme("sunny");
-  }, [activateTheme]);
 
   useEffect(() => {
     if (!isHome) {
@@ -785,14 +779,10 @@ export function CozyWindowShade({
 
       switch (event.key.toLowerCase()) {
         case "s":
-          activateSunnyTheme();
+          activateTheme("sunny");
           break;
         case "r":
           activateTheme("rain");
-          break;
-        case "d":
-        case "escape":
-          activateTheme("default");
           break;
         case "a":
           void toggleAudio();
@@ -807,7 +797,7 @@ export function CozyWindowShade({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activateSunnyTheme, activateTheme, isHome, toggleAudio]);
+  }, [activateTheme, isHome, toggleAudio]);
 
   useEffect(() => {
     const element = audioPullRef.current;
@@ -1455,6 +1445,7 @@ export function CozyWindowShade({
                 ref={leavesVideoRef}
                 className={styles.leavesVideo}
                 src="https://theme-switch.pages.dev/assets/leaves.mp4"
+                autoPlay
                 muted
                 loop
                 playsInline
@@ -1493,19 +1484,7 @@ export function CozyWindowShade({
               <button
                 type="button"
                 className={`${styles.toggle} ${themeMode === "sunny" ? styles.toggleActive : ""}`}
-                onClick={() => {
-                  if (themeMode === "sunny") {
-                    activateTheme("default");
-                    return;
-                  }
-
-                  activateSunnyTheme();
-                }}
-                style={
-                  themeMode === "sunny"
-                    ? { transform: `rotate(${rotation}deg)` }
-                    : undefined
-                }
+                onClick={() => activateTheme("sunny")}
                 aria-pressed={themeMode === "sunny"}
                 aria-label={homeUiCopy.sunnyModeLabel}
               >
@@ -1541,9 +1520,7 @@ export function CozyWindowShade({
               <button
                 type="button"
                 className={`${styles.toggle} ${themeMode === "rain" ? styles.toggleActive : ""}`}
-                onClick={() =>
-                  activateTheme(themeMode === "rain" ? "default" : "rain")
-                }
+                onClick={() => activateTheme("rain")}
                 aria-pressed={themeMode === "rain"}
                 aria-label={homeUiCopy.rainyModeLabel}
               >
