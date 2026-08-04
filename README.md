@@ -1,21 +1,17 @@
-# Vincent Portfolio
+# Vincent Low Portfolio
 
-A personal portfolio website.
+Personal portfolio of Vincent Low Sik Ching, a Malaysian product designer based in Tokyo. It features selected work in AI products, UX/UI, interaction, and visual design.
 
-This site showcases selected work in product design, UI/UX design, interaction design, and branding. It includes project case studies, visual design explorations, process documentation, and final outcomes.
+## Built with
 
-## Projects
+Next.js, React, TypeScript, CSS Modules, Tailwind CSS, and Vercel.
 
-- IntoDay
-- Weave AI
-- GoEvent
-- Lemon Yuzu Fruit Tea
+## Local development
 
-## Tech Stack
+```bash
+npm install
+npm run dev
+```
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Vercel
+Set `NEXT_PUBLIC_SITE_URL` to the production URL when deploying outside Vercel.
 
