@@ -38,12 +38,21 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: "/images/site/opengraph-bamboo.png",
+        width: 1200,
+        height: 630,
+        alt: "Vincent Low portfolio with bamboo shadows",
+      },
+    ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
+    images: ["/images/site/opengraph-bamboo.png"],
   },
 };
 
