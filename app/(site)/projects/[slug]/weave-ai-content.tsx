@@ -93,7 +93,7 @@ const weaveLocaleCopy: Record<
     dateLabel: "Date",
     dateValue: "September 2025 → December 2025",
     websiteLabel: "Website",
-    websiteUrl: "https://seminardesign-app.vercel.app/",
+    websiteUrl: "https://seminardesign.vercel.app/",
     videoLabel: "Weave AI concept preview",
     researchTitle:
       "Team Research: From 2025 Technology to Life with AI Agents in 2045",
@@ -168,7 +168,7 @@ const weaveLocaleCopy: Record<
     dateLabel: "日期",
     dateValue: "2025 年 9 月 → 2025 年 12 月",
     websiteLabel: "Website",
-    websiteUrl: "https://seminardesign-app.vercel.app/",
+    websiteUrl: "https://seminardesign.vercel.app/",
     videoLabel: "Weave AI 概念预览",
     researchTitle: "团队研究：从 2025 年技术到 2045 年 AI 代理生活",
     framingQuestionTitle: "界定问题：",
@@ -241,7 +241,7 @@ const weaveLocaleCopy: Record<
     dateLabel: "日付",
     dateValue: "2025 年 9 月 → 2025 年 12 月",
     websiteLabel: "Website",
-    websiteUrl: "https://seminardesign-app.vercel.app/",
+    websiteUrl: "https://seminardesign.vercel.app/",
     videoLabel: "Weave AI コンセプトプレビュー",
     researchTitle:
       "チームリサーチ：2025年の技術から2045年のAIエージェントとの生活へ",
@@ -394,7 +394,7 @@ export function WeaveAIContent({
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  seminardesign-app.vercel.app
+                  seminardesign.vercel.app
                 </a>
               </dd>
             </div>
@@ -697,7 +697,7 @@ export function WeaveAIContent({
             </figure>
             <a
               className={styles.weavePrototypeLink}
-              href="https://vincentlow02.github.io/weave-destination-experience/"
+              href="https://seminardesign.vercel.app/"
               target="_blank"
               rel="noreferrer"
             >
