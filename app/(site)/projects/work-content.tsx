@@ -142,8 +142,8 @@ export function WorkContent({
         title: copy.interactiveTitle,
         year: "2025",
         category: "Interactive exhibition experience",
-        href: `/projects/weave-ai?lang=${locale}`,
-        external: false,
+        href: "https://vincentlow02.github.io/weave-destination-experience/",
+        external: true,
         image: {
           src: "/images/projects/weave-ai/prototype-optimized.webp",
           width: 1536,

@@ -697,7 +697,7 @@ export function WeaveAIContent({
             </figure>
             <a
               className={styles.weavePrototypeLink}
-              href="https://seminardesign.vercel.app/"
+              href="https://vincentlow02.github.io/weave-destination-experience/"
               target="_blank"
               rel="noreferrer"
             >
