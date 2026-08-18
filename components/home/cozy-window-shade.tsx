@@ -1573,7 +1573,7 @@ export function CozyWindowShade({
                   <p className={styles.labSectionLabel}>01</p>
                   <article className={styles.labFeaturedCard}>
                     <a
-                      href="https://curio-web-production-49c7.up.railway.app/"
+                      href="https://foragent-testing.vercel.app/"
                       target="_blank"
                       rel="noreferrer"
                       className={styles.labFeaturedMedia}
@@ -1597,7 +1597,7 @@ export function CozyWindowShade({
                       <div className={styles.labFeaturedHeading}>
                         <h2 id="featured-project-title">Curio</h2>
                         <a
-                          href="https://curio-web-production-49c7.up.railway.app/"
+                          href="https://foragent-testing.vercel.app/"
                           target="_blank"
                           rel="noreferrer"
                           className={styles.labLaunchLink}
@@ -1615,7 +1615,7 @@ export function CozyWindowShade({
                           {labUiCopy.projectDescription}
                         </p>
                         <p className={styles.labAccessCode}>
-                          {labUiCopy.accessCodeLabel} <code>agentforge</code>
+                          {labUiCopy.accessCodeLabel} <code>agent-forge-demo</code>
                         </p>
                       </div>
                       <p className={styles.labFeaturedMeta}>
