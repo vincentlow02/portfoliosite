@@ -105,9 +105,9 @@ export function WorkContent({
         height: 1352,
       },
       intoday: {
-        src: "/images/projects/intoday/intoday-cover-v3.png",
+        src: "/images/projects/intoday/intoday-cover-v4.png",
         width: 1920,
-        height: 1248,
+        height: 1216,
       },
       "lemon-yuzu-fruit-tea": {
         src: "/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp",
@@ -251,6 +251,7 @@ export function WorkContent({
                     className={styles.cardImage}
                     priority={index < 4}
                     sizes="(min-width: 1280px) 22vw, (min-width: 900px) 30vw, (min-width: 640px) 46vw, 100vw"
+                    unoptimized
                   />
                 </div>
                 <span className={styles.cardTitleRow}>
