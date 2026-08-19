@@ -1,6 +1,6 @@
 # Vincent Low Portfolio
-
-Personal portfolio of Vincent Low Sik Ching, a Malaysian product designer based in Tokyo. It features selected work in AI products, UX/UI, interaction, and visual design.
+Product Designer & Frontend Engineer
+I design and build digital products from user problems to working software.
 
 Live site: [vincentlow.work](https://vincentlow.work)
 
