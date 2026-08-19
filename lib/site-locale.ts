@@ -24,8 +24,8 @@ export const localeCopy: Record<
 > = {
   en: {
     introLines: [
-      "Product designer from Malaysia, based in Tokyo.",
-      "I design and build clear, intuitive AI products and digital experiences.",
+      "Product Designer &\nFrontend Engineer",
+      "I design and build digital products\nfrom user problems to working software.",
     ],
     navItems: [
       { label: "Notes", href: "/about" },
@@ -44,8 +44,8 @@ export const localeCopy: Record<
   },
   zh: {
     introLines: [
-      "来自马来西亚、现居东京的产品设计师。",
-      "设计并构建清晰、直觉的 AI 产品与数字体验。",
+      "Product Designer &\nFrontend Engineer",
+      "I design and build digital products\nfrom user problems to working software.",
     ],
     navItems: [
       { label: "笔记", href: "/about" },
@@ -64,8 +64,8 @@ export const localeCopy: Record<
   },
   ja: {
     introLines: [
-      "マレーシア出身、東京を拠点に活動するプロダクトデザイナー。",
-      "明快で直感的なAIプロダクトとデジタル体験をデザインしています。",
+      "Product Designer &\nFrontend Engineer",
+      "I design and build digital products\nfrom user problems to working software.",
     ],
     navItems: [
       { label: "ノート", href: "/about" },

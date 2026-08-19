@@ -1837,6 +1837,10 @@ export function CozyWindowShade({
                       href: "https://www.instagram.com/vincent_low02",
                     },
                     {
+                      label: "GitHub",
+                      href: "https://github.com/vincentlow02",
+                    },
+                    {
                       label: "Gmail",
                       href: "mailto:lowvincent21@gmail.com",
                     },
