@@ -117,7 +117,6 @@ const intodayProgressImages = [
   "/images/projects/intoday/intoday-progress-03.png",
   "/images/projects/intoday/intoday-progress-04.png",
   "/images/projects/intoday/intoday-progress-05.png",
-  "/images/projects/intoday/intoday-progress-06.png",
 ];
 
 export function IntodayContent({
