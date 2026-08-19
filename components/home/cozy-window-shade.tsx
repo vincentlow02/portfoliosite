@@ -1812,10 +1812,10 @@ export function CozyWindowShade({
                   >
                     <div className={styles.intodayPreviewMedia}>
                       <Image
-                        src="/images/projects/intoday/intoday-cover-v4.png"
-                        alt="IntoDay LP preview"
-                        width={1920}
-                        height={1216}
+                        src="/images/projects/intoday/intoday-cover-v5.jpg"
+                        alt="IntoDay laptop mockup preview"
+                        width={1000}
+                        height={600}
                         className={styles.intodayPreviewImage}
                         sizes="(min-width: 1040px) 13rem, 100vw"
                         unoptimized
