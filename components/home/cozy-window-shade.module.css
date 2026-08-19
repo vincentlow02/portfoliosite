@@ -756,7 +756,7 @@
 .homeOverlay {
   position: relative;
   z-index: 130;
-  width: min(100%, 27rem);
+  width: min(100%, 29.5rem);
   margin: 0 auto;
   left: 0.9rem;
   padding: clamp(2.5rem, 5vh, 4.5rem) 1.25rem clamp(2.5rem, 5vh, 4.5rem);
@@ -1161,6 +1161,23 @@
   bottom: -0.18rem;
   height: 1px;
   background: currentColor;
+}
+
+.allWorkRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.allWorkRow .homeFooter {
+  margin-top: 0;
+  padding-top: 0;
+  width: auto;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  gap: 0.9rem;
 }
 
 .homeFooter {
