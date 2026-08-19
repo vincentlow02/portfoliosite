@@ -54,15 +54,15 @@ const intodayCopy: Record<
     teamValue: "Collaborative Project",
     problemTitle: "Problem",
     problemBody:
-      "During school research and creative projects, people collect links, images, PDFs, and notes across different tools, but the context often becomes fragmented and hard to reuse.",
+      "Project context is often scattered across links, images, PDFs, notes, and different tools. When users need that context again—especially for AI workflows—they have to repeatedly search, upload, and explain the same information.",
     progressTitle: "IntoDay v2 (In Progress)",
-    versionTitle: "IntoDay Ver.1",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "The first public version of IntoDay, focusing on collecting and organizing digital context into a visual workspace.",
-    versionLinkLabel: "View IntoDay",
-    manyMoreTitle: "And many more...",
+      "The current beta focuses on collecting, organizing, and reusing project context within a visual workspace.",
+    versionLinkLabel: "View Live Product",
+    manyMoreTitle: "In Progress",
     manyMoreBody:
-      "IntoDay is continuously evolving through ongoing design iterations and feature improvements. More updates and experiments are coming soon.",
+      "IntoDay is continuously evolving through product testing, design iteration, and frontend development.",
   },
   zh: {
     languageLabel: "语言",
@@ -80,15 +80,15 @@ const intodayCopy: Record<
     teamValue: "合作项目",
     problemTitle: "问题",
     problemBody:
-      "在学校研究与创意项目中，人们会使用不同工具收集链接、图片、PDF 和笔记，但这些资料的背景脉络往往变得零散，难以再次利用。",
+      "项目上下文往往散落在链接、图片、PDF、笔记和不同的工具中。当用户再次需要这些上下文（尤其是用于 AI 工作流）时，必须反复搜索、上传和解释相同的信息。",
     progressTitle: "IntoDay v2（进行中）",
-    versionTitle: "IntoDay Ver.1",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "IntoDay 的首个公开版本，专注于收集并整理数字内容，将其组织成一个视觉化工作空间。",
-    versionLinkLabel: "查看 IntoDay",
-    manyMoreTitle: "还有更多...",
+      "当前的 Beta 版本专注于在视觉工作空间中收集、组织和复用项目上下文。",
+    versionLinkLabel: "查看在线产品",
+    manyMoreTitle: "进行中",
     manyMoreBody:
-      "IntoDay 正通过持续的设计迭代与功能改进不断发展。更多更新与实验即将推出。",
+      "IntoDay 正通过产品测试、设计迭代和前端开发持续演进。",
   },
   ja: {
     languageLabel: "言語",
@@ -106,15 +106,15 @@ const intodayCopy: Record<
     teamValue: "コラボレーションプロジェクト",
     problemTitle: "課題",
     problemBody:
-      "学校でのリサーチやクリエイティブプロジェクトでは、リンク、画像、PDF、メモを複数のツールに集めますが、文脈が分散し、再利用しにくくなりがちです。",
+      "プロジェクトのコンテキストは、リンク、画像、PDF、メモ、さまざまなツールに分散しがちです。ユーザーがそのコンテキストを再利用するとき（特にAIワークフローにおいて）、同じ情報を何度も検索、アップロード、説明しなければなりません。",
     progressTitle: "IntoDay v2（進行中）",
-    versionTitle: "IntoDay Ver.1",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "IntoDay の最初の公開バージョン。デジタルコンテキストを収集・整理し、ビジュアルワークスペースへまとめることに焦点を当てました。",
-    versionLinkLabel: "IntoDay を見る",
-    manyMoreTitle: "And many more...",
+      "現在のベータ版では、ビジュアルワークスペース内でのプロジェクトコンテキストの収集、整理、再利用に焦点を当てています。",
+    versionLinkLabel: "ライブプロダクトを見る",
+    manyMoreTitle: "進行中",
     manyMoreBody:
-      "IntoDay は、継続的なデザインの反復と機能改善を通じて進化しています。今後もアップデートや新しい実験を公開していきます。",
+      "IntoDay は、プロダクトテスト、デザインイテレーション、フロントエンド開発を通じて継続的に進化しています。",
   },
 };
 
