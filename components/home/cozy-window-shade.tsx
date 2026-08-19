@@ -458,7 +458,7 @@ export function CozyWindowShade({
   const homeProjects = [
     {
       slug: "intoday",
-      name: "Sogdia",
+      name: "IntoDay",
       year: "2026",
       category: "",
       url: undefined,

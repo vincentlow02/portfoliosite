@@ -40,19 +40,17 @@ const projects: Project[] = [
 const detailProjects: Project[] = [
   {
     slug: "intoday",
-    name: "Sogdia",
+    name: "IntoDay",
     category: "Product design and visual workspace",
     summary:
-      "One research space connecting the references, thinking, and progress behind long-term projects.",
+      "A visual workspace for collecting scattered project context and organizing it into reusable packs for AI workflows.",
     description:
-      "One research space connecting the references, thinking, and progress behind long-term projects.",
+      "A visual workspace for collecting scattered project context and organizing it into reusable packs for AI workflows.",
     year: "2026",
     status: "in-progress",
     stack: [
-      "Product Strategy",
-      "UX/UI Design",
-      "Branding",
-      "Front-end Development",
+      "Product Design",
+      "Frontend Development",
     ],
     highlights: [],
   },
