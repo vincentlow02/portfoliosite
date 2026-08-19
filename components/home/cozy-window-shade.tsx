@@ -457,6 +457,13 @@ export function CozyWindowShade({
   ] as const;
   const homeProjects = [
     {
+      slug: "curio",
+      name: "Curio",
+      year: "2026",
+      category: "",
+      url: "https://foragent-testing.vercel.app/",
+    },
+    {
       slug: "intoday",
       name: "IntoDay",
       year: "2026",
@@ -1772,6 +1779,26 @@ export function CozyWindowShade({
                         muted
                         playsInline
                         preload="metadata"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "curio"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.intodayPreview}`}
+                  >
+                    <div className={styles.intodayPreviewMedia}>
+                      <Image
+                        src="/images/projects/curio/curio-cover-v1.png"
+                        alt="Curio preview"
+                        width={1920}
+                        height={1200}
+                        className={styles.intodayPreviewImage}
+                        sizes="(min-width: 1040px) 13rem, 100vw"
+                        unoptimized
                       />
                     </div>
                   </div>

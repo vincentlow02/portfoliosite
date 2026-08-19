@@ -2,6 +2,20 @@ import { Project } from "@/types/project";
 
 const projects: Project[] = [
   {
+    slug: "curio",
+    name: "Curio",
+    category: "AI Agent & Tokyo Collectibles Discovery",
+    summary:
+      "Discover your next collectible in Tokyo. Check prices, locations, and details powered by AI agents.",
+    description:
+      "Curio is an AI-agent-powered discovery and research tool for collectible toys, game cards, and music records across Tokyo.",
+    year: "2026",
+    status: "in-progress",
+    stack: ["Product Design", "AI Agent", "Frontend Development"],
+    url: "https://foragent-testing.vercel.app/",
+    highlights: [],
+  },
+  {
     slug: "intoday",
     name: "IntoDay",
     category: "Product design and visual workspace",

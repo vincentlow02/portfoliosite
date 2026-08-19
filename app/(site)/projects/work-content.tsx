@@ -91,9 +91,14 @@ export function WorkContent({
 
   const workItems = projects.flatMap<WorkItem>((project) => {
     const isWeaveAI = project.slug === "weave-ai";
-    const href = `/projects/${project.slug}?lang=${locale}`;
+    const href = project.url ?? `/projects/${project.slug}?lang=${locale}`;
 
     const imageBySlug: Record<string, WorkItem["image"]> = {
+      curio: {
+        src: "/images/projects/curio/curio-cover-v1.png",
+        width: 1920,
+        height: 1200,
+      },
       "weave-ai": {
         src: "/images/projects/weave-ai/weaveAI-optimized.webp",
         width: 1800,
@@ -127,7 +132,7 @@ export function WorkContent({
       year: project.year,
       category: project.category,
       href,
-      external: false,
+      external: Boolean(project.url),
       image: imageBySlug[project.slug],
     };
 
