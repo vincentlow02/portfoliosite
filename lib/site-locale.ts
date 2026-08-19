@@ -24,8 +24,8 @@ export const localeCopy: Record<
 > = {
   en: {
     introLines: [
-      "Product Designer &\nFrontend Engineer",
-      "I design and build digital products\nfrom user problems to working software.",
+      "Product Designer & Frontend Engineer",
+      "I design and build digital products from user problems to working software.",
     ],
     navItems: [
       { label: "Notes", href: "/about" },
@@ -44,8 +44,8 @@ export const localeCopy: Record<
   },
   zh: {
     introLines: [
-      "Product Designer &\nFrontend Engineer",
-      "I design and build digital products\nfrom user problems to working software.",
+      "Product Designer & Frontend Engineer",
+      "设计并构建从用户问题到可运行软件的数字产品。",
     ],
     navItems: [
       { label: "笔记", href: "/about" },
@@ -64,8 +64,8 @@ export const localeCopy: Record<
   },
   ja: {
     introLines: [
-      "Product Designer &\nFrontend Engineer",
-      "I design and build digital products\nfrom user problems to working software.",
+      "Product Designer & Frontend Engineer",
+      "ユーザーの課題解決から動作するソフトウェアまで、デジタルプロダクトをデザイン・構築しています。",
     ],
     navItems: [
       { label: "ノート", href: "/about" },

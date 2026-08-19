@@ -834,14 +834,13 @@
 .summary {
   display: grid;
   gap: 0.625rem;
-  max-width: 18rem;
+  max-width: 22rem;
 }
 
 .summary p {
   font-size: 0.8125rem;
   line-height: 1.45;
   color: #1f1f1f;
-  white-space: pre-line;
 }
 
 .nav {
