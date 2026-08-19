@@ -119,10 +119,10 @@ const intodayCopy: Record<
 };
 
 const intodayProgressImages = [
-  "/images/projects/intoday/intoday-progress-02.png",
-  "/images/projects/intoday/intoday-progress-03.png",
-  "/images/projects/intoday/intoday-progress-04.png",
-  "/images/projects/intoday/intoday-progress-05.png",
+  "/images/projects/intoday/intoday-search-v3.png",
+  "/images/projects/intoday/intoday-export-v3.png",
+  "/images/projects/intoday/intoday-add-v3.png",
+  "/images/projects/intoday/intoday-settings-v3.png",
 ];
 
 export function IntodayContent({
@@ -209,12 +209,13 @@ export function IntodayContent({
 
           <div className={styles.intodayHeroFrame}>
             <Image
-              src="/images/projects/intoday/intoday-ver2.png"
-              alt="Sogdia visual workspace"
+              src="/images/projects/intoday/intoday-hero-v3.png"
+              alt="IntoDay visual workspace"
               width={1920}
               height={1248}
               className={styles.intodayHeroImage}
               priority
+              unoptimized
             />
           </div>
 
@@ -234,10 +235,11 @@ export function IntodayContent({
               <Image
                 key={src}
                 src={src}
-                alt={`Sogdia in-progress exploration ${index + 2}`}
+                alt={`IntoDay in-progress exploration ${index + 2}`}
                 width={1920}
                 height={1248}
                 className={styles.intodayProgressImage}
+                unoptimized
               />
             ))}
           </div>

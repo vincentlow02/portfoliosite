@@ -1785,12 +1785,13 @@ export function CozyWindowShade({
                   >
                     <div className={styles.intodayPreviewMedia}>
                       <Image
-                        src="/images/projects/intoday/intoday.jpg"
-                        alt="Sogdia preview"
+                        src="/images/projects/intoday/intoday-cover-v3.png"
+                        alt="IntoDay preview"
                         width={1681}
                         height={979}
                         className={styles.intodayPreviewImage}
                         sizes="(min-width: 1040px) 13rem, 100vw"
+                        unoptimized
                       />
                     </div>
                   </div>

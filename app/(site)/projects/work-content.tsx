@@ -105,9 +105,9 @@ export function WorkContent({
         height: 1352,
       },
       intoday: {
-        src: "/images/projects/intoday/intoday-optimized.webp",
-        width: 7352,
-        height: 5328,
+        src: "/images/projects/intoday/intoday-cover-v3.png",
+        width: 1920,
+        height: 1248,
       },
       "lemon-yuzu-fruit-tea": {
         src: "/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp",
