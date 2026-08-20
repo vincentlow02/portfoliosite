@@ -457,8 +457,15 @@ export function CozyWindowShade({
   ] as const;
   const homeProjects = [
     {
+      slug: "curio",
+      name: "Curio",
+      year: "2026",
+      category: "",
+      url: "https://foragent-testing.vercel.app/",
+    },
+    {
       slug: "intoday",
-      name: "Sogdia",
+      name: "IntoDay",
       year: "2026",
       category: "",
       url: undefined,
@@ -1573,7 +1580,7 @@ export function CozyWindowShade({
                   <p className={styles.labSectionLabel}>01</p>
                   <article className={styles.labFeaturedCard}>
                     <a
-                      href="https://curio-web-production-49c7.up.railway.app/"
+                      href="https://foragent-testing.vercel.app/"
                       target="_blank"
                       rel="noreferrer"
                       className={styles.labFeaturedMedia}
@@ -1597,7 +1604,7 @@ export function CozyWindowShade({
                       <div className={styles.labFeaturedHeading}>
                         <h2 id="featured-project-title">Curio</h2>
                         <a
-                          href="https://curio-web-production-49c7.up.railway.app/"
+                          href="https://foragent-testing.vercel.app/"
                           target="_blank"
                           rel="noreferrer"
                           className={styles.labLaunchLink}
@@ -1615,7 +1622,7 @@ export function CozyWindowShade({
                           {labUiCopy.projectDescription}
                         </p>
                         <p className={styles.labAccessCode}>
-                          {labUiCopy.accessCodeLabel} <code>agentforge</code>
+                          {labUiCopy.accessCodeLabel} <code>agent-forge-demo</code>
                         </p>
                       </div>
                       <p className={styles.labFeaturedMeta}>
@@ -1712,6 +1719,99 @@ export function CozyWindowShade({
                       </>
                     );
 
+                    if (isAllWorkLink) {
+                      return (
+                        <div key={project.slug} className={styles.allWorkRow}>
+                          <Link
+                            href={href}
+                            className={styles.workItem}
+                            style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
+                          >
+                            {itemContent}
+                          </Link>
+
+                          <footer className={styles.homeFooter}>
+                            <nav
+                              className={styles.contactLinks}
+                              aria-label="Contact links"
+                            >
+                              {[
+                                {
+                                  label: "X",
+                                  href: "https://x.com/vdhhhl?s=21",
+                                },
+                                {
+                                  label: "LinkedIn",
+                                  href:
+                                    "https://www.linkedin.com/in/vincent-low-sik-ching/",
+                                },
+                                {
+                                  label: "Instagram",
+                                  href: "https://www.instagram.com/vincent_low02",
+                                },
+                                {
+                                  label: "GitHub",
+                                  href: "https://github.com/vincentlow02",
+                                },
+                                {
+                                  label: "Gmail",
+                                  href: "mailto:lowvincent21@gmail.com",
+                                },
+                              ].map((item, i) => (
+                                <span key={item.label} className={styles.contactItem}>
+                                  {i > 0 ? (
+                                    <span
+                                      className={styles.contactSeparator}
+                                      aria-hidden="true"
+                                    >
+                                      ·
+                                    </span>
+                                  ) : null}
+                                  <a
+                                    href={item.href}
+                                    target={
+                                      item.href.startsWith("mailto:") ? undefined : "_blank"
+                                    }
+                                    rel={
+                                      item.href.startsWith("mailto:")
+                                        ? undefined
+                                        : "noreferrer noopener"
+                                    }
+                                  >
+                                    {item.label}
+                                  </a>
+                                </span>
+                              ))}
+                            </nav>
+
+                            <div
+                              className={styles.localeSwitch}
+                              role="group"
+                              aria-label="Language"
+                            >
+                              {[
+                                { key: "ja", label: "日" },
+                                { key: "zh", label: "中" },
+                                { key: "en", label: "EN" },
+                              ].map((item) => (
+                                <button
+                                  key={item.key}
+                                  type="button"
+                                  className={`${styles.localeButton} ${
+                                    locale === item.key ? styles.localeButtonActive : ""
+                                  }`}
+                                  onClick={() => handleLocaleChange(item.key as SiteLocale)}
+                                  aria-pressed={locale === item.key}
+                                >
+                                  {item.label}
+                                </button>
+                              ))}
+                            </div>
+                          </footer>
+                        </div>
+                      );
+                    }
+
                     return (
                       <Link
                         key={project.slug}
@@ -1721,10 +1821,8 @@ export function CozyWindowShade({
                         className={styles.workItem}
                         style={{ "--enter-delay": `${320 + index * 70}ms` } as CSSProperties}
                         onMouseEnter={
-                          isAllWorkLink
-                            ? undefined
-                            : (event) =>
-                                updateWorkPreview(project.slug, event.currentTarget)
+                          (event) =>
+                            updateWorkPreview(project.slug, event.currentTarget)
                         }
                         onMouseLeave={() =>
                           setHoveredProjectSlug((current) =>
@@ -1732,19 +1830,17 @@ export function CozyWindowShade({
                           )
                         }
                         onFocus={
-                          isAllWorkLink
-                            ? undefined
-                            : (event) =>
-                                updateWorkPreview(project.slug, event.currentTarget)
+                          (event) =>
+                            updateWorkPreview(project.slug, event.currentTarget)
                         }
                         onBlur={() =>
                           setHoveredProjectSlug((current) =>
                             current === project.slug ? null : current,
                           )
                         }
-                    >
-                      {itemContent}
-                    </Link>
+                      >
+                        {itemContent}
+                      </Link>
                     );
                   })}
                 </div>
@@ -1778,6 +1874,26 @@ export function CozyWindowShade({
 
                   <div
                     className={`${styles.workPreviewCard} ${
+                      hoveredProjectSlug === "curio"
+                        ? styles.workPreviewCardVisible
+                        : ""
+                    } ${styles.intodayPreview}`}
+                  >
+                    <div className={styles.intodayPreviewMedia}>
+                      <Image
+                        src="/images/projects/curio/curio-cover-v1.png"
+                        alt="Curio preview"
+                        width={1920}
+                        height={1200}
+                        className={styles.intodayPreviewImage}
+                        sizes="(min-width: 1040px) 13rem, 100vw"
+                        unoptimized
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.workPreviewCard} ${
                       hoveredProjectSlug === "intoday"
                         ? styles.workPreviewCardVisible
                         : ""
@@ -1785,12 +1901,13 @@ export function CozyWindowShade({
                   >
                     <div className={styles.intodayPreviewMedia}>
                       <Image
-                        src="/images/projects/intoday/intoday.jpg"
-                        alt="Sogdia preview"
-                        width={1681}
-                        height={979}
+                        src="/images/projects/intoday/intoday-cover-v5.jpg"
+                        alt="IntoDay laptop mockup preview"
+                        width={1000}
+                        height={600}
                         className={styles.intodayPreviewImage}
                         sizes="(min-width: 1040px) 13rem, 100vw"
+                        unoptimized
                       />
                     </div>
                   </div>
@@ -1816,81 +1933,6 @@ export function CozyWindowShade({
                   </div>
                 </div>
               </div>
-
-              <footer className={styles.homeFooter}>
-                <nav
-                  className={styles.contactLinks}
-                  aria-label="Contact links"
-                >
-                  {[
-                    {
-                      label: "X",
-                      href: "https://x.com/vdhhhl?s=21",
-                    },
-                    {
-                      label: "LinkedIn",
-                      href:
-                        "https://www.linkedin.com/in/vincent-low-sik-ching/",
-                    },
-                    {
-                      label: "Instagram",
-                      href: "https://www.instagram.com/vincent_low02",
-                    },
-                    {
-                      label: "Gmail",
-                      href: "mailto:lowvincent21@gmail.com",
-                    },
-                  ].map((item, index) => (
-                    <span key={item.label} className={styles.contactItem}>
-                      {index > 0 ? (
-                        <span
-                          className={styles.contactSeparator}
-                          aria-hidden="true"
-                        >
-                          ·
-                        </span>
-                      ) : null}
-                      <a
-                        href={item.href}
-                        target={
-                          item.href.startsWith("mailto:") ? undefined : "_blank"
-                        }
-                        rel={
-                          item.href.startsWith("mailto:")
-                            ? undefined
-                            : "noreferrer noopener"
-                        }
-                      >
-                        {item.label}
-                      </a>
-                    </span>
-                  ))}
-                </nav>
-
-                <div
-                  className={styles.localeSwitch}
-                  role="group"
-                  aria-label="Language"
-                >
-                  {[
-                    { key: "ja", label: "日" },
-                    { key: "zh", label: "中" },
-                    { key: "en", label: "EN" },
-                  ].map((item) => (
-                    <button
-                      key={item.key}
-                      type="button"
-                      className={`${styles.localeButton} ${
-                        locale === item.key ? styles.localeButtonActive : ""
-                      }`}
-                      onClick={() => handleLocaleChange(item.key as SiteLocale)}
-                      aria-pressed={locale === item.key}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </footer>
             </section>
             </div>
           ) : null}

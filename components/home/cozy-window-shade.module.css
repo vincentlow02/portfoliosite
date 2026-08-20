@@ -756,10 +756,10 @@
 .homeOverlay {
   position: relative;
   z-index: 130;
-  width: min(100%, 27rem);
+  width: min(100%, 34rem);
   margin: 0 auto;
   left: 0.9rem;
-  padding: 9.6rem 1.25rem 9.6rem;
+  padding: clamp(2.5rem, 5vh, 4.5rem) 1.25rem clamp(2.5rem, 5vh, 4.5rem);
   color: #121212;
 }
 
@@ -833,8 +833,8 @@
 
 .summary {
   display: grid;
-  gap: 0.125rem;
-  max-width: 14rem;
+  gap: 0.625rem;
+  max-width: 22rem;
 }
 
 .summary p {
@@ -1163,13 +1163,43 @@
   background: currentColor;
 }
 
-.homeFooter {
+.allWorkRow {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  margin-top: 1.55rem;
+  white-space: nowrap;
+}
+
+.allWorkRow .workItem {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.allWorkRow .workTitle {
+  white-space: nowrap;
+}
+
+.allWorkRow .homeFooter {
+  margin-top: 0;
+  padding-top: 0;
+  width: auto;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  gap: 0.9rem;
+  white-space: nowrap;
+}
+
+.homeFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 0.4rem;
   opacity: 0;
   filter: blur(8px);
   transform: translateY(16px);

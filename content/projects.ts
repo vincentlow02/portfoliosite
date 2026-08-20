@@ -2,6 +2,33 @@ import { Project } from "@/types/project";
 
 const projects: Project[] = [
   {
+    slug: "curio",
+    name: "Curio",
+    category: "AI Agent & Tokyo Collectibles Discovery",
+    summary:
+      "Discover your next collectible in Tokyo. Check prices, locations, and details powered by AI agents.",
+    description:
+      "Curio is an AI-agent-powered discovery and research tool for collectible toys, game cards, and music records across Tokyo.",
+    year: "2026",
+    status: "in-progress",
+    stack: ["Product Design", "AI Agent", "Frontend Development"],
+    url: "https://foragent-testing.vercel.app/",
+    highlights: [],
+  },
+  {
+    slug: "intoday",
+    name: "IntoDay",
+    category: "Product design and visual workspace",
+    summary:
+      "A visual workspace for collecting scattered project context and organizing it into reusable packs for AI workflows.",
+    description:
+      "A visual workspace for collecting scattered project context and organizing it into reusable packs for AI workflows.",
+    year: "2026",
+    status: "in-progress",
+    stack: ["Product Design", "Frontend Development"],
+    highlights: [],
+  },
+  {
     slug: "weave-ai",
     name: "Weave AI",
     category: "Seminar exhibition project",
@@ -35,27 +62,6 @@ const projects: Project[] = [
       "Packaged the work as a concise portfolio-ready case study.",
     ],
   },
-];
-
-const detailProjects: Project[] = [
-  {
-    slug: "intoday",
-    name: "Sogdia",
-    category: "Product design and visual workspace",
-    summary:
-      "One research space connecting the references, thinking, and progress behind long-term projects.",
-    description:
-      "One research space connecting the references, thinking, and progress behind long-term projects.",
-    year: "2026",
-    status: "in-progress",
-    stack: [
-      "Product Strategy",
-      "UX/UI Design",
-      "Branding",
-      "Front-end Development",
-    ],
-    highlights: [],
-  },
   {
     slug: "lemon-yuzu-fruit-tea",
     name: "Lemon Yuzu Fruit Tea",
@@ -76,13 +82,15 @@ const detailProjects: Project[] = [
 ];
 
 export function getProjects(): Project[] {
-  return projects;
+  return projects.filter(
+    (project) => project.slug === "weave-ai" || project.slug === "goevent",
+  );
 }
 
 export function getRoutableProjects(): Project[] {
-  return [...projects, ...detailProjects];
+  return projects;
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return getRoutableProjects().find((project) => project.slug === slug);
+  return projects.find((project) => project.slug === slug);
 }

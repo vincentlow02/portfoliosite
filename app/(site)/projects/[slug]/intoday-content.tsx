@@ -26,6 +26,8 @@ const intodayCopy: Record<
     dateValue: string;
     roleLabel: string;
     roleValue: string;
+    teamLabel: string;
+    teamValue: string;
     problemTitle: string;
     problemBody: string;
     progressTitle: string;
@@ -39,85 +41,88 @@ const intodayCopy: Record<
   en: {
     languageLabel: "Language",
     backToHomeLabel: "Back to home",
-    title: "Sogdia",
+    title: "IntoDay",
     summary:
-      "One research space connecting the references, thinking, and progress behind long-term projects.",
+      "A visual workspace for collecting scattered project context and organizing it into reusable packs for AI workflows.",
     locationLabel: "Location",
     locationValue: "Tokyo, Japan",
     dateLabel: "Date",
     dateValue: "2026 \u2192 In Progress",
     roleLabel: "Role",
-    roleValue:
-      "Product Strategy / UX/UI Design / Branding / Front-end Development",
+    roleValue: "Product Design / Frontend Development",
+    teamLabel: "Team",
+    teamValue: "Collaborative Project",
     problemTitle: "Problem",
     problemBody:
-      "During school research and creative projects, people collect links, images, PDFs, and notes across different tools, but the context often becomes fragmented and hard to reuse.",
-    progressTitle: "Sogdia v2 (In Progress)",
-    versionTitle: "Sogdia Ver.1",
+      "Project context is often scattered across links, images, PDFs, notes, and different tools. When users need that context again—especially for AI workflows—they have to repeatedly search, upload, and explain the same information.",
+    progressTitle: "IntoDay v2 (In Progress)",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "The first public version of Sogdia, focusing on collecting and organizing digital context into a visual workspace.",
-    versionLinkLabel: "View Sogdia",
-    manyMoreTitle: "And many more...",
+      "The current beta focuses on collecting, organizing, and reusing project context within a visual workspace.",
+    versionLinkLabel: "View Live Product",
+    manyMoreTitle: "In Progress",
     manyMoreBody:
-      "Sogdia is continuously evolving through ongoing design iterations and feature improvements. More updates and experiments are coming soon.",
+      "IntoDay is continuously evolving through product testing, design iteration, and frontend development.",
   },
   zh: {
     languageLabel: "语言",
     backToHomeLabel: "返回首页",
-    title: "Sogdia",
+    title: "IntoDay",
     summary:
-      "让长期项目的资料、思考与进展集中相连的研究空间。",
+      "用于收集分散的项目上下文并将其组织为可用于 AI 工作流的可复用 Pack 的视觉工作空间。",
     locationLabel: "地点",
     locationValue: "日本东京",
     dateLabel: "日期",
     dateValue: "2026 \u2192 进行中",
     roleLabel: "角色",
-    roleValue: "产品策略 / UX/UI 设计 / 品牌设计 / 前端开发",
+    roleValue: "产品设计 / 前端开发",
+    teamLabel: "团队",
+    teamValue: "合作项目",
     problemTitle: "问题",
     problemBody:
-      "在学校研究与创意项目中，人们会使用不同工具收集链接、图片、PDF 和笔记，但这些资料的背景脉络往往变得零散，难以再次利用。",
-    progressTitle: "Sogdia v2（进行中）",
-    versionTitle: "Sogdia Ver.1",
+      "项目上下文往往散落在链接、图片、PDF、笔记和不同的工具中。当用户再次需要这些上下文（尤其是用于 AI 工作流）时，必须反复搜索、上传和解释相同的信息。",
+    progressTitle: "IntoDay v2（进行中）",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "Sogdia 的首个公开版本，专注于收集并整理数字内容，将其组织成一个视觉化工作空间。",
-    versionLinkLabel: "查看 Sogdia",
-    manyMoreTitle: "还有更多...",
+      "当前的 Beta 版本专注于在视觉工作空间中收集、组织和复用项目上下文。",
+    versionLinkLabel: "查看在线产品",
+    manyMoreTitle: "进行中",
     manyMoreBody:
-      "Sogdia 正通过持续的设计迭代与功能改进不断发展。更多更新与实验即将推出。",
+      "IntoDay 正通过产品测试、设计迭代和前端开发持续演进。",
   },
   ja: {
     languageLabel: "言語",
     backToHomeLabel: "ホームへ戻る",
-    title: "Sogdia",
+    title: "IntoDay",
     summary:
-      "長期プロジェクトの資料・思考・進捗を、ひとつにつなぐリサーチスペース。",
+      "散在するプロジェクトのコンテキストを収集し、AIワークフローで再利用可能なパックとして整理するためのビジュアルワークスペース。",
     locationLabel: "場所",
     locationValue: "東京、日本",
     dateLabel: "期間",
     dateValue: "2026 \u2192 進行中",
     roleLabel: "担当",
-    roleValue:
-      "プロダクト戦略 / UX/UI デザイン / ブランディング / フロントエンド開発",
+    roleValue: "プロダクトデザイン / フロントエンド開発",
+    teamLabel: "チーム",
+    teamValue: "コラボレーションプロジェクト",
     problemTitle: "課題",
     problemBody:
-      "学校でのリサーチやクリエイティブプロジェクトでは、リンク、画像、PDF、メモを複数のツールに集めますが、文脈が分散し、再利用しにくくなりがちです。",
-    progressTitle: "Sogdia v2（進行中）",
-    versionTitle: "Sogdia Ver.1",
+      "プロジェクトのコンテキストは、リンク、画像、PDF、メモ、さまざまなツールに分散しがちです。ユーザーがそのコンテキストを再利用するとき（特にAIワークフローにおいて）、同じ情報を何度も検索、アップロード、説明しなければなりません。",
+    progressTitle: "IntoDay v2（進行中）",
+    versionTitle: "IntoDay — Current Beta",
     versionBody:
-      "Sogdia の最初の公開バージョン。デジタルコンテキストを収集・整理し、ビジュアルワークスペースへまとめることに焦点を当てました。",
-    versionLinkLabel: "Sogdia を見る",
-    manyMoreTitle: "And many more...",
+      "現在のベータ版では、ビジュアルワークスペース内でのプロジェクトコンテキストの収集、整理、再利用に焦点を当てています。",
+    versionLinkLabel: "ライブプロダクトを見る",
+    manyMoreTitle: "進行中",
     manyMoreBody:
-      "Sogdia は、継続的なデザインの反復と機能改善を通じて進化しています。今後もアップデートや新しい実験を公開していきます。",
+      "IntoDay は、プロダクトテスト、デザインイテレーション、フロントエンド開発を通じて継続的に進化しています。",
   },
 };
 
 const intodayProgressImages = [
-  "/images/projects/intoday/intoday-progress-02.png",
-  "/images/projects/intoday/intoday-progress-03.png",
-  "/images/projects/intoday/intoday-progress-04.png",
-  "/images/projects/intoday/intoday-progress-05.png",
-  "/images/projects/intoday/intoday-progress-06.png",
+  "/images/projects/intoday/intoday-search-v3.png",
+  "/images/projects/intoday/intoday-export-v3.png",
+  "/images/projects/intoday/intoday-add-v3.png",
+  "/images/projects/intoday/intoday-settings-v3.png",
 ];
 
 export function IntodayContent({
@@ -193,6 +198,7 @@ export function IntodayContent({
               [copy.locationLabel, copy.locationValue],
               [copy.dateLabel, copy.dateValue],
               [copy.roleLabel, copy.roleValue],
+              [copy.teamLabel, copy.teamValue],
             ].map(([label, value]) => (
               <div className={styles.weaveMetaItem} key={label}>
                 <dt className={styles.weaveMetaLabel}>{label}</dt>
@@ -203,12 +209,13 @@ export function IntodayContent({
 
           <div className={styles.intodayHeroFrame}>
             <Image
-              src="/images/projects/intoday/intoday-ver2.png"
-              alt="Sogdia visual workspace"
+              src="/images/projects/intoday/intoday-hero-v3.png"
+              alt="IntoDay visual workspace"
               width={1920}
               height={1248}
               className={styles.intodayHeroImage}
               priority
+              unoptimized
             />
           </div>
 
@@ -228,10 +235,11 @@ export function IntodayContent({
               <Image
                 key={src}
                 src={src}
-                alt={`Sogdia in-progress exploration ${index + 2}`}
+                alt={`IntoDay in-progress exploration ${index + 2}`}
                 width={1920}
                 height={1248}
                 className={styles.intodayProgressImage}
+                unoptimized
               />
             ))}
           </div>

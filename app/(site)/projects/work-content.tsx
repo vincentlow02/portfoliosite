@@ -91,9 +91,14 @@ export function WorkContent({
 
   const workItems = projects.flatMap<WorkItem>((project) => {
     const isWeaveAI = project.slug === "weave-ai";
-    const href = `/projects/${project.slug}?lang=${locale}`;
+    const href = project.url ?? `/projects/${project.slug}?lang=${locale}`;
 
     const imageBySlug: Record<string, WorkItem["image"]> = {
+      curio: {
+        src: "/images/projects/curio/curio-cover-v1.png",
+        width: 1920,
+        height: 1200,
+      },
       "weave-ai": {
         src: "/images/projects/weave-ai/weaveAI-optimized.webp",
         width: 1800,
@@ -105,9 +110,9 @@ export function WorkContent({
         height: 1352,
       },
       intoday: {
-        src: "/images/projects/intoday/intoday-optimized.webp",
-        width: 7352,
-        height: 5328,
+        src: "/images/projects/intoday/intoday-cover-v5.jpg",
+        width: 1000,
+        height: 600,
       },
       "lemon-yuzu-fruit-tea": {
         src: "/images/projects/lemon-yuzu-fruit-tea/packaging01-optimized.webp",
@@ -127,7 +132,7 @@ export function WorkContent({
       year: project.year,
       category: project.category,
       href,
-      external: false,
+      external: Boolean(project.url),
       image: imageBySlug[project.slug],
     };
 
@@ -251,6 +256,7 @@ export function WorkContent({
                     className={styles.cardImage}
                     priority={index < 4}
                     sizes="(min-width: 1280px) 22vw, (min-width: 900px) 30vw, (min-width: 640px) 46vw, 100vw"
+                    unoptimized
                   />
                 </div>
                 <span className={styles.cardTitleRow}>
